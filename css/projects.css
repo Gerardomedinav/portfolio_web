@@ -1,0 +1,151 @@
+.projects {
+  text-align: center;
+}
+
+.projects__container {
+  row-gap: 2rem;
+}
+
+.projects__links {
+  box-shadow: 0 4px 25px rgba(14, 36, 49, 0.068);
+  border-radius: 0.55rem;
+  height: auto;
+  margin: 0 auto;
+  background-color: aliceblue;
+  padding: 1.5rem 1rem; /* Añadido padding */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.projects__links img {
+  transition: 1s;
+  cursor: pointer;
+  width: 350px;
+  height: 230px;
+  object-fit: contain;
+}
+
+.projects__links img:hover {
+  transform: scale(1.05);
+}
+
+.project__link-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.53rem;
+}
+
+.project__item {
+  padding: 0 1rem;
+  color: var(--second-color);
+}
+
+.project__item:hover {
+  color: var(--first-color);
+}
+
+.project__more-btn {
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+
+.project__more-btn:hover {
+  background-color: #0056b3;
+}
+
+/* ============================= */
+/* Estilos para el fondo oscuro */
+/* ============================= */
+.project__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+}
+
+/* ============================= */
+/* Estilos para el popover      */
+/* ============================= */
+.project__popover {
+  width: 90%;
+  max-width: 800px;
+  padding: 2rem;
+  border-radius: 1rem;
+  background-color: #fff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  margin: 0 auto; /* Centra el contenedor */
+  left: 0;
+  right: 0;
+  top: 15%; /* Intenta subirlo un poco */
+}
+
+/* Imagen dentro del popover - duplicamos su tamaño visual */
+.project__popover-img {
+  display: block;
+  margin: 0 auto 1.5rem auto;
+  transform: scale(1.2); /* Aumentar al 200% */
+  transform-origin: center;
+  max-width: none; /* Evita que se limite por el max-width del contenedor */
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 0.75rem;
+}
+
+.project__popover-title {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.project__popover-desc {
+  font-size: 1.05rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.project__popover-links {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.project__popover-link {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.project__close-btn {
+  margin-top: 1.5rem;
+  padding: 0.6rem 1rem;
+  background-color: #dc3545;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+}
+
+.project__close-btn:hover {
+  background-color: #b02a37;
+}
+
+.project__popover::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}

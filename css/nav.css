@@ -1,0 +1,104 @@
+.nav {
+  height: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+}
+
+@media screen and (max-width: 768px) {
+  .nav__menu {
+    position: fixed;
+    top: 3rem;
+    right: -100%;
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    background-color: var(--second-color);
+    transition: 0.5s;
+  }
+}
+.nav__item {
+  margin-bottom: 2rem;
+}
+.nav__link {
+  position: relative;
+  color: #fff;
+}
+.nav__link:hover {
+  position: relative;
+}
+.nav__link:hover::after {
+  position: absolute;
+  content: '';
+  width: 100%;
+  height: 0.18rem;
+  left: 0;
+  top: 2rem;
+  background-color: var(--first-color);
+}
+.nav__link-es,
+.nav__link-en {
+  font-size: 0.9rem;
+}
+.nav__logo {
+  color: var(--second-color);
+}
+.nav__toggle {
+  color: var(--second-color);
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.active::after {
+  position: absolute;
+  content: '';
+  width: 100%;
+  height: 0.18rem;
+  left: 0;
+  top: 2rem;
+  background-color: var(--first-color);
+}
+.show {
+  right: 0;
+}
+#language-select {
+  background: transparent;
+  border: none;
+  color: rgb(25, 25, 26);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0;
+  /* Quitar estilos por defecto */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* Para que se ubique bien y se alinee con nav */
+  outline: none;
+  position: relative;
+}
+
+/* Para el dropdown arrow personalizado */
+#language-select {
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23fff" height="10" viewBox="0 0 24 24" width="10" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 0.65rem;
+  padding-right: 1.5rem;
+}
+
+/* Hover similar a nav__link */
+#language-select:hover {
+  border-bottom: 2px solid var(--first-color);
+}
+
+/* En dispositivos móviles o tamaños pequeños, ajustar */
+@media screen and (max-width: 768px) {
+  #language-select {
+    color: white;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23000" height="10" viewBox="0 0 24 24" width="10" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  }
+  #language-select:hover {
+    border-bottom: 2px solid var(--first-color);
+  }
+}

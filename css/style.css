@@ -1,0 +1,147 @@
+:root {
+  --poppins: 'Poppins', sans-serif;
+  /* --color-principal: #81da8b; */
+  /* --first-color: hsl(109, 100%, 80%); */
+
+  --first-color: hsl(204, 100%, 65%);
+
+  /* --first-color: #4070f4; */
+  /* --second-color: #00495c; 074f71ee*/
+  --toggle-color: hsla(202, 57%, 12%, 0.952);
+  /* --toggle-color: #074f71ee; */
+  --second-color: hsl(202, 56%, 12%);
+}
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 3rem 0 0 0;
+  font-family: var(--poppins);
+  font-size: 0.938rem;
+  color: var(--second-color);
+}
+h1,
+h2,
+p {
+  margin: 0;
+}
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+a {
+  text-decoration: none;
+}
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ---- */
+.section-title {
+  position: relative;
+  font-size: 1.25rem;
+  color:rgb(34, 34, 88) ;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+.section-title::after {
+  position: absolute;
+  content: '';
+  width: 64px;
+  height: 0.18rem;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 2rem;
+  background-color: var(--first-color);
+}
+.section {
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+}
+/* modo oscuro*/
+/* Estilo del botón */
+.dark-mode-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: inherit;
+  margin-left: 1rem;
+}
+
+/* Modo oscuro */
+body.dark {
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+body.dark a {
+  color: #9cf;
+}
+
+body.dark .section-title,
+body.dark .project__title {
+  color: #f0f0f0;
+}
+
+/* Adaptaciones de fondo, si hiciera falta */
+body.dark .home,
+body.dark .about,
+body.dark .projects,
+body.dark .skills,
+body.dark .contact,
+body.dark .footer {
+  background-color: #1e1e1ea8;
+}
+
+/* Ejemplo para modificar videos si es necesario */
+body.dark video {
+  opacity: 0.6;
+}
+body.dark .about, body.dark .skills {
+  background-color: #1e1e1e;
+}
+body.dark .home__img, body.dark .skills__name, body.dark .projects__links, body.dark .icon-social, body.dark i.bx {
+     /* Sombra que sigue el contorno */
+            filter: drop-shadow(0px 15px 10px rgba(110, 107, 107, 0.9));
+}
+body.dark .home__title-color {
+  color: #f0f0f0!important;
+}
+ body.dark .project__title {
+  color: #181717;
+}
+body.dark .home__social-icon .bx {
+  color: #ffffff !important;
+}
+ body.dark .icon-social {
+  color: #ffffff !important;
+}
+body.dark .contact__social i,
+body.dark .icon-contact i {
+  color: #ffffff !important;
+}
+body.dark .header{
+  background-color: #0e0d0d;
+}
+ body.dark a.button.aos-init.aos-animate {
+  color: #121212;
+}
+body.dark #language-select {
+  color: #9cf;
+}
+
+body.dark .bx-menu {
+  color: #ffffff !important;
+}

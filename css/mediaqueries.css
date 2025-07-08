@@ -1,0 +1,144 @@
+/* MEDIA QUERIES */
+@media screen and (min-width: 768px) {
+  .h-grid {
+    width: 80%;
+  }
+}
+@media screen and (min-width: 768px) {
+  body {
+    margin: 0;
+  }
+  .section {
+    padding-top: 4rem;
+    padding-bottom: 3rem;
+  }
+  .section-title {
+    margin-bottom: 3rem;
+    font-size: 1.5rem;
+  }
+  .section-title::after {
+    width: 80px;
+    top: 3rem;
+  }
+}
+/* Header */
+@media screen and (min-width: 768px) {
+  .nav {
+    height: 4.5rem;
+  }
+  .nav__list {
+    display: flex;
+    padding-top: 0;
+  }
+  .nav__item {
+    margin-left: 3rem;
+    margin-bottom: 0;
+  }
+  .nav__toggle {
+    display: none;
+  }
+  .nav__link {
+    color: var(--second-color);
+  }
+  .nav__link-es,
+  .nav__link-en {
+    font-size: 0.8rem;
+  }
+  .nav__link-en {
+    margin-left: -2rem;
+  }
+}
+
+/* About */
+@media screen and (min-width: 768px) {
+  .about__container {
+    padding-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .about__content {
+    width: 80%;
+    height: 30%;
+  }
+  .about__img img {
+    width: 250px;
+    height: 250px;
+  }
+}
+/* Proyects */
+@media screen and (min-width: 768px) {
+  .projects__container {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 2rem;
+    padding-top: 2rem;
+  }
+  .projects__links {
+    width: 350px;
+    height: 350px;
+    margin-bottom: 2rem;
+    background-color: aliceblue;
+  }
+  .projects__links img {
+    width: 350px;
+    height: 230px;
+    object-fit: contain;
+  }
+}
+/* Skills */
+@media screen and (min-width: 768px) {
+  .skills__name img {
+    width: 5rem;
+  }
+  .vite {
+    width: 4rem;
+  }
+  .tools {
+    grid-template-columns: 15% 15% 15% 15%;
+    grid-template-rows: 7rem;
+    width: 80%;
+  }
+}
+@media screen and (min-width: 768px) {
+  .contact__social {
+    width: 50%;
+    max-width: 500px;
+  }
+  .contact__email,
+  .contact__phone,
+  .contact__map {
+    justify-content: center;
+    padding-bottom: 0.5rem;
+  }
+  .icon-social {
+    padding-bottom: 1rem;
+  }
+}
+@media screen and (max-width: 768px) {
+  .home__img {
+    max-width: 280px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .home__img {
+    max-width: 200px;
+  }
+
+  .home__img-perfil {
+    width: 100%;
+  }
+}
+html,
+body {
+  min-width: 400px;
+  min-height: 500px;
+}
+
+@media (max-width: 768px) {
+  .project__popover {
+    width: 90%;
+    max-width: 90%;
+    padding: 1rem;
+  }
+}

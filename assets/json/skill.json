@@ -1,0 +1,188 @@
+{
+  "languages": [
+    {
+      "id": "js",
+      "name": "JavaScript",
+      "image": "./assets/icon/icons8-javascript.svg",
+      "link": "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+    },
+    {
+      "id": "html5",
+      "name": "HTML 5",
+      "image": "./assets/icon/icons8-html-5.svg",
+      "link": "https://developer.mozilla.org/en-US/docs/Web/HTML"
+    },
+    {
+      "id": "css3",
+      "name": "CSS 3",
+      "image": "./assets/icon/icons8-css3.svg",
+      "link": "https://developer.mozilla.org/en-US/docs/Web/CSS"
+    },
+    {
+      "id": "php",
+      "name": "PHP",
+      "image": "./assets/icon/icons8-php-gradient-96.png",
+      "link": "https://www.php.net/manual/en/index.php"
+    },
+    {
+      "id": "python",
+      "name": "Python",
+      "image": "./assets/icon/python-logo.png",
+      "link": "https://docs.python.org/3/"
+    },
+    {
+      "id": "java",
+      "name": "Java",
+      "image": "./assets/icon/icons8-logotipo-de-java-coffee-cup-96.png",
+      "link": "https://docs.oracle.com/javase/8/docs/"
+    },
+    {
+      "id": "sql",
+      "name": "SQL",
+      "image": "./assets/icon/icons8-sql-96.png",
+      "link": "https://www.w3schools.com/sql/"
+    }
+  ],
+  "frameworks": [
+    {
+      "id": "react",
+      "name": "React",
+      "image": "./assets/icon/icons8-react.svg",
+      "link": "https://reactjs.org/docs/getting-started.html"
+    },
+    {
+      "id": "angular",
+      "name": "Angular",
+      "image": "./assets/icon/icons8-angular-96.png",
+      "link": "https://angular.io/docs"
+    },
+    {
+      "id": "laravel",
+      "name": "Laravel",
+      "image": "./assets/icon/icons8-laravel-96.png",
+      "link": "https://laravel.com/docs"
+    },
+    {
+      "id": "springboot",
+      "name": "Spring Boot",
+      "image": "./assets/icon/icons8-logotipo-de-primavera-96.png",
+      "link": "https://spring.io/projects/spring-boot"
+    },
+    {
+      "id": "bootstrap",
+      "name": "Bootstrap",
+      "image": "./assets/icon/icons8-bootstrap.svg",
+      "link": "https://getbootstrap.com/docs/"
+    },
+    {
+      "id": "tailwind",
+      "name": "Tailwind",
+      "image": "./assets/icon/icons8-tailwind-css.svg",
+      "link": "https://tailwindcss.com/docs"
+    },
+    {
+      "id": "livewire",
+      "name": "Livewire",
+      "image": "./assets/icon/livewire.png",
+      "link": "https://livewire.laravel.com/docs"
+    }
+  ],
+  "tools": [
+    {
+      "id": "git",
+      "name": "Git",
+      "image": "./assets/icon/icons8-git.svg",
+      "link": "https://git-scm.com/doc"
+    },
+    {
+      "id": "github",
+      "name": "GitHub",
+      "image": "./assets/icon/icons8-github.svg",
+      "link": "https://docs.github.com/"
+    },
+    {
+      "id": "npm",
+      "name": "npm",
+      "image": "./assets/icon/icons8-npm.svg",
+      "link": "https://docs.npmjs.com/"
+    },
+    {
+      "id": "vite",
+      "name": "Vite JS",
+      "image": "./assets/icon/vitejs.svg",
+      "link": "https://vitejs.dev/guide/"
+    },
+    {
+      "id": "figma",
+      "name": "Figma",
+      "image": "./assets/icon/icons8-figma.svg",
+      "link": "https://help.figma.com/hc/en-us"
+    },
+    {
+      "id": "trello",
+      "name": "Trello",
+      "image": "./assets/icon/icons8-trello.svg",
+      "link": "https://support.atlassian.com/trello/"
+    },
+    {
+      "id": "notion",
+      "name": "Notion",
+      "image": "./assets/icon/icons8-notion.svg",
+      "link": "https://www.notion.so/help"
+    },
+    {
+      "id": "slack",
+      "name": "Slack",
+      "image": "./assets/icon/icons8-slack-nuevo.svg",
+      "link": "https://slack.com/help"
+    },
+    {
+      "id": "docker",
+      "name": "Docker",
+      "image": "./assets/icon/Docker-Simbolo.png",
+      "link": "https://docs.docker.com/"
+    },
+    {
+      "id": "laragon",
+      "name": "Laragon",
+      "image": "./assets/icon/a631321da408385e13a803084482d05b.png",
+      "link": "https://laragon.org/docs/"
+    },
+    {
+      "id": "postman",
+      "name": "Postman",
+      "image": "./assets/icon/postman-icon-1990x2048-vq52fl5n.png",
+      "link": "https://learning.postman.com/docs/"
+    },
+    {
+      "id": "vsc",
+      "name": "Visual Studio Code",
+      "image": "./assets/icon/icons8-visual-studio-code-2019.svg",
+      "link": "https://code.visualstudio.com/docs"
+    },
+    {
+      "id": "intellij",
+      "name": "IntelliJ IDEA",
+      "image": "./assets/icon/intellij-idea-logo.png",
+      "link": "https://www.jetbrains.com/idea/documentation/"
+    },
+    {
+      "id": "netbeans",
+      "name": "NetBeans",
+      "image": "./assets/icon/netbeans_logo.png",
+      "link": "https://netbeans.apache.org/kb/index.html"
+    },
+    {
+      "id": "postgresql",
+      "name": "PostgreSQL",
+      "image": "./assets/icon/PostgreSQL-Logo.wine.png",
+      "link": "https://www.postgresql.org/docs/"
+    },
+    {
+      "id": "mysql-workbench",
+      "name": "Workbench",
+      "image": "./assets/icon/mysql-workbench-icon-1024x1024-q4ahgo9t.png",
+      "link": "https://dev.mysql.com/doc/workbench/en/"
+    }
+  ]
+}

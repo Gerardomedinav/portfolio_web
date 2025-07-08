@@ -1,0 +1,134 @@
+[
+  {
+  "title": {
+    "es": "ProyeCoins - Gestión de Proyectos Escolares",
+    "en": "ProyeCoins - School Project Management"
+  },
+  "image": "./assets/img/projects/proyecoins.png",
+  "github": "https://github.com/Gerardomedinav/ProyeCoins ",
+  "demo": "https://github.com/Gerardomedinav/ProyeCoins ",
+  "description": {
+    "es": "Plataforma web diseñada para apoyar a estudiantes y profesores en la gestión eficiente de proyectos escolares. Incluye un sistema de gamificación con monedas virtuales (ProyeCoins) para incentivar la participación activa de los alumnos. Cuenta con roles de usuario, CRUDs completos, generación de PDFs y una interfaz intuitiva desarrollada con Laravel, Livewire, TailwindCSS y Alpine.js.",
+    "en": "Web platform designed to support students and teachers in efficiently managing school projects. It includes a gamification system with virtual coins (ProyeCoins) to encourage active student participation. It features user roles, complete CRUDs, PDF generation, and an intuitive interface built with Laravel, Livewire, TailwindCSS, and Alpine.js."
+  }
+},
+  {
+    "title": {
+      "es": "EntreVigas S.A.S.- Sitio Web Inmobiliaria",
+      "en": "EntreVigas S.A.S.- Real Estate Website"
+    },
+    "image": "./assets/img/projects/entrevigas.png",
+    "github": "https://github.com/Gerardomedinav/entrevigas",
+    "demo": "https://entrevigas.netlify.app/",
+    "description": {
+      "es": "Landing page desarrollada con HTML, CSS y JavaScript para promocionar la inmobiliaria EntreVigas S.A.S. en Formosa Capital. Es completamente responsiva y se adapta a todo tipo de dispositivos y tamaños de pantalla. Incluye formularios funcionales que envían mensajes directamente al correo del usuario, mapas interactivos, información de servicios, y enlaces de contacto (WhatsApp, correo, dirección y teléfonos) para facilitar la comunicación con los interesados.",
+      "en": "Landing page developed with HTML, CSS, and JavaScript to promote EntreVigas S.A.S. real estate in Formosa Capital. It is fully responsive and adapts to all types of devices and screen sizes. It includes functional forms that send messages directly to the user's email, interactive maps, service information, and contact links (WhatsApp, email, address, and phone numbers) to make communication easy for potential clients."
+    }
+  },
+
+
+ 
+  {
+    "title": {
+      "es": "Proyecto Comunitario - Ayuda Animal",
+      "en": "Community Project - Animal Support"
+    },
+    "image": "./assets/img/projects/proyecto_comunitario.png",
+    "github": "https://github.com/Gerardomedinav/proyecto_comunitario",
+    "demo": "https://proyecto-comunitario.vercel.app/",
+    "description": {
+      "es": "Proyecto en curso. Página web desarrollada con HTML, CSS y JavaScript para promover el trabajo comunitario en favor de animales en situación de calle. Su objetivo es dar visibilidad a la labor que se realiza, fomentar la colaboración ciudadana y solicitar donaciones y ayuda de todo tipo. El sitio es completamente responsivo y se adapta a diferentes tamaños de dispositivos.",
+      "en": "Ongoing project. Website developed with HTML, CSS, and JavaScript to promote community work supporting stray animals. Its goal is to raise awareness about the work being done, encourage community involvement, and request donations and all types of help. The site is fully responsive and adapts to various screen sizes."
+    }
+  },
+  
+
+  {
+    "title": {
+      "es": "BYTEZAR - El Bazar de la Tecnología",
+      "en": "BYTEZAR - The Tech Bazaar"
+    },
+    "image": "./assets/img/projects/bytezar.png",
+    "github": "https://github.com/HackeandoBits/BYTEZAR",
+    "demo": "https://bytezar.onrender.com/",
+    "description": {
+      "es": "BYTEZAR es una tienda online de productos electrónicos desarrollada con HTML, CSS, JavaScript, Node.js, Express y PostgreSQL. Incluye catálogo de productos, carrito de compras, autenticación de usuarios y panel de administración. Proyecto colaborativo, de código abierto y con fines pedagógicos realizado por estudiantes de la UTN - FRRe. Sitio web responsive alojado en Render.",
+      "en": "BYTEZAR is an online tech store built with HTML, CSS, JavaScript, Node.js, Express, and PostgreSQL. It features a product catalog, shopping cart, user authentication, and admin panel. A collaborative, open-source project with educational purposes developed by UTN - FRRe students. Fully responsive site hosted on Render."
+    }
+  },
+
+  {
+    "title": {
+      "es": "Emulador de Algoritmos de Planificación",
+      "en": "Process Scheduling Algorithm Emulator"
+    },
+    "image": "./assets/img/projects/planificador_procesos.png",
+    "github": "https://github.com/Gerardomedinav/algoritmo_de_procesos",
+    "demo": "https://algoritmo-de-procesos.vercel.app/",
+    "description": {
+      "es": "Aplicación desarrollada con HTML, CSS y JavaScript para emular algoritmos de planificación de procesos como FCFS, SJN y Round Robin. Permite visualizar, comparar y experimentar con distintos escenarios en una interfaz gráfica interactiva y completamente responsiva.",
+      "en": "Application developed with HTML, CSS, and JavaScript to emulate process scheduling algorithms like FCFS, SJN, and Round Robin. It allows users to visualize, compare, and experiment with different scenarios through an interactive and fully responsive graphical interface."
+    }
+  },
+
+
+  {
+    "title": {
+      "es": "Código Urbano - E-commerce de Ropa Deportiva",
+      "en": "Código Urbano - Sportswear E-commerce"
+    },
+    "image": "./assets/img/projects/codigo_urbano.png",
+    "github": "https://github.com/Gerardomedinav/codigourbano",
+    "demo": "https://codigourbano.vercel.app/",
+    "description": {
+      "es": "Sitio web de comercio electrónico desarrollado colaborativamente con HTML, CSS, JavaScript, Vue.js, Bootstrap y Django para una tienda de ropa deportiva en Formosa. Incluye catálogos, mapas, formularios funcionales, conexión con la API de Mercado Libre y diseño responsivo para distintos dispositivos. Proyecto desplegado con backend en Python usando Django y base de datos integrada.",
+      "en": "Collaborative e-commerce website developed with HTML, CSS, JavaScript, Vue.js, Bootstrap, and Django for a sportswear store in Formosa. Features product catalogs, maps, functional contact forms, integration with Mercado Libre API, and a responsive design for multiple devices. The project includes backend development in Python with Django and integrated database."
+    }
+  },
+
+
+  {
+    "title": {
+      "es": "Catálogo de Ventas - React",
+      "en": "Sales Catalog - React"
+    },
+    "image": "./assets/img/projects/catalogo_ventas.png",
+    "github": "https://github.com/Gerardomedinav/Catalogo_ventas_react2",
+    "demo": "https://catalogo-ventas-react2.vercel.app/",
+    "description": {
+      "es": "Página de detalle de producto desarrollada con React, Chakra UI y Formik. Proyecto del programa Argentina Programa y UTN, incluye gestión de estados y diseño responsive.",
+      "en": "Product detail page built with React, Chakra UI, and Formik. Developed for Argentina Programa and UTN. Features state handling and responsive design."
+    }
+  },
+
+
+
+  {
+    "title": {
+      "es": "Formulario con React, Formik y Chakra UI",
+      "en": "Form with React, Formik and Chakra UI"
+    },
+    "image": "./assets/img/projects/formulario_react.png",
+    "github": "https://github.com/Gerardomedinav/Formulario_con_React_formix",
+    "demo": "https://formulario-con-react-formix.vercel.app/",
+    "description": {
+      "es": "Formulario de registro desarrollado con React JS, Formik, Chakra UI y validaciones con Yup. Proyecto realizado como parte del programa UTN + Argentina Programa. Cuenta con diseño responsive y validación completa de campos.",
+      "en": "Registration form developed with React JS, Formik, Chakra UI, and Yup validations. Project created as part of the UTN + Argentina Programa initiative. Features responsive design and full field validation."
+    }
+  },
+
+  {
+    "title": {
+      "es": "Contador Responsive con Chakra UI",
+      "en": "Responsive Counter with Chakra UI"
+    },
+    "image": "./assets/img/projects/contador_responsive.png",
+    "github": "https://github.com/Gerardomedinav/ContadorResponsive",
+    "demo": "https://contador-responsive-cztikv945-gerardo-medinas-projects.vercel.app/",
+    "description": {
+      "es": "Contador interactivo desarrollado con React, Chakra UI y useState. Proyecto enfocado en diseño responsive adaptable a todo tipo de dispositivos. Permite probar la integración visual y funcional de componentes UI modernos.",
+      "en": "Interactive counter built with React, Chakra UI, and useState. The project focuses on a responsive design adaptable to all device sizes. Demonstrates visual and functional integration of modern UI components."
+    }
+  }
+]
+

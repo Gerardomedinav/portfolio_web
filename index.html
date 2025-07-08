@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <link type="image/png" sizes="100x100" rel="icon" href="./assets/icon/icons8-rocket-32.png" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/header.css" />
+    <link rel="stylesheet" href="./css/nav.css" />
+    <link rel="stylesheet" href="./css/home.css" />
+    <link rel="stylesheet" href="./css/about.css" />
+    <link rel="stylesheet" href="./css/projects.css" />
+    <link rel="stylesheet" href="./css/skills.css" />
+    <link rel="stylesheet" href="./css/contact.css" />
+    <link rel="stylesheet" href="./css/footer.css" />
+    <link rel="stylesheet" href="./css/mediaqueries.css" />
+
+    <title>Gerardo Medina – Full Stack Developer</title>
+  </head>
+  <body>
+    <header class="header">
+      <nav class="nav h-grid">
+        <div>
+          <a href="#" class="nav__logo">GER</a>
+        </div>
+
+        <div class="nav__menu" id="nav-menu">
+          <ul class="nav__list">
+            <li class="nav__item"><a href="#home" class="nav__link active">Home</a></li>
+            <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
+            <li class="nav__item"><a href="#projects" class="nav__link">Projects</a></li>
+            <li class="nav__item"><a href="#skills" class="nav__link">Skills</a></li>
+            <li class="nav__item"><a href="#contact" class="nav__link">Contact</a></li>
+            <li class="nav__item">
+              <select id="language-select">
+                <option value="en">English</option>
+                <option value="es">Español</option>
+              </select>
+            </li>
+          </ul>
+        </div>
+
+        <div class="nav__toggle" id="nav-toggle">
+          <i class="bx bx-menu"></i>
+        </div>
+
+        <!-- Botón modo oscuro/claro -->
+        <button id="darkModeToggle" aria-label="Toggle dark mode" class="dark-mode-btn">
+          <i class="bx bx-moon" id="theme-icon"></i>
+        </button>
+      </nav>
+    </header>
+
+    <main class="main">
+      <video autoplay muted loop id="background-video">
+        <source src="/assets/img/video/124333-730771399_small.mp4" type="video/mp4" />
+        Tu navegador no soporta el video HTML5.
+      </video>
+      <section class="home" id="home">
+        <video autoplay muted loop playsinline class="video-bg">
+          <source src="./assets/img/video/fondo_Programando.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div class="Perfil1">
+          <div data-aos="fade-down" class="home__data">
+            <h1 class="home__title" data-i18n="homeTitle">
+              Hi, <br />
+              I'm <span class="home__title-color">Gerardo</span> <br />
+              Full Stack Developer Jr.
+            </h1>
+            <a
+              href="https://drive.google.com/file/d/1s9Er1alVxVXaRIQUmJLSW-1cUrR7hv6L/view?usp=share_link"
+              target="_blank"
+              class="button"
+              data-aos="fade-down"
+              data-i18n="resume"
+              >Resume</a
+            >
+          </div>
+
+          <div data-aos="fade-down" class="home__social">
+            <a href="https://www.linkedin.com/in/gerardomedinav/" target="_blank" class="home__social-icon"
+              ><i class="bx bxl-linkedin"></i
+            ></a>
+            <a href="https://github.com/gerardomedinav" target="_blank" class="home__social-icon"
+              ><i class="bx bxl-github"></i
+            ></a>
+            <a
+              href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=gerardomedinavv@gmail.com"
+              class="home__social-icon"
+              target="_blank"
+              ><i class="bx bxl-gmail"></i
+            ></a>
+          </div>
+
+          <div data-aos="fade-down" class="home__img">
+            <img src="./assets/img/profile/yo.PNG" alt="" class="home__img-perfil" />
+          </div>
+        </div>
+      </section>
+
+      <section class="about section" id="about">
+        <h2 data-aos="fade-down" class="section-title" data-i18n="aboutTitle">About me</h2>
+
+        <div data-aos="zoom-in" class="about__container h-grid">
+          <div class="about__img">
+            <video autoplay muted loop playsinline class="about-video">
+              <source src="./assets/img/profile/imagen_animada.mp4" type="video/mp4" />
+              <!-- Fallback para navegadores antiguos -->
+              <img src="./assets/img/profile/perfil2.JPG" alt="about-perfil" />
+            </video>
+          </div>
+
+          <div data-aos="zoom-in" class="about__content">
+            <h2 class="about__subtitle" data-i18n="aboutSubtitle">I'm Gerardo Medina</h2>
+            <p class="about__text" data-i18n="aboutText"></p>
+          </div>
+        </div>
+      </section>
+
+      <section data-aos="fade-down" class="projects section" id="projects">
+        <h2 class="section-title" data-i18n="projectsTitle">Projects</h2>
+        <div class="projects__container h-grid">
+          <!-- Aquí se insertarán los proyectos automáticamente con JS -->
+        </div>
+      </section>
+
+      <section class="skills section" id="skills">
+        <h2 data-aos="fade-down" class="section-title" data-i18n="skills">Skills</h2>
+
+        <div class="skills__container h-grid">
+          <div data-aos="fade-down">
+            <h2 class="skills__subtitle" data-i18n="skillsSubtitle">My languages, frameworks, technologies & tools:</h2>
+
+            <div data-aos="fade-down" class="skills__data">
+              <!-- Lenguajes -->
+              <h3 class="skills-title" data-i18n="skillsLanguage">Language</h3>
+              <div class="skills__names" id="skills-languages">
+                <!-- Aquí se insertarán los lenguajes dinámicamente -->
+              </div>
+
+              <!-- Frameworks -->
+              <h3 class="skills-title" data-i18n="skillsFrameworks">Frameworks & Library</h3>
+              <div class="skills__names" id="skills-frameworks">
+                <!-- Aquí se insertarán los frameworks dinámicamente -->
+              </div>
+
+              <!-- Herramientas -->
+              <h3 class="skills-title" data-i18n="skillsTechnologies">Technologies & Tools</h3>
+              <div class="skills__names tools" id="skills-tools">
+                <!-- Aquí se insertarán las herramientas dinámicamente -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact h-grid" id="contact">
+        <h2 data-aos="fade-down" class="section-title" data-i18n="contact">Contact:</h2>
+
+        <p data-aos="fade-down" class="contact__text" data-i18n="contactText">
+          Call me, write me an e-mail, or connect and chat with me on Linkedin.
+        </p>
+
+        <div data-aos="fade-down" class="contact__social">
+          <div class="contact__email">
+            <i class="bx bx-envelope icon"></i>
+            <address class="contact__email-content">gerardomedinavv@gmail.com</address>
+          </div>
+
+          <div class="contact__phone">
+            <i class="bx bxs-phone icon"></i>
+            <span class="contact__phone-content">+54 9 3704857048</span>
+          </div>
+
+          <div class="contact__map">
+            <i class="bx bxs-map icon"></i>
+            <span class="contact__map-content">Formosa, Argentina</span>
+          </div>
+
+          <div class="icon-social">
+            <a href="https://www.linkedin.com/in/gerardomedinav/" target="_blank" class="icon-contact"
+              ><i class="bx bxl-linkedin"></i
+            ></a>
+            <a
+              href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=gerardomedinavv@gmail.com"
+              target="_blank"
+              class="icon-contact"
+              ><i class="bx bxl-gmail"></i
+            ></a>
+            <a href="https://github.com/gerardomedinav" target="_blank" class="icon-contact"
+              ><i class="bx bxl-github"></i
+            ></a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__text">
+        <p data-i18n="footerThanks">
+          Thank you for watching <img src="./assets/icon/icons8-grinning-face-with-smiling-eyes-30.png" alt="" />
+        </p>
+      </div>
+
+      <div class="footer__copyright">
+        <p data-i18n="footerCopyright">
+          Created by
+          <a class="link-github" href="https://github.com/gerardomedinav" target="_blank" rel="noreferrer noopener">
+            gerardomedinav
+          </a>
+          | 2022 Copyright &copy All Rights Reserved
+        </p>
+      </div>
+    </footer>
+
+    <script src="./js/app.js"></script>
+    <script src="./js/proyectos.js"></script>
+
+    <script src="./js/skill.js"></script>
+    <script src="./js/oscuro.js"></script>
+    <script src="./js/idioma.js"></script>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+  </body>
+</html>
