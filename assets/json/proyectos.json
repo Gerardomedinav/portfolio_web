@@ -17,7 +17,7 @@
       "es": "Juego del Ahorcado",
       "en": "Hangman Game"
     },
-    "image": "./assets/img/projects/ahorcado.png",
+    "image": "./assets/img/projects/ahorcado_demo.png",
     "github": "https://github.com/Gerardomedinav/juego-ahorcado-gerardomedina",
     "demo": "https://juego-ahorcado-gerardomedina.netlify.app/",
     "description": {
