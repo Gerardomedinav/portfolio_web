@@ -14,6 +14,19 @@
 },
   {
     "title": {
+      "es": "Juego del Ahorcado",
+      "en": "Hangman Game"
+    },
+    "image": "./assets/img/projects/ahorcado.png",
+    "github": "https://github.com/Gerardomedinav/juego-ahorcado-gerardomedina",
+    "demo": "https://juego-ahorcado-gerardomedina.netlify.app/",
+    "description": {
+      "es": "Juego clásico del Ahorcado desarrollado con HTML, CSS y JavaScript. Incluye un diseño interactivo y responsivo, detección de letras correctas e incorrectas, y mensajes de victoria o derrota. Ideal para practicar lógica de programación y manipulación del DOM.",
+      "en": "Classic Hangman game developed with HTML, CSS, and JavaScript. Features an interactive and responsive design, correct and incorrect letter detection, and win/lose messages. Perfect for practicing programming logic and DOM manipulation."
+    }
+  },
+  {
+    "title": {
       "es": "EntreVigas S.A.S.- Sitio Web Inmobiliaria",
       "en": "EntreVigas S.A.S.- Real Estate Website"
     },
