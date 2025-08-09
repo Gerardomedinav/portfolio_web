@@ -3,28 +3,39 @@
 }
 
 .projects__container {
-  row-gap: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
+
 .projects__links {
-  box-shadow: 0 4px 25px rgba(14, 36, 49, 0.068);
-  border-radius: 0.55rem;
-  height: auto;
-  margin: 0 auto;
-  background-color: aliceblue;
-  padding: 1.5rem 1rem; /* Añadido padding */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+
+  width: 300px; /* o usa max-width: 300px si prefieres */
+  min-height: 450px;
+  background-color: aliceblue;
+  padding: 1.5rem 1rem;
+  margin: 0 auto;
+
+  box-shadow: 0 4px 25px rgba(14, 36, 49, 0.068);
+  border-radius: 0.55rem;
+  transition: transform 0.3s ease;
 }
 
 
 .projects__links img {
   transition: 1s;
-  cursor: pointer;
-  width: 350px;
-  height: 230px;
+ 
+  width: auto;
+  height: 6rem;
   object-fit: contain;
 }
 

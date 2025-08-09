@@ -6,6 +6,12 @@
       "image": "./assets/icon/icons8-javascript.svg",
       "link": "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
     },
+      {
+    "id": "typescript",
+    "name": "TypeScript",
+    "image": "./assets/icon/typescript-16.svg",
+    "link": "https://www.typescriptlang.org/docs/"
+  },
     {
       "id": "html5",
       "name": "HTML 5",

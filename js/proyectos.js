@@ -27,35 +27,52 @@ function renderProjects(projects, lang) {
     const projectDiv = document.createElement("div");
     projectDiv.className = "projects__links";
     projectDiv.dataset.aos = "fade-down";
-
-  projectDiv.innerHTML = `
-  <img src="${project.image}" alt="${project.title[lang]}" />
+projectDiv.innerHTML = `
+  <img 
+    class="project" 
+    src="${project.image}" 
+    alt="Vista previa del proyecto ${project.title[lang]}. ${project.description[lang]}" 
+  />
+  
   <h4 class="project__title">${project.title[lang]}</h4>
 
   <div class="project__link-item">
-    <a href="${project.github}" class="project__item" target="_blank"><i class="bx bxl-github"></i></a>
-    <a href="${project.demo}" class="project__item" target="_blank"><i class="bx bx-globe"></i></a>
+    <a href="${project.github}" class="project__item" target="_blank" aria-label="Abrir repositorio de ${project.title[lang]} en GitHub">
+      <i class="bx bxl-github"></i>
+    </a>
+    <a href="${project.demo}" class="project__item" target="_blank" aria-label="Ver demo en vivo de ${project.title[lang]}">
+      <i class="bx bx-globe"></i>
+    </a>
   </div>
 
-  <button popovertarget="popover-${index}" class="project__more-btn">${texts[lang].readMore}</button>
+  <button popovertarget="popover-${index}" class="project__more-btn" aria-label="Ver más información sobre ${project.title[lang]}">
+    ${texts[lang].readMore}
+  </button>
 
   <div id="popover-${index}" popover class="project__popover">
-    <img src="${project.image}" alt="${project.title[lang]}" class="project__popover-img"/>
+    <img 
+      src="${project.image}" 
+      alt="Captura ampliada del proyecto ${project.title[lang]}. ${project.description[lang]}" 
+      class="project__popover-img"
+    />
     <h4 class="project__popover-title">${project.title[lang]}</h4>
     <p class="project__popover-desc">${project.description[lang]}</p>
 
     <div class="project__popover-links">
-      <a href="${project.github}" target="_blank" class="project__popover-link">
+      <a href="${project.github}" target="_blank" class="project__popover-link" aria-label="Ir al repositorio de ${project.title[lang]} en GitHub">
         <i class="bx bxl-github"></i> Repositorio
       </a>
-      <a href="${project.demo}" target="_blank" class="project__popover-link">
+      <a href="${project.demo}" target="_blank" class="project__popover-link" aria-label="Abrir demo en vivo de ${project.title[lang]}">
         <i class="bx bx-globe"></i> Ver Demo
       </a>
     </div>
 
-    <button popovertarget="popover-${index}" popovertargetaction="hide" class="project__close-btn">${texts[lang].readMoreBack}</button>
+    <button popovertarget="popover-${index}" popovertargetaction="hide" class="project__close-btn" aria-label="Cerrar información de ${project.title[lang]}">
+      ${texts[lang].readMoreBack}
+    </button>
   </div>
 `;
+
     container.appendChild(projectDiv);
   });
 }

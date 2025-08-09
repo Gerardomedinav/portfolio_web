@@ -46,7 +46,9 @@ const translations = {
     contact: "Contact",
     contactText: "Call me, write me an e-mail, or connect and chat with me on Linkedin.",
     footerThanks: 'Thank you for watching <img src="./assets/icon/icons8-grinning-face-with-smiling-eyes-30.png" alt="" />',
-    footerCopyright: `Created by <a class="link-github" href="https://github.com/gerardomedinav"  target="_blank" rel="noreferrer noopener">gerardomedinav</a> | 2022 Copyright &copy All Rights Reserved`
+    footerCopyright: `Created by <a class="link-github" href="https://github.com/gerardomedinav"  target="_blank" rel="noreferrer noopener">gerardomedinav</a> | 2022 Copyright &copy All Rights Reserved`,
+       footerEmojiAlt: "Smiling face emoji with smiling eyes",
+    footerGithubLabel: "Visit Gerardo Medina's GitHub profile"
   },
   es: {
     homeTitle: "Hola, <br /> Soy <span class='home__title-color'>Gerardo</span> <br /> Desarrollador Full Stack Jr.",
@@ -63,7 +65,9 @@ const translations = {
     contact: "Contacto",
     contactText: "Lláma, escríbeme un correo electrónico o conéctate y chatea conmigo en Linkedin.",
     footerThanks: 'Gracias por visitar <img src="./assets/icon/icons8-grinning-face-with-smiling-eyes-30.png" alt="" />',
-    footerCopyright: `Creado por <a class="link-github" href="https://github.com/gerardomedinav"  target="_blank" rel="noreferrer noopener">gerardomedinav</a> | 2022 Derechos Reservados &copy`
+    footerCopyright: `Creado por <a class="link-github" href="https://github.com/gerardomedinav"  target="_blank" rel="noreferrer noopener">gerardomedinav</a> | 2022 Derechos Reservados &copy`,
+     footerEmojiAlt: "Emoji de cara sonriente con ojos sonrientes",
+    footerGithubLabel: "Visitar el perfil de GitHub de Gerardo Medina"
   }
 };
 
@@ -128,13 +132,28 @@ function initLanguage() {
         localStorage.setItem('lang', lang);
         setLanguage(lang);
         translatePage(lang);
+         updateResumeLink(lang);
         loadProjects(); // ✅ Recargar proyectos al cambiar de idioma
       }
     });
   }
+  function updateResumeLink(lang) {
+  const resumeLink = document.querySelector('a[data-i18n="resume"]');
+  if (resumeLink) {
+    if (lang === 'es') {
+      resumeLink.href = './assets/CV_Gerardo_Medina_Villalba_español.pdf';
+      resumeLink.setAttribute('download', 'CV_Gerardo_Medina_Villalba_español.pdf');
+    } else {
+      resumeLink.href = './assets/CV_Gerardo_Medina_Villalba_EN.pdf';
+      resumeLink.setAttribute('download', 'CV_Gerardo_Medina_Villalba_EN.pdf');
+    }
+  }
+}
+
 
   setLanguage(savedLang);
   translatePage(savedLang);
+  updateResumeLink(savedLang);
 }
 
 // Función para cargar proyectos
@@ -146,6 +165,37 @@ function loadProjects() {
     .then(data => renderProjects(data, lang))
     .catch(error => console.error("Error cargando los proyectos:", error));
 }
+
+function translatePage(lang) {
+  if (!availableLangs.includes(lang)) return;
+
+  const elements = document.querySelectorAll('[data-i18n]');
+  elements.forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang][key]) {
+      el.innerHTML = translations[lang][key];
+    }
+  });
+
+  // Traducción de atributos alt
+  const altElements = document.querySelectorAll('[data-i18n-alt]');
+  altElements.forEach(el => {
+    const key = el.getAttribute('data-i18n-alt');
+    if (translations[lang][key]) {
+      el.alt = translations[lang][key];
+    }
+  });
+
+  // Traducción de atributos aria-label
+  const ariaElements = document.querySelectorAll('[data-i18n-aria]');
+  ariaElements.forEach(el => {
+    const key = el.getAttribute('data-i18n-aria');
+    if (translations[lang][key]) {
+      el.setAttribute('aria-label', translations[lang][key]);
+    }
+  });
+}
+
 
 // Inicializar traducción y carga de proyectos al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
