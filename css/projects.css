@@ -29,7 +29,10 @@
   border-radius: 0.55rem;
   transition: transform 0.3s ease;
 }
-
+.projects__links:focus {
+  outline: 2px solid var(--first-color);
+  outline-offset: 2px;
+}
 
 .projects__links img {
   transition: 1s;
@@ -41,6 +44,10 @@
 
 .projects__links img:hover {
   transform: scale(1.05);
+}
+.projects__links:focus {
+  outline: 2px solid var(--first-color);
+  outline-offset: 2px;
 }
 
 .project__link-item {
@@ -58,6 +65,25 @@
 .project__item:hover {
   color: var(--first-color);
 }
+.project__item:focus {
+  outline: 3px solid #89cbf1; /* Color contrastante */
+  outline-offset: 4px;        /* Separación para que no tape el icono */
+  border-radius: 6px;         /* Borde redondeado para coincidir con tu diseño */
+}
+
+.project__item:focus-visible {
+  outline: 3px solid #9ebcf3;
+  outline-offset: 4px;
+}
+.project__item:active {
+  color: #0056b3; /* Color más oscuro al hacer clic */
+}
+.project__item:active:focus {
+  outline: 3px solid #003f7f; /* Color más oscuro al hacer clic */
+  outline-offset: 4px;
+  border-radius: 6px; /* Borde redondeado para coincidir con tu diseño */
+}
+
 
 .project__more-btn {
   margin-top: 0.5rem;
@@ -73,6 +99,13 @@
 .project__more-btn:hover {
   background-color: #0056b3;
 }
+.project__more-btn:focus {
+  outline: 2px solid #0056b3;
+  outline-offset: 2px;
+}
+.project__more-btn:active {
+  background-color: #003f7f;     
+}           
 
 /* ============================= */
 /* Estilos para el fondo oscuro */
@@ -138,23 +171,38 @@
 
 .project__popover-link {
   text-decoration: none;
-  color: #007bff;
+  color: #021f3f;
   font-weight: bold;
+}
+.project__popover-link:hover {
+  color: #0056b3;
+}
+.project__popover-link:focus {
+  outline: 2px solid #0056b3;
+  outline-offset: 2px;
+}
+.project__popover-link:active {
+  color: #003f7f;
 }
 
 .project__close-btn {
   margin-top: 1.5rem;
   padding: 0.6rem 1rem;
-  background-color: #dc3545;
+  background-color: #87b2f3;
   border: none;
-  color: white;
+  color: rgb(14, 12, 12);
   font-size: 1rem;
   border-radius: 0.4rem;
   cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .project__close-btn:hover {
-  background-color: #b02a37;
+  background-color: #36a0f7;
+}
+.project__close-btn:focus {
+  outline: 2px solid #0056b3;
+  outline-offset: 2px;
 }
 
 .project__popover::backdrop {

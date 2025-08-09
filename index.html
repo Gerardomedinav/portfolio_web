@@ -81,7 +81,7 @@
     </header>
 
     <main class="main">
-      <video autoplay muted loop id="background-video">
+      <video autoplay muted loop id="background-video" aria-hidden="true">
         <source src="/assets/img/video/124333-730771399_small.mp4" type="video/mp4" />
         Tu navegador no soporta el video HTML5.
       </video>
@@ -210,136 +210,211 @@
         </div>
       </section>
 
-    <section class="skills section" id="skills" aria-labelledby="skills-title">
-  <h2 id="skills-title" data-aos="fade-down" class="section-title" data-i18n="skills">Skills</h2>
+      <section class="skills section" id="skills" aria-labelledby="skills-title">
+        <h2 id="skills-title" data-aos="fade-down" class="section-title" data-i18n="skills">Skills</h2>
 
-  <!-- Texto oculto para lector de pantalla -->
-  <p class="visually-hidden" id="skills-description">
-    Sección que presenta las habilidades técnicas de Gerardo Medina, con imagenes que aparecen con una transicion suave de cada tecnologia o herramientas, que sirven como link a documentacion oficial de cada una, incluyendo lenguajes de programación, frameworks y librerías, 
-    así como tecnologías y herramientas utilizadas en el desarrollo de proyectos.
-  </p>
+        <!-- Texto oculto para lector de pantalla -->
+        <p class="visually-hidden" id="skills-description">
+          Sección que presenta las habilidades técnicas de Gerardo Medina, con imagenes que aparecen con una transicion
+          suave de cada tecnologia o herramientas, que sirven como link a documentacion oficial de cada una, incluyendo
+          lenguajes de programación, frameworks y librerías, así como tecnologías y herramientas utilizadas en el
+          desarrollo de proyectos.
+        </p>
 
-  <div class="skills__container h-grid" aria-describedby="skills-description">
-    <div data-aos="fade-down">
-      <h2 class="skills__subtitle" data-i18n="skillsSubtitle">
-        My languages, frameworks, technologies &amp; tools:
-      </h2>
+        <div class="skills__container h-grid" aria-describedby="skills-description">
+          <div data-aos="fade-down">
+            <h2 class="skills__subtitle" data-i18n="skillsSubtitle">
+              My languages, frameworks, technologies &amp; tools:
+            </h2>
 
-      <div data-aos="fade-down" class="skills__data">
-        
-        <!-- Lenguajes -->
-        <h3 class="skills-title" data-i18n="skillsLanguage">Language</h3>
-        <div class="skills__names" id="skills-languages" role="list" aria-label="Programming languages list">
-          <!-- Aquí se insertarán los lenguajes dinámicamente -->
+            <div data-aos="fade-down" class="skills__data">
+              <!-- Lenguajes -->
+              <h3 class="skills-title" data-i18n="skillsLanguage">Language</h3>
+              <div class="skills__names" id="skills-languages" role="list" aria-label="Programming languages list">
+                <!-- Aquí se insertarán los lenguajes dinámicamente -->
+              </div>
+
+              <!-- Frameworks -->
+              <h3 class="skills-title" data-i18n="skillsFrameworks">Frameworks &amp; Library</h3>
+              <div class="skills__names" id="skills-frameworks" role="list" aria-label="Frameworks and libraries list">
+                <!-- Aquí se insertarán los frameworks dinámicamente -->
+              </div>
+
+              <!-- Herramientas -->
+              <h3 class="skills-title" data-i18n="skillsTechnologies">Technologies &amp; Tools</h3>
+              <div class="skills__names tools" id="skills-tools" role="list" aria-label="Technologies and tools list">
+                <!-- Aquí se insertarán las herramientas dinámicamente -->
+              </div>
+            </div>
+          </div>
         </div>
+      </section>
 
-        <!-- Frameworks -->
-        <h3 class="skills-title" data-i18n="skillsFrameworks">Frameworks &amp; Library</h3>
-        <div class="skills__names" id="skills-frameworks" role="list" aria-label="Frameworks and libraries list">
-          <!-- Aquí se insertarán los frameworks dinámicamente -->
+      <section class="contact h-grid" id="contact" aria-labelledby="contact-title">
+        <h2 id="contact-title" data-aos="fade-down" class="section-title" data-i18n="contact">Contact:</h2>
+
+        <p data-aos="fade-down" class="contact__text" data-i18n="contactText">
+          Call me, write me an e-mail, or connect and chat with me on Linkedin.
+        </p>
+
+        <div data-aos="fade-down" class="contact__social">
+          <!-- Email -->
+          <div class="contact__email">
+            <i class="bx bx-envelope icon" aria-hidden="true"></i>
+            <address class="contact__email-content">
+              <a href="mailto:gerardomedinavv@gmail.com" aria-label="Send an email to Gerardo Medina">
+                gerardomedinavv@gmail.com
+              </a>
+            </address>
+          </div>
+
+          <!-- Teléfono -->
+          <div class="contact__phone">
+            <i class="bx bxs-phone icon" aria-hidden="true"></i>
+            <a href="tel:+5493704857048" class="contact__phone-content" aria-label="Call Gerardo Medina">
+              +54 9 3704 857048
+            </a>
+          </div>
+
+          <!-- Ubicación -->
+          <div class="contact__map">
+            <i class="bx bxs-map icon" aria-hidden="true"></i>
+            <address class="contact__map-content">
+              Formosa, Argentina
+              <span class="visually-hidden">Current location of Gerardo Medina</span>
+            </address>
+          </div>
+
+          <!-- Redes Sociales -->
+          <div class="icon-social">
+            <a
+              href="https://www.linkedin.com/in/gerardomedinav/"
+              target="_blank"
+              class="icon-contact"
+              aria-label="Visit Gerardo Medina's LinkedIn profile"
+            >
+              <i class="bx bxl-linkedin" aria-hidden="true"></i>
+            </a>
+            <a
+              href="mailto:gerardomedinavv@gmail.com"
+              target="_blank"
+              class="icon-contact"
+              aria-label="Send an email to Gerardo Medina via Gmail"
+            >
+              <i class="bx bxl-gmail" aria-hidden="true"></i>
+            </a>
+            <a
+              href="https://github.com/gerardomedinav"
+              target="_blank"
+              class="icon-contact"
+              aria-label="Visit Gerardo Medina's GitHub profile"
+            >
+              <i class="bx bxl-github" aria-hidden="true"></i>
+            </a>
+          </div>
         </div>
-
-        <!-- Herramientas -->
-        <h3 class="skills-title" data-i18n="skillsTechnologies">Technologies &amp; Tools</h3>
-        <div class="skills__names tools" id="skills-tools" role="list" aria-label="Technologies and tools list">
-          <!-- Aquí se insertarán las herramientas dinámicamente -->
-        </div>
-
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<section class="contact h-grid" id="contact" aria-labelledby="contact-title">
-  <h2 id="contact-title" data-aos="fade-down" class="section-title" data-i18n="contact">Contact:</h2>
-
-  <p data-aos="fade-down" class="contact__text" data-i18n="contactText">
-    Call me, write me an e-mail, or connect and chat with me on Linkedin.
-  </p>
-
-  <div data-aos="fade-down" class="contact__social">
-    
-    <!-- Email -->
-    <div class="contact__email">
-      <i class="bx bx-envelope icon" aria-hidden="true"></i>
-      <address class="contact__email-content">
-        <a href="mailto:gerardomedinavv@gmail.com" aria-label="Send an email to Gerardo Medina">
-          gerardomedinavv@gmail.com
-        </a>
-      </address>
-    </div>
-
-    <!-- Teléfono -->
-    <div class="contact__phone">
-      <i class="bx bxs-phone icon" aria-hidden="true"></i>
-      <a href="tel:+5493704857048" class="contact__phone-content" aria-label="Call Gerardo Medina">
-        +54 9 3704 857048
-      </a>
-    </div>
-
-    <!-- Ubicación -->
-    <div class="contact__map">
-      <i class="bx bxs-map icon" aria-hidden="true"></i>
-      <address class="contact__map-content">
-        Formosa, Argentina
-        <span class="visually-hidden">Current location of Gerardo Medina</span>
-      </address>
-    </div>
-
-    <!-- Redes Sociales -->
-    <div class="icon-social">
-      <a href="https://www.linkedin.com/in/gerardomedinav/" target="_blank" class="icon-contact"
-         aria-label="Visit Gerardo Medina's LinkedIn profile">
-        <i class="bx bxl-linkedin" aria-hidden="true"></i>
-      </a>
-      <a href="mailto:gerardomedinavv@gmail.com" target="_blank" class="icon-contact"
-         aria-label="Send an email to Gerardo Medina via Gmail">
-        <i class="bx bxl-gmail" aria-hidden="true"></i>
-      </a>
-      <a href="https://github.com/gerardomedinav" target="_blank" class="icon-contact"
-         aria-label="Visit Gerardo Medina's GitHub profile">
-        <i class="bx bxl-github" aria-hidden="true"></i>
-      </a>
-    </div>
-
-  </div>
-</section>
-
+      </section>
     </main>
 
-<footer class="footer" role="contentinfo">
-  <div class="footer__text">
-    <p data-i18n="footerThanks">
-      Thank you for watching 
-      <img 
-        src="./assets/icon/icons8-grinning-face-with-smiling-eyes-30.png" 
-        data-i18n-alt="footerEmojiAlt"
-        alt="Emoji smiling face with smiling eyes" 
-        width="30" height="30"
-      />
-    </p>
-  </div>
-
-  <div class="footer__copyright">
-    <p data-i18n="footerCopyright">
-      Created by
-      <a 
-        class="link-github" 
-        href="https://github.com/gerardomedinav" 
-        target="_blank" 
-        rel="noreferrer noopener"
-        data-i18n-aria="footerGithubLabel"
-        aria-label="Visit Gerardo Medina's GitHub profile"
+    <footer class="footer" role="contentinfo">
+      <div class="footer__text">
+        <p data-i18n="footerThanks">
+          Thank you for watching
+          <img
+            src="./assets/icon/icons8-grinning-face-with-smiling-eyes-30.png"
+            data-i18n-alt="footerEmojiAlt"
+            alt="Emoji smiling face with smiling eyes"
+            width="30"
+            height="30"
+          />
+        </p>
+      </div>
+      <div
+        class="accessibility-badge-container"
+        style="text-align: center; color: #fdfafa !important; font-family: 'Poppins', sans-serif"
       >
-        gerardomedinav
-      </a>
-      | 2022 Copyright &copy; All Rights Reserved
-    </p>
-  </div>
-</footer>
+        <p style="font-size: 0.9rem; margin-bottom: 10px">
+          Este sitio web cumple con las normas WCAG 2.1 AA y cuenta con un widget de accesibilidad para mejorar la
+          experiencia de navegación.
+        </p>
+        <!-- Badge de accesibilidad -->
+        <a
+          href="declaracion-accesibilidad.pdf"
+          target="_blank"
+          rel="noopener"
+          aria-label="Ver declaración de accesibilidad del portafolio"
+        >
+          <img
+            src="accesibilidad-badge.png"
+            alt="Este sitio cumple con las normas WCAG 2.1 AA y cuenta con un widget de accesibilidad para controlar videos, modo oscuro e idioma"
+            style="width: 180px; height: auto; border: none"
+          />
+        </a>
 
+        <!-- Mensaje de compromiso con la accesibilidad -->
+        <p style="font-size: 0.9rem; color: #fdfafa; font-family: 'Poppins', sans-serif; margin-top: 10px">
+          <strong> Por una web más inclusiva, usable, humana y más accesible para todos.</strong>
+        </p>
+      </div>
+      <div class="footer__copyright">
+        <p data-i18n="footerCopyright">
+          Created by
+          <a
+            class="link-github"
+            href="https://github.com/gerardomedinav"
+            target="_blank"
+            rel="noreferrer noopener"
+            data-i18n-aria="footerGithubLabel"
+            aria-label="Visit Gerardo Medina's GitHub profile"
+          >
+            gerardomedinav
+          </a>
+          | 2022 Copyright &copy; All Rights Reserved
+        </p>
+      </div>
+    </footer>
 
+    <!-- Widget Flotante de Accesibilidad -->
+    <div class="accessibility-widget">
+      <!-- Botón principal para abrir/cerrar -->
+      <button id="widget-toggle" class="widget-toggle" aria-label="Abrir herramientas de accesibilidad">
+        <i class="bx bxs-universal-access"></i>
+      </button>
+
+      <!-- Panel del widget (oculto por defecto) -->
+      <div id="widget-panel" class="widget-panel" hidden>
+        <h3 class="widget-title" id="widget-title">Panel de Accesibilidad</h3>
+
+        <!-- Control de videos -->
+        <div class="widget-item">
+          <label for="toggle-video">Videos</label>
+          <button id="toggle-video" aria-pressed="true" aria-label="Pausar videos de fondo">
+            <i class="bx bx-pause" id="video-icon" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <!-- Modo oscuro -->
+        <div class="widget-item">
+          <label>Tema</label>
+          <!-- Modo oscuro -->
+          <div class="widget-item">
+            <label>Tema</label>
+            <button class="dark-mode-btn widget-dark-toggle" aria-label="Activar modo oscuro">
+              <i class="bx bx-moon" id="widget-theme-icon" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Selector de idioma -->
+        <div class="widget-item">
+          <label for="language-select">Idioma</label>
+          <select id="language-select" aria-label="Seleccionar idioma">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+          </select>
+        </div>
+      </div>
+    </div>
     <script src="./js/app.js"></script>
     <script src="./js/proyectos.js"></script>
 

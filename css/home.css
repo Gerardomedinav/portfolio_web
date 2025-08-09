@@ -26,13 +26,19 @@
   width: max-content;
   margin-bottom: 1rem;
   margin : 2rem 2rem 0 0;
-
   font-size: 1.5rem;
   color: var(--second-color);
+  transition: box-shadow 0.3s, color 0.3s;
+  
 }
 
 .home__social-icon:hover {
   color: var(--first-color);
+}
+
+.home__social-icon:focus {
+  outline: 2px solid var(--first-color);
+  outline-offset: 2px;
 }
 
 .home__img {
@@ -41,24 +47,29 @@
   bottom: 0;
   width: 260px;
     /* Sombra que sigue el contorno */
-            filter: drop-shadow(0px 15px 10px rgba(0, 0, 0, 0.9));
+  filter: drop-shadow(0px 15px 10px rgba(0, 0, 0, 0.9));
 }
- 
-
 
 .button {
   display: inline-block;
   background-color: var(--first-color);
-  color: #fff;
+  color: #0a0035;
   padding: 0.75rem 2.5rem;
   margin-left: 2rem;
   font-weight: 600;
   border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.30);
+  
 }
 
 .button:hover {
   box-shadow: 0 10px 36px rgba(0, 0, 0, 0.15);
 }
+.button:focus {
+  outline: 2px solid var(--first-color);
+  outline-offset: 2px;
+} 
+
 /* Video de fondo */
 .video-bg {
   position: absolute;
@@ -78,11 +89,8 @@
 }
 
 .Perfil1 {
- 
   margin-top: 5%;
-  
-  
-}
+ }
 
 /* Estilos para el video de fondo */
 #background-video {
@@ -94,7 +102,6 @@
   object-fit: cover; /* Ajusta el video sin distorsión */
   z-index: -999999; /* Lo envía al fondo detrás de todo */
   opacity: 0.4; /* Ajusta la opacidad del video */
- 
 }
 
 
