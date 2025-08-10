@@ -101,6 +101,7 @@ function setLanguage(lang) {
   if (footerCopy) footerCopy.textContent = texts[lang].footerCopy;
 }
 
+
 function translatePage(lang) {
   if (!availableLangs.includes(lang)) return;
 
@@ -122,21 +123,31 @@ function initLanguage() {
   }
 
   // Establecer selector y traducciones
-  const languageSelect = document.getElementById('language-select');
-  if (languageSelect) {
-    languageSelect.value = savedLang;
+  const languageSelectors = [
+  document.getElementById('language-select-header'),
+  document.getElementById('language-select-widget')
+].filter(Boolean); // Quita nulls por si alguno no existe
 
-    languageSelect.addEventListener('change', (e) => {
-      const lang = e.target.value;
-      if (availableLangs.includes(lang)) {
-        localStorage.setItem('lang', lang);
-        setLanguage(lang);
-        translatePage(lang);
-         updateResumeLink(lang);
-        loadProjects(); // ✅ Recargar proyectos al cambiar de idioma
-      }
-    });
-  }
+languageSelectors.forEach(selector => {
+  selector.value = savedLang;
+  selector.addEventListener('change', (e) => {
+    const lang = e.target.value;
+    if (availableLangs.includes(lang)) {
+      localStorage.setItem('lang', lang);
+
+      // Sincroniza ambos selectores
+      languageSelectors.forEach(s => {
+        if (s !== e.target) s.value = lang;
+      });
+
+      setLanguage(lang);
+      translatePage(lang);
+      updateResumeLink(lang);
+      loadProjects();
+    }
+  });
+});
+
   function updateResumeLink(lang) {
   const resumeLink = document.querySelector('a[data-i18n="resume"]');
   if (resumeLink) {

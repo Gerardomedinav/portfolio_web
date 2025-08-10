@@ -54,7 +54,7 @@
             <!-- Selector de idioma con label accesible -->
             <li class="nav__item">
               <label for="language-select" class="visually-hidden">Seleccionar idioma</label>
-              <select id="language-select" aria-label="Seleccionar idioma">
+              <select id="language-select-header" data-lang-select aria-label="Seleccionar idioma">
                 <option value="en">English</option>
                 <option value="es">Español</option>
               </select>
@@ -338,18 +338,18 @@
           experiencia de navegación.
         </p>
         <!-- Badge de accesibilidad -->
-        <a
-          href="declaracion-accesibilidad.pdf"
-          target="_blank"
-          rel="noopener"
-          aria-label="Ver declaración de accesibilidad del portafolio"
-        >
-          <img
-            src="accesibilidad-badge.png"
-            alt="Este sitio cumple con las normas WCAG 2.1 AA y cuenta con un widget de accesibilidad para controlar videos, modo oscuro e idioma"
-            style="width: 180px; height: auto; border: none"
-          />
-        </a>
+  <div class="wcag-badge">
+  <a href="https://www.w3.org/WAI/WCAG2AA-Conformance" 
+     title="Explanation of WCAG 2 Level AA conformance" target="_blank">
+    <img
+      height="32"
+      width="88"
+      src="https://www.w3.org/WAI/WCAG21/wcag2.1AA-v"
+      alt="Level AA conformance, W3C WAI Web Content Accessibility Guidelines 2.1"
+    />
+  </a>
+</div>
+
 
         <!-- Mensaje de compromiso con la accesibilidad -->
         <p style="font-size: 0.9rem; color: #fdfafa; font-family: 'Poppins', sans-serif; margin-top: 10px">
@@ -408,7 +408,7 @@
         <!-- Selector de idioma -->
         <div class="widget-item">
           <label for="language-select">Idioma</label>
-          <select id="language-select" aria-label="Seleccionar idioma">
+          <select id="language-select-widget" data-lang-select aria-label="Seleccionar idioma">
             <option value="en">English</option>
             <option value="es">Español</option>
           </select>

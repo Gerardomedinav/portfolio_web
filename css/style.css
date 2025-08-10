@@ -63,7 +63,7 @@ img {
   right: 0;
   margin: auto;
   top: 2rem;
-  background-color: var(--first-color);
+  background-color: hsl(204.1, 83.1%, 34.7%)
 }
 .section {
   padding-top: 3rem;
@@ -285,4 +285,13 @@ body.dark .bx-menu {
   pointer-events: none; /* El ícono no captura el clic, lo recibe el botón */
   color: white;
   font-size: 24px;
+}
+
+.wcag-badge {
+  text-align: center; /* centra horizontalmente */
+  margin-top: 1rem;   /* separa del contenido anterior */
+}
+
+.wcag-badge img {
+  display: inline-block;
 }
