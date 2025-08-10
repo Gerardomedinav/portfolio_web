@@ -78,7 +78,7 @@ const translations = {
     footerGithubLabel: "Visitar el perfil de GitHub de Gerardo Medina",
       accessibilitySlogan: "<strong>Por una web más inclusiva, usable, humana y más accesible para todos.</strong>",
     accessibilityText: "Este sitio web cumple con las normas WCAG 2.1 AA y cuenta con un widget de accesibilidad para mejorar la experiencia de navegación.",
-        widgetTitle: "Panel de Accesibilidad",
+    widgetTitle: "Panel de Accesibilidad",
     widgetVideo: "Videos",
     widgetTheme: "Tema",
     widgetLanguage: "Idioma"
@@ -116,17 +116,6 @@ function setLanguage(lang) {
 }
 
 
-function translatePage(lang) {
-  if (!availableLangs.includes(lang)) return;
-
-  const elements = document.querySelectorAll('[data-i18n]');
-  elements.forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (translations[lang][key]) {
-      el.innerHTML = translations[lang][key];
-    }
-  });
-}
 
 function initLanguage() {
   let savedLang = localStorage.getItem('lang') || defaultLang;
@@ -193,7 +182,7 @@ function loadProjects() {
 
 function translatePage(lang) {
   if (!availableLangs.includes(lang)) return;
-
+  document.documentElement.lang = lang;
   const elements = document.querySelectorAll('[data-i18n]');
   elements.forEach(el => {
     const key = el.getAttribute('data-i18n');
