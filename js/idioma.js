@@ -12,6 +12,7 @@ const texts = {
     footerCopy: "© 2024 Gerardo Medina - Todos los derechos reservados",
     readMoreBack: "Volver",
     readMore: "Leer más"
+   
 
   },
   en: {
@@ -27,6 +28,7 @@ const texts = {
     footerCopy: "© 2024 Gerardo Medina - All rights reserved",
     readMoreBack: "Go back",
     readMore: "Read more"
+   
   }
 };
 
@@ -48,7 +50,13 @@ const translations = {
     footerThanks: 'Thank you for watching <img src="./assets/icon/icons8-grinning-face-with-smiling-eyes-30.png" alt="" />',
     footerCopyright: `Created by <a class="link-github" href="https://github.com/gerardomedinav"  target="_blank" rel="noreferrer noopener">gerardomedinav</a> | 2022 Copyright &copy All Rights Reserved`,
        footerEmojiAlt: "Smiling face emoji with smiling eyes",
-    footerGithubLabel: "Visit Gerardo Medina's GitHub profile"
+    footerGithubLabel: "Visit Gerardo Medina's GitHub profile",
+    accessibilitySlogan: "<strong>For a more inclusive, usable, human, and accessible web for everyone.</strong>",
+    accessibilityText: "This website complies with WCAG 2.1 AA standards and includes an accessibility widget to improve the browsing experience." ,
+        widgetTitle: "Accessibility Panel",
+    widgetVideo: "Videos",
+    widgetTheme: "Theme",
+    widgetLanguage: "Language"
   },
   es: {
     homeTitle: "Hola, <br /> Soy <span class='home__title-color'>Gerardo</span> <br /> Desarrollador Full Stack Jr.",
@@ -67,7 +75,13 @@ const translations = {
     footerThanks: 'Gracias por visitar <img src="./assets/icon/icons8-grinning-face-with-smiling-eyes-30.png" alt="" />',
     footerCopyright: `Creado por <a class="link-github" href="https://github.com/gerardomedinav"  target="_blank" rel="noreferrer noopener">gerardomedinav</a> | 2022 Derechos Reservados &copy`,
      footerEmojiAlt: "Emoji de cara sonriente con ojos sonrientes",
-    footerGithubLabel: "Visitar el perfil de GitHub de Gerardo Medina"
+    footerGithubLabel: "Visitar el perfil de GitHub de Gerardo Medina",
+      accessibilitySlogan: "<strong>Por una web más inclusiva, usable, humana y más accesible para todos.</strong>",
+    accessibilityText: "Este sitio web cumple con las normas WCAG 2.1 AA y cuenta con un widget de accesibilidad para mejorar la experiencia de navegación.",
+        widgetTitle: "Panel de Accesibilidad",
+    widgetVideo: "Videos",
+    widgetTheme: "Tema",
+    widgetLanguage: "Idioma"
   }
 };
 

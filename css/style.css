@@ -149,7 +149,7 @@ body.dark .bx-menu {
 
 /* Cuando el body tiene clase dark, poner texto claro */
 body.dark .skills-title {
-  color: #f1f1f1; /* texto claro en modo oscuro */
+  color: #f1f1f1 !important; /* texto claro en modo oscuro */
 }
 
 

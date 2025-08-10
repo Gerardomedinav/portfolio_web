@@ -317,7 +317,40 @@
     </main>
 
     <footer class="footer" role="contentinfo">
-      <div class="footer__text">
+   
+      <div
+        class="accessibility-badge-container"
+        style="text-align: center; color: #fdfafa !important; font-family: 'Poppins', sans-serif"
+      >
+        <p data-i18n="accessibilityText" style="font-size: 0.9rem; margin-bottom: 10px">
+          Este sitio web cumple con las normas WCAG 2.1 AA y cuenta con un widget de accesibilidad para mejorar la
+          experiencia de navegación.
+        </p>
+        <!-- Badge de accesibilidad -->
+        <div class="wcag-badge">
+          <a
+            href="https://www.w3.org/WAI/WCAG2AA-Conformance"
+            title="Explanation of WCAG 2 Level AA conformance"
+            target="_blank"
+          >
+            <img
+              height="32"
+              width="88"
+              src="https://www.w3.org/WAI/WCAG21/wcag2.1AA-v"
+              alt="Level AA conformance, W3C WAI Web Content Accessibility Guidelines 2.1"
+            />
+          </a>
+        </div>
+
+        <!-- Mensaje de compromiso con la accesibilidad -->
+        <p
+          data-i18n="accessibilitySlogan"
+          style="font-size: 0.9rem; color: #fdfafa; font-family: 'Poppins', sans-serif; margin-top: 10px"
+        >
+          <strong>Por una web más inclusiva, usable, humana y más accesible para todos.</strong>
+        </p>
+      </div>
+         <div class="footer__text">
         <p data-i18n="footerThanks">
           Thank you for watching
           <img
@@ -327,33 +360,6 @@
             width="30"
             height="30"
           />
-        </p>
-      </div>
-      <div
-        class="accessibility-badge-container"
-        style="text-align: center; color: #fdfafa !important; font-family: 'Poppins', sans-serif"
-      >
-        <p style="font-size: 0.9rem; margin-bottom: 10px">
-          Este sitio web cumple con las normas WCAG 2.1 AA y cuenta con un widget de accesibilidad para mejorar la
-          experiencia de navegación.
-        </p>
-        <!-- Badge de accesibilidad -->
-  <div class="wcag-badge">
-  <a href="https://www.w3.org/WAI/WCAG2AA-Conformance" 
-     title="Explanation of WCAG 2 Level AA conformance" target="_blank">
-    <img
-      height="32"
-      width="88"
-      src="https://www.w3.org/WAI/WCAG21/wcag2.1AA-v"
-      alt="Level AA conformance, W3C WAI Web Content Accessibility Guidelines 2.1"
-    />
-  </a>
-</div>
-
-
-        <!-- Mensaje de compromiso con la accesibilidad -->
-        <p style="font-size: 0.9rem; color: #fdfafa; font-family: 'Poppins', sans-serif; margin-top: 10px">
-          <strong> Por una web más inclusiva, usable, humana y más accesible para todos.</strong>
         </p>
       </div>
       <div class="footer__copyright">
@@ -375,46 +381,42 @@
     </footer>
 
     <!-- Widget Flotante de Accesibilidad -->
-    <div class="accessibility-widget">
-      <!-- Botón principal para abrir/cerrar -->
-      <button id="widget-toggle" class="widget-toggle" aria-label="Abrir herramientas de accesibilidad">
-        <i class="bx bxs-universal-access"></i>
+<div class="accessibility-widget">
+  <!-- Botón principal para abrir/cerrar -->
+  <button id="widget-toggle" class="widget-toggle" aria-label="Abrir herramientas de accesibilidad">
+    <i class="bx bxs-universal-access"></i>
+  </button>
+
+  <!-- Panel del widget (oculto por defecto) -->
+  <div id="widget-panel" class="widget-panel" hidden>
+    <h3 class="widget-title" data-i18n="widgetTitle">Panel de Accesibilidad</h3>
+
+    <!-- Control de videos -->
+    <div class="widget-item">
+      <label for="toggle-video" data-i18n="widgetVideo">Videos</label>
+      <button id="toggle-video" aria-pressed="true" aria-label="Pausar videos de fondo">
+        <i class="bx bx-pause" id="video-icon" aria-hidden="true"></i>
       </button>
-
-      <!-- Panel del widget (oculto por defecto) -->
-      <div id="widget-panel" class="widget-panel" hidden>
-        <h3 class="widget-title" id="widget-title">Panel de Accesibilidad</h3>
-
-        <!-- Control de videos -->
-        <div class="widget-item">
-          <label for="toggle-video">Videos</label>
-          <button id="toggle-video" aria-pressed="true" aria-label="Pausar videos de fondo">
-            <i class="bx bx-pause" id="video-icon" aria-hidden="true"></i>
-          </button>
-        </div>
-
-        <!-- Modo oscuro -->
-        <div class="widget-item">
-          <label>Tema</label>
-          <!-- Modo oscuro -->
-          <div class="widget-item">
-            <label>Tema</label>
-            <button class="dark-mode-btn widget-dark-toggle" aria-label="Activar modo oscuro">
-              <i class="bx bx-moon" id="widget-theme-icon" aria-hidden="true"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- Selector de idioma -->
-        <div class="widget-item">
-          <label for="language-select">Idioma</label>
-          <select id="language-select-widget" data-lang-select aria-label="Seleccionar idioma">
-            <option value="en">English</option>
-            <option value="es">Español</option>
-          </select>
-        </div>
-      </div>
     </div>
+
+    <!-- Modo oscuro -->
+    <div class="widget-item">
+      <label data-i18n="widgetTheme">Tema</label>
+      <button class="dark-mode-btn widget-dark-toggle" aria-label="Activar modo oscuro">
+        <i class="bx bx-moon" id="widget-theme-icon" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <!-- Selector de idioma -->
+    <div class="widget-item">
+      <label for="language-select-widget" data-i18n="widgetLanguage">Idioma</label>
+      <select id="language-select-widget" aria-label="Seleccionar idioma">
+        <option value="en">English</option>
+        <option value="es">Español</option>
+      </select>
+    </div>
+  </div>
+</div>
     <script src="./js/app.js"></script>
     <script src="./js/proyectos.js"></script>
 
