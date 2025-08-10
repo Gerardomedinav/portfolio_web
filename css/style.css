@@ -146,6 +146,13 @@ body.dark .bx-menu {
   color: #ffffff !important;
 }
 
+
+/* Cuando el body tiene clase dark, poner texto claro */
+body.dark .skills-title {
+  color: #f1f1f1; /* texto claro en modo oscuro */
+}
+
+
 /* Accesibilidad: Oculta visualmente pero permite lectura por lector de pantalla */
 .visually-hidden {
   position: absolute;
