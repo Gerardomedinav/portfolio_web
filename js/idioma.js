@@ -87,7 +87,7 @@ const translations = {
 
 // Idiomas disponibles y por defecto
 const availableLangs = ['en', 'es'];
-const defaultLang = 'en';
+const defaultLang = 'es';
 
 function getLang() {
   return localStorage.getItem('lang') || defaultLang;
