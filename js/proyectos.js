@@ -76,3 +76,4 @@ projectDiv.innerHTML = `
     container.appendChild(projectDiv);
   });
 }
+

@@ -1,10 +1,11 @@
+// ===== MOSTRAR / OCULTAR MENÚ =====
 const showMenu = (toggleId, navId) => {
   const toggle = document.getElementById(toggleId),
     nav = document.getElementById(navId);
 
   if (toggle && nav) {
     toggle.addEventListener('click', () => {
-      nav.classList.toggle('show');
+      nav.classList.toggle('show'); // Usamos la misma clase para abrir/cerrar
     });
   }
 };
@@ -20,7 +21,7 @@ function linkAction() {
 
   // Remove Menu
   const navMenu = document.getElementById('nav-menu');
-  navMenu.classList.remove('show');
+  navMenu.classList.remove('show'); // Misma clase
 }
 
 navLink.forEach((n) => n.addEventListener('click', linkAction));
@@ -30,7 +31,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const widgetToggle = document.getElementById("widget-toggle");
   const widgetPanel = document.getElementById("widget-panel");
 
-  // Alternar panel
   widgetToggle.addEventListener("click", () => {
     const isHidden = widgetPanel.hasAttribute("hidden");
     if (isHidden) {
@@ -42,7 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Cerrar al hacer clic fuera
   document.addEventListener("click", (e) => {
     if (!widgetPanel.contains(e.target) && e.target !== widgetToggle) {
       widgetPanel.setAttribute("hidden", "");
@@ -83,35 +82,29 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       playVideos();
     }
-    // Guardar preferencia
     localStorage.setItem("videoPlaying", isVideoPlaying);
   });
 
-  // Recuperar estado
   const savedVideoState = localStorage.getItem("videoPlaying");
   if (savedVideoState === "false") {
     pauseVideos();
   }
 
-  // ===== IDIOMA (reutiliza tu funcionalidad) =====
+  // ===== IDIOMA =====
   const langSelect = document.getElementById("language-select");
   if (langSelect) {
     langSelect.addEventListener("change", () => {
-      // Aquí llamas a tu función de cambio de idioma
-      // Asumiendo que tienes una función `cambiarIdioma(lang)`
       cambiarIdioma(langSelect.value);
     });
 
-    // Recuperar idioma guardado
     const savedLang = localStorage.getItem("language") || "en";
     langSelect.value = savedLang;
   }
 
-  // ===== MODO OSCURO (reutiliza tu funcionalidad) =====
+  // ===== MODO OSCURO =====
   const darkModeToggle = document.getElementById("darkModeToggle");
   const themeIcon = document.getElementById("theme-icon");
 
-  // Recuperar tema guardado
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme === "dark") {
     document.body.classList.add("dark-theme");
@@ -128,10 +121,23 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// === Función de ejemplo para cambio de idioma (ajústala según tu `idioma.js`) ===
+// === CAMBIO DE IDIOMA ===
 function cambiarIdioma(lang) {
-  // Aquí iría tu lógica real (fetch, traducción, etc.)
   console.log("Idioma cambiado a:", lang);
   localStorage.setItem("language", lang);
-  // Recargar o actualizar contenido
 }
+
+// ===== BOTÓN CERRAR MENÚ =====
+const navMenu = document.getElementById('nav-menu');
+const navToggle = document.getElementById('nav-toggle');
+const navClose = document.getElementById('nav-close');
+
+// Abrir menú
+navToggle.addEventListener('click', () => {
+  navMenu.classList.add('show'); // Misma clase
+});
+
+// Cerrar menú
+navClose.addEventListener('click', () => {
+  navMenu.classList.remove('show'); // Misma clase
+});

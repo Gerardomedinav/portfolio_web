@@ -1,21 +1,56 @@
+/* =======================
+   Footer - Estilos base
+   ======================= */
 .footer {
   background-color: var(--second-color);
   color: #fff;
   text-align: center;
   font-weight: 400;
-  padding: 1rem 0;
+  padding: 1rem;
+  box-sizing: border-box; /* Evita overflow por padding */
+  overflow-x: hidden;     /* Previene desbordamiento horizontal */
 }
+
 .footer .link-github {
   margin: 0 0.2rem;
   color: var(--first-color);
   text-decoration: none;
+  word-break: break-word; /* Evita que enlaces largos causen overflow */
 }
+
 .footer__text p,
 .footer__copyright p {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap; /* Permite que el texto baje a otra línea en pantallas pequeñas */
+  margin: 0.2rem 0;
+  text-align: center;
 }
+
 .footer__copyright p {
   display: block;
+  font-size: 0.85rem;
+}
+
+/* =======================
+   Footer - Breakpoint >= 768px
+   ======================= */
+@media (min-width: 768px) {
+  .footer__text p,
+  .footer__copyright p {
+    flex-wrap: nowrap; /* En pantallas grandes mantiene todo en una sola línea */
+  }
+}
+
+/* =======================
+   Footer - Breakpoint >= 1024px
+   ======================= */
+@media (min-width: 1024px) {
+  .footer {
+    padding: 1.5rem;
+  }
+  .footer__text p {
+    font-size: 1rem;
+  }
 }

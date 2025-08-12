@@ -102,3 +102,22 @@
     border-bottom: 2px solid var(--first-color);
   }
 }
+
+.nav__close {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: var(--first-color, #fff);
+  cursor: pointer;
+  display: none;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+/* Mostrar solo cuando menú está activo en móvil */
+@media screen and (max-width: 768px) {
+  .nav__close {
+    display: block;
+  }
+}
