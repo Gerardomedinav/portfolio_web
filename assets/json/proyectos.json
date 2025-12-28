@@ -1,4 +1,44 @@
 [
+  
+  {
+    "title": {
+      "es": "SIGA-Formosa: Sistema Integral de Gestión Académica",
+      "en": "SIGA-Formosa: Comprehensive Academic Management System"
+    },
+    "image": "./assets/img/projects/siga_formosa.png",
+    "github": "https://github.com/Gerardomedinav/siga-formosa/tree/develop",
+    "demo": "https://siga-formosa-uugd.onrender.com/",
+    "description": {
+      "es": "Sistema profesional de gestión académica desarrollado como tesina final para la UTN FRRe. Centraliza la información educativa eliminando la dispersión de datos. Construido con un stack robusto que incluye Laravel 12, PostgreSQL y Docker, el sistema destaca por su escalabilidad y su arquitectura preparada para integrarse con el ecosistema Sysacad.",
+      "en": "Professional academic management system developed as a final thesis for UTN FRRe. It centralizes educational information to eliminate data fragmentation. Built with a robust stack including Laravel 12, PostgreSQL, and Docker, the system stands out for its scalability and an architecture designed for future integration with the Sysacad ecosystem."
+    }
+  },
+  {
+    "title": {
+      "es": "Data Analytics con Python - Análisis de Rendimiento Comercial",
+      "en": "Data Analytics with Python - Business Performance Analysis"
+    },
+    "image": "./assets/img/projects/Data_Analytics_Python.png",
+    "github": "https://drive.google.com/drive/folders/1sshX-E38YfcI-dk-TEam6P_dHTakUEZT?usp=sharing",
+    "demo": "https://drive.google.com/file/d/1utGnDiiX27-YwM4_L2HnfqZhbhqt8Pr1/view?usp=sharing",
+    "description": {
+      "es": "Proyecto final de Data Analytics (Calificación: 10/10) que consiste en un análisis integral de ventas, marketing y comportamiento de clientes. Incluye limpieza de datos, análisis exploratorio (EDA), cálculo de KPIs como ROAS y ticket promedio, y la creación de dashboards interactivos utilizando Python, Pandas, Seaborn y Plotly.",
+      "en": "Final Data Analytics project (Grade: 10/10) consisting of a comprehensive analysis of sales, marketing, and customer behavior. It includes data cleaning, exploratory data analysis (EDA), KPI calculation (ROAS, average ticket), and the creation of interactive dashboards using Python, Pandas, Seaborn, and Plotly."
+    }
+  },
+  {
+    "title": {
+      "es": "Nexo Emprendedor - Hackatón Formosa",
+      "en": "Nexo Emprendedor - Formosa Hackathon"
+    },
+    "image": "./assets/img/projects/nexo_emprendedrores.png",
+    "github": "https://github.com/FabioArias23/Nexo-Emprendedor.git",
+    "demo": "https://nexo-emprendedores.onrender.com/",
+    "description": {
+      "es": "Ecosistema digital desarrollado en 24 horas para el Hackatón del Politécnico de Formosa. Conecta emprendedores con inversores mediante una plataforma que incluye autenticación biométrica (reconocimiento facial), un asistente virtual con IA (Llama 3.1) y herramientas de accesibilidad. Desarrollado con el TALL stack (Tailwind, Alpine, Laravel, Livewire) y Python.",
+      "en": "Digital ecosystem developed in 24 hours for the Formosa Polytechnic Hackathon. It connects entrepreneurs with investors through a platform featuring biometric authentication (face recognition), an AI virtual assistant (Llama 3.1), and accessibility tools. Built with the TALL stack (Tailwind, Alpine, Laravel, Livewire) and Python."
+    }
+  },
   {
   "title": {
     "es": "ProyeCoins - Gestión de Proyectos Escolares",
