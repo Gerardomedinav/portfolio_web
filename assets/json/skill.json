@@ -95,6 +95,12 @@
   ],
   "tools": [
     {
+      "id": "azure",
+      "name": "Azure",
+      "image": "./assets/icon/azure.png",
+      "link": "https://learn.microsoft.com/en-us/azure/"
+    },
+    {
       "id": "git",
       "name": "Git",
       "image": "./assets/icon/icons8-git.svg",
