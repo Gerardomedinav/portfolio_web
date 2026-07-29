@@ -1187,6 +1187,10 @@ body.dark .admin-select {
   animation: botFadeUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.bot-window[hidden] {
+  display: none !important;
+}
+
 body.dark .bot-window {
   background: #0f172a;
   color: #f8fafc;

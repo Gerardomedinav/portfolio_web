@@ -51,8 +51,8 @@ export function renderChatbotWidget() {
           <div class="bot-msg-avatar"><i class="bx bx-bot"></i></div>
           <div class="bot-msg-bubble">
             ${lang === 'es' 
-              ? '¡Hola! 👋 Soy **GerAssist**, el asistente inteligente de **Gerardo Medina**.\n\nMe encantaría hablarte un poco más sobre Gerardo, su perfil como **Desarrollador Full Stack & Analista de Datos (Data Scientist)**, su pasión por la **Accesibilidad (WCAG 2.1 AA)**, sus estudios en la **UTN** y el **impacto real** de sus proyectos. ¿Qué te interesaría saber más sobre él?' 
-              : "Hi! 👋 I am **GerAssist**, Gerardo Medina's AI assistant.\n\nI would love to tell you more about Gerardo, his **Full Stack & Data Analyst / Data Scientist** profile, his passion for **Accessibility (WCAG 2.1 AA)**, his **UTN** studies, and the **real impact** of his work. What would you like to know about him?"}
+              ? '¡Hola! 👋 Soy <strong>GerAssist</strong>, el asistente inteligente de <strong>Gerardo Medina</strong>.<br /><br />Me encantaría hablarte un poco más sobre Gerardo, su perfil como <strong>Desarrollador Full Stack & Analista de Datos (Data Scientist)</strong>, su pasión por la <strong>Accesibilidad (WCAG 2.1 AA)</strong>, sus estudios en la <strong>UTN</strong> y el <strong>impacto real</strong> de sus proyectos. ¿Qué te interesaría saber más sobre él?' 
+              : "Hi! 👋 I am <strong>GerAssist</strong>, Gerardo Medina's AI assistant.<br /><br />I would love to tell you more about Gerardo, his <strong>Full Stack & Data Analyst / Data Scientist</strong> profile, his passion for <strong>Accessibility (WCAG 2.1 AA)</strong>, his <strong>UTN</strong> studies, and the <strong>real impact</strong> of his work. What would you like to know about him?"}
           </div>
         </div>
 
@@ -200,6 +200,7 @@ function appendMessage(container, sender, text) {
 function formatMarkdownText(str) {
   return String(str || '')
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
     .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
     .replace(/\n/g, '<br />');
 }
