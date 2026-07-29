@@ -505,15 +505,23 @@ body.dark.disable-animations .skills__name img {
   background: #ffffff;
   color: #0f172a;
   border-radius: 1.25rem;
-  width: 100%;
-  max-width: 680px;
-  max-height: 90vh;
+  width: 95%;
+  max-width: 960px;
+  max-height: 92vh;
   overflow-y: auto;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
   padding: 2.25rem;
   position: relative;
   box-sizing: border-box;
   border: 1px solid #e2e8f0;
+}
+
+.admin-login-card {
+  max-width: 480px;
+}
+
+.admin-crud-card {
+  max-width: 980px;
 }
 
 body.dark .admin-modal-card {
@@ -663,6 +671,7 @@ body.dark .admin-field input {
 /* Tabs */
 .admin-tabs {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
   border-bottom: 2px solid #e2e8f0;
   margin-bottom: 1.5rem;
