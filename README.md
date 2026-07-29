@@ -7,152 +7,92 @@
 
 Bienvenido al repositorio del **Portafolio Web Profesional de Gerardo Medina** (Full Stack Developer Jr.).
 
-Este proyecto destaca mis proyectos y habilidades a la vez que sirve como caso de estudio en **Desarrollo Web Moderno, Accesibilidad Universal (WCAG 2.1 AA), Internacionalización (i18n), Comunicación Asíncrona (AJAX Formspree), Endurecimiento de Seguridad (Hardening)** y **Optimización de Rendimiento (PageSpeed)**.
+Este proyecto destaca mis proyectos y habilidades a la vez que sirve como caso de estudio en **Desarrollo Web Moderno, Accesibilidad Universal (WCAG 2.1 AA), Internacionalización (i18n), Comunicación Asíncrona (AJAX Formspree), Endurecimiento de Seguridad (Hardening)** y un **Sistema de Administración CRUD Multisección Criptográfico**.
 
 ---
 
 ## ✨ Funcionalidades Principales
 
-### ✉️ 1. Formulario de Contacto Directo (AJAX + Formspree)
+### 🔑 1. Sistema de Administración CRUD Multisección (Fases 0 a 5)
+El portafolio incluye un **Panel de Administración Inteligente y Seguro** accesible mediante el icono de la llave (🔑) en el encabezado:
+* **Seguridad Criptográfica Nativa (SHA-256):** Autenticación mediante `crypto.subtle.digest` con contraseñas hash guardadas de forma segura. El HTML del panel no existe en la página hasta ingresar la clave correcta (previniendo inspección en DevTools).
+* **Edición Limpia en Texto Plano:** Formulario intuitivo sin etiquetas HTML expuestas. Los campos dividen Saludos, Nombres y Profesiones en texto limpio y el código aplica los colores y formato automáticamente.
+* **Carga Directa de Archivos Locales (`<input type="file">`):** Selector de archivos de la computadora con previsualización en tiempo real para fotos de perfil, imágenes de proyectos, logos y PDFs de CVs.
+* **Gestión de Texto Alternativo (Alt Text WCAG 2.1 AA):** Todos los cargadores de imagen permiten ingresar o modificar el **Texto Alt bilingüe (ES / EN)** para garantizar la accesibilidad completa.
+* **Pestañas CRUD Organizadas:**
+  1. **Banner / Inicio:** Saludos, Nombre, Profesión, Foto de Perfil, CVs en PDF y Redes Sociales.
+  2. **Sobre Mí:** Subtítulos, Biografía Completa y Fotografía Secundaria.
+  3. **Proyectos:** Lista interactiva para **Crear, Editar, Eliminar y Reordenar proyectos** con portadas y enlaces.
+  4. **Habilidades / Skills:** Clasificación por Lenguajes, Frameworks y Herramientas para agregar/editar tecnologías.
+  5. **Contacto & Footer:** Endpoint AJAX de Formspree, Teléfono/WhatsApp, Ubicación y Copyright del pie de página.
+  6. **Seguridad / Clave:** Cambio seguro de contraseña de administrador.
+
+### ✉️ 2. Formulario de Contacto Directo (AJAX + Formspree)
 * **Envío Asíncrono en Tiempo Real:** Integración directa por Fetch/AJAX con Formspree hacia `gerardomedinavv@gmail.com` sin recargar la página ni abrir clientes de correo externos.
 * **Experiencia de Usuario Fluida:** Indicador de carga dinámico en el botón de envío y alertas en pantalla personalizadas en español e inglés.
-* **Seguridad y Filtro Anti-Spam:** Trampa Honeypot `_gotcha` para neutralizar bots automáticos y validación de longitud de contenido.
-* **Diseño Simétrico de Tarjetas Gemelas:** Maquetación equilibrada con badges de información de contacto (Email, Teléfono/WhatsApp, Ubicación) y sombreado responsivo (`box-shadow`).
+* **Seguridad y Filtro Anti-Spam:** Trampa Honeypot `_gotcha` para neutralizar bots automáticos y validación de contenido.
 
-### 🌐 2. Internacionalización (i18n - Español / Inglés)
+### 🌐 3. Internacionalización (i18n - Español / Inglés)
 * **Motor Reactivo sin Recarga:** Cambio de idioma instantáneo (`es` / `en`) mediante eventos personalizados `languageChange`.
 * **Sincronización Total:** Sincroniza simultáneamente los selectores del encabezado y del panel de accesibilidad, placeholders de formularios y textos de proyectos.
 * **Previsualización de CV en PDF:** Apertura nativa del currículum en PDF en una nueva pestaña adaptado al idioma activo (`CV_Gerardo_Medina_Villalba_español.pdf` y `CV_Gerardo_Medina_Villalba_EN.pdf`).
-* **Persistencia:** Guarda la preferencia de idioma en `localStorage`.
 
-### ♿ 3. Suite Avanzada de Accesibilidad (WCAG 2.1 AA) & Imágenes Bilingües
+### ♿ 4. Suite Avanzada de Accesibilidad (WCAG 2.1 AA)
 Panel flotante interactivo (`.widget-panel`) integrado estéticamente con el tema visual:
-* **👁️ Auditoría de Imágenes 100% Accesibles:** Cada imagen del sitio (*estática o dinámica*) posee un texto alternativo (`alt`) descriptivo y reactivo en tiempo real al cambio de idioma (`data-i18n-alt`).
+* **👁️ Auditoría de Imágenes 100% Accesibles:** Cada imagen del sitio posee un texto alternativo (`alt`) descriptivo y reactivo en tiempo real al cambio de idioma (`data-i18n-alt`).
 * **🔊 Lector de Voz (TTS):** Síntesis de voz nativa mediante Web Speech API para escuchar el contenido del sitio.
 * **🎨 Filtro de Daltonismo:** Modo monocromático / escala de grises para usuarios con visibilidad reducida.
 * **🔤 Escalado Tipográfico Dinámico:** Controles para ajustar el tamaño de fuente (`A-`, `A`, `A+`).
 * **📖 Espaciado de Lectura (Dislexia):** Optimización del interlineado y espaciado de texto para facilitar la lectura.
 * **🔗 Resaltado de Hipervínculos:** Indicadores visuales destacados en todos los enlaces interactivos.
 * **⏸️ Pausar Animaciones (TDA / Concentración):** Desactivación instantánea de todo tipo de movimiento y efectos para personas con TDA o trastornos de atención.
-* **🔄 Restablecimiento y Persistencia:** Botón global para reiniciar ajustes y guardado automático en `localStorage`.
 
-### 🌓 4. Modo Oscuro / Claro
+### 🌓 5. Modo Oscuro / Claro
 * **Sincronización Unificada:** Alternancia fluida de tema visual mediante la clase `.dark` en el `body`.
 * **Detección Automática:** Detección de la preferencia del sistema operativo (`prefers-color-scheme`).
-* **Persistencia:** Mantiene la selección del usuario en `localStorage`.
-
-### 💼 5. Secciones Interactivas Dinámicas
-* **Proyectos Dinámicos (`proyectos.json`):** Renderizado reactivo de tarjetas con elevación y sombras responsivas (`box-shadow`), enlaces a GitHub/Demo y modales popover adaptativos con scroll interno aislado.
-* **Habilidades Dinámicas (`skill.json`):** Clasificación por Lenguajes, Frameworks y Herramientas con animación de entrada meteorito multidireccional y onda de choque expansiva en el impacto (`@keyframes shockwaveRipple` y `@keyframes shockwaveHover`).
-* **Navegación Responsive:** Menú colapsable estilo *hamburger* para dispositivos móviles.
 
 ---
 
-## ⚡ Rendimiento y Auditoría (PageSpeed Insights)
-
-Auditado con **Google PageSpeed Insights (Lighthouse)** logrando métricas en el percentil superior:
-
-* 🚀 **Performance: 96%** – Carga crítica optimizada con LCP (Largest Contentful Paint) de solo **0.7s**.
-* ♿ **Accessibility: 100%** – Cumplimiento estricto de WCAG 2.1 AA con etiquetas semánticas y soportes `aria-*`.
-* 🛡️ **Best Practices: 92%** – Código sin vulnerabilidades y mejores prácticas de la industria.
-* 🔍 **SEO: 91%** – Meta-etiquetas descriptivas, Open Graph y arquitectura limpia.
-
----
-
-## 🛡️ Ciberseguridad & Endurecimiento (Security Grade A)
-
-Evaluación basada en marcos de seguridad como **NIST SP 800-30**, logrando la calificación **Grade A** en *Security Headers* mediante la configuración estricta en `vercel.json`:
-
-* **Content-Security-Policy (CSP):** Mitigación proactiva contra ataques de inyección y XSS.
-* **X-Frame-Options (DENY):** Protección contra ataques de Clickjacking.
-* **X-Content-Type-Options (nosniff):** Prevención de vulnerabilidades MIME.
-* **Referrer-Policy & Permissions-Policy:** Control estricto de origen y permisos de características.
-
----
-
-## 🛠️ Tecnologías y Arquitectura
-
-* **Frontend:** HTML5 Semántico, Vanilla CSS3 (Modular por componentes), Vanilla JavaScript (ES Modules).
-* **Servicios Backend:** Formspree AJAX API (`https://formspree.io/f/mvzeyrzq`).
-* **Librerías:** 
-  * [AOS (Animate On Scroll)](https://michalsnik.github.io/aos/) - Animaciones al scroll.
-  * [Boxicons](https://boxicons.com/) - Iconografía vectorial.
-  * [Google Fonts](https://fonts.google.com/) - Tipografía Poppins.
-* **Analítica & Despliegue:** Google Analytics 4 (`gtag.js`), Vercel Edge Network.
-
----
-
-## 📂 Estructura del Proyecto
+## 📂 Arquitectura de Archivos
 
 ```
 portfolio_web/
-├── .agents/                  # Memoria y regla del proyecto para agentes de IA (AGENTS.md)
 ├── assets/
-│   ├── icon/                 # Iconos de marcas y favicons
-│   ├── img/                  # Imágenes de proyectos y sobre mí
+│   ├── icon/                 # Iconos vectoriales y marcas
+│   ├── img/                  # Imágenes de proyectos y perfiles
 │   ├── json/
-│   │   ├── proyectos.json    # Datos dinámicos multilingües de proyectos
+│   │   ├── proyectos.json    # Datos dinámicos de proyectos
 │   │   └── skill.json        # Datos dinámicos de habilidades
 │   ├── CV_Gerardo_Medina_Villalba_EN.pdf
 │   └── CV_Gerardo_Medina_Villalba_español.pdf
 ├── css/
-│   ├── main.css              # Importador central de módulos CSS
-│   ├── style.css             # Reset, variables globales y widget de accesibilidad
-│   ├── header.css            # Estilos del encabezado
-│   ├── nav.css               # Navegación y menú responsive
-│   ├── home.css              # Sección de inicio
+│   ├── main.css              # Hoja de estilos principal
+│   ├── style.css             # Estilos globales, variables y modales CRUD
+│   ├── header.css            # Cabecera
+│   ├── nav.css               # Menú responsive
+│   ├── home.css              # Sección Inicio
 │   ├── about.css             # Sección Sobre mí
-│   ├── projects.css          # Tarjetas de proyectos y modales popover
-│   ├── skills.css            # Sección de habilidades
-│   ├── contact.css           # Sección de contacto (Tarjetas gemelas y responsive)
-│   ├── footer.css            # Pie de página
-│   └── mediaqueries.css      # Adaptabilidad responsive / Breakpoints
+│   ├── projects.css          # Sección Proyectos y popovers
+│   ├── skills.css            # Sección Habilidades
+│   ├── contact.css           # Sección Contacto
+│   └── footer.css            # Pie de página
 ├── js/
-│   ├── main.js               # Punto de entrada de ES Modules
+│   ├── main.js               # Punto de entrada ES Modules
 │   └── modules/
-│       ├── navigation.js     # Menú móvil y controladores de nav
-│       ├── theme.js          # Control unificado Modo Oscuro/Claro
-│       ├── i18n.js           # Motor de traducción y vista de CV
-│       ├── projects.js       # Renderizado reactivo de proyectos y modales
+│       ├── navigation.js     # Menú móvil y navlinks
+│       ├── theme.js          # Control de Modo Oscuro/Claro
+│       ├── i18n.js           # Diccionario y motor de traducción
+│       ├── projects.js       # Renderizado dinámico de proyectos
 │       ├── skills.js         # Renderizado dinámico de habilidades
-│       ├── contact.js        # Manejo de contacto por AJAX Formspree y validaciones
-│       └── accessibility.js  # Lector de voz, daltonismo, tipografía y WCAG
-├── index.html                # Documento HTML principal
-├── vercel.json               # Configuración de cabeceras de seguridad y despliegue
-├── package.json              # Gestión de dependencias (aos)
-└── README.md                 # Documentación principal del repositorio
+│       ├── accessibility.js  # Suite de accesibilidad WCAG
+│       ├── contact.js        # Formulario AJAX Formspree
+│       ├── auth.js           # Autenticación SHA-256 de Administrador
+│       ├── dataStore.js      # Almacén central de datos reactivos
+│       ├── home.js           # Renderizado dinámico del Banner
+│       ├── about.js          # Renderizado dinámico de Sobre Mí
+│       ├── footerContact.js  # Renderizado dinámico de Contacto y Footer
+│       └── adminModal.js     # Panel de Administración CRUD Multisección
+├── index.html                # Documento HTML5 principal
+├── vercel.json               # Configuración de despliegue y seguridad Vercel (CSP)
+└── README.md                 # Documentación del proyecto
 ```
-
----
-
-## 🚀 Ejecución en Entorno Local
-
-Para ejecutar el portafolio en tu máquina local:
-
-1. **Clonar el repositorio:**
-   ```bash
-   git clone https://github.com/Gerardomedinav/portfolio_web.git
-   cd portfolio_web
-   ```
-
-2. **Iniciar un servidor HTTP local:**
-   Puedes usar `npx http-server` o `python`:
-   ```bash
-   npx http-server -p 8080
-   # O con Python:
-   python -m http.server 8080
-   ```
-
-3. **Abrir en el navegador:**
-   Accede a [`http://localhost:8080`](http://localhost:8080).
-
----
-
-## 👤 Autor
-
-* **Gerardo Medina** - *Full Stack Developer Jr.*
-* **LinkedIn:** [Gerardo Medina](https://www.linkedin.com/in/gerardomedinav/)
-* **GitHub:** [@Gerardomedinav](https://github.com/Gerardomedinav)
-
----
-*Desarrollado enfocado en alta velocidad, accesibilidad universal y seguridad por diseño.*
