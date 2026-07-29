@@ -51,8 +51,8 @@ export function renderChatbotWidget() {
           <div class="bot-msg-avatar"><i class="bx bx-bot"></i></div>
           <div class="bot-msg-bubble">
             ${lang === 'es' 
-              ? '¡Hola! 👋 Soy **GerAssist**, el asistente inteligente de **Gerardo Medina**.\n\nEstoy aquí para contarte sobre su perfil como **Desarrollador Full Stack & Analista de Datos**, su enfoque en **Accesibilidad (WCAG 2.1 AA)**, sus estudios en la **UTN** y el **impacto real** de sus proyectos. ¿En qué te puedo ayudar hoy?' 
-              : "Hi! 👋 I am **GerAssist**, Gerardo Medina's AI assistant. How can I help you explore his projects, analytical background or skills today?"}
+              ? '¡Hola! 👋 Soy **GerAssist**, el asistente inteligente de **Gerardo Medina**.\n\nMe encantaría hablarte un poco más sobre Gerardo, su perfil como **Desarrollador Full Stack & Analista de Datos (Data Scientist)**, su pasión por la **Accesibilidad (WCAG 2.1 AA)**, sus estudios en la **UTN** y el **impacto real** de sus proyectos. ¿Qué te interesaría saber más sobre él?' 
+              : "Hi! 👋 I am **GerAssist**, Gerardo Medina's AI assistant.\n\nI would love to tell you more about Gerardo, his **Full Stack & Data Analyst / Data Scientist** profile, his passion for **Accessibility (WCAG 2.1 AA)**, his **UTN** studies, and the **real impact** of his work. What would you like to know about him?"}
           </div>
         </div>
 
