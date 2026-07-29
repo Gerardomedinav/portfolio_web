@@ -13,6 +13,7 @@ import { initHome } from './modules/home.js';
 import { initAbout } from './modules/about.js';
 import { initFooterContact } from './modules/footerContact.js';
 import { initAdminModal, openAdminModal } from './modules/adminModal.js';
+import { initChatbot } from './modules/chatbotModal.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Inicializar Almacén Central de Datos
@@ -47,6 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Inicializar Suite de Accesibilidad (Voz, Daltonismo, Tipografía)
   initAccessibility();
+
+  // Inicializar Asistente Virtual Inteligente (GerAssist)
+  initChatbot();
 
   // Inicializar Modal de Administración & CRUD
   initAdminModal();
