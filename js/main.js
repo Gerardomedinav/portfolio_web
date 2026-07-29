@@ -8,8 +8,17 @@ import { initProjects } from './modules/projects.js';
 import { initSkills } from './modules/skills.js';
 import { initAccessibility } from './modules/accessibility.js';
 import { initContactForm } from './modules/contact.js';
+import { initDataStore } from './modules/dataStore.js';
+import { initHome } from './modules/home.js';
+import { initAdminModal, openAdminModal } from './modules/adminModal.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Inicializar Almacén Central de Datos
+  initDataStore();
+
+  // Inicializar Sección Inicio / Banner Dinámico
+  initHome();
+
   // Inicializar Navegación y Menú
   initNavigation();
 
@@ -30,4 +39,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Inicializar Suite de Accesibilidad (Voz, Daltonismo, Tipografía)
   initAccessibility();
+
+  // Inicializar Modal de Administración & CRUD
+  initAdminModal();
+
+  // Escuchador para el botón de acceso de administración (🔑)
+  const adminBtn = document.getElementById('admin-access-btn');
+  if (adminBtn) {
+    adminBtn.addEventListener('click', () => {
+      openAdminModal();
+    });
+  }
 });

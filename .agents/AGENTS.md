@@ -22,6 +22,10 @@ Este documento sirve como memoria y guía contextual de referencia para cualquie
   - `i18n.js`: Motor de internacionalización (ES/EN), sincronización de selectores y previsualización de CV en PDF.
   - `projects.js`: Renderizado dinámico de proyectos reactivo al idioma con modales adaptativos.
   - `skills.js`: Renderizado dinámico de habilidades reactivo al idioma.
+  - `auth.js`: Sistema de autenticación de administrador con cifrado criptográfico SHA-256 nativo, gestión de sesiones y cambio de contraseña.
+  - `dataStore.js`: Almacén centralizado de datos reactivos del sitio con persistencia local y reseteo por defecto.
+  - `home.js`: Renderizado dinámico de la sección Inicio / Banner reactivo a cambios de estado e idioma.
+  - `adminModal.js`: Inyección dinámica del modal de Login y del panel de administración CRUD del Banner con pestañas interactiva.
   - `contact.js`: Formulario de contacto interactivo con envíos asíncronos directos (AJAX) vía Formspree (`https://formspree.io/f/mvzeyrzq`) hacia correo personal, trampa anti-bots Honeypot `_gotcha` y validación de contenido.
   - `accessibility.js`: Suite avanzada de accesibilidad WCAG 2.1 AA (Lector de voz TTS, Daltonismo/Filtros de color, tamaño de texto A-/A/A+, espaciado de lectura para dislexia, resaltado de enlaces, pausar animaciones TDA y restablecer todo).
 
