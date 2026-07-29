@@ -1537,8 +1537,8 @@ body.dark .bot-cta-link {
 /* SVG Ring Progress */
 .preloader-ring-wrapper {
   position: relative;
-  width: 130px;
-  height: 130px;
+  width: 140px;
+  height: 140px;
   margin-bottom: 1.5rem;
   display: flex;
   align-items: center;
@@ -1558,31 +1558,56 @@ body.dark .bot-cta-link {
 
 .preloader-circle-progress {
   fill: none;
-  stroke: url(#preloader-gradient);
-  stroke: var(--first-color);
+  stroke: #38bdf8; /* Cyan vibrante */
   stroke-width: 8;
   stroke-linecap: round;
   transition: stroke-dashoffset 0.35s ease;
-  filter: drop-shadow(0 0 10px rgba(0, 120, 255, 0.6));
+  filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.8));
 }
 
-.preloader-percent-box {
+.preloader-center-content {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 0.15rem;
+}
+
+.preloader-bot-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+  animation: botPulseGlow 2s infinite ease-in-out;
+}
+
+.preloader-bot-icon {
+  font-size: 1.75rem;
+  color: #38bdf8; /* Celeste / Cyan vibrante */
+  filter: drop-shadow(0 0 8px #38bdf8);
+}
+
+@keyframes botPulseGlow {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(56, 189, 248, 0.4); }
+  50% { transform: scale(1.08); box-shadow: 0 0 28px rgba(56, 189, 248, 0.8); }
 }
 
 .preloader-percent-num {
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   font-weight: 700;
   letter-spacing: -0.5px;
   color: #ffffff;
-  text-shadow: 0 0 12px rgba(0, 120, 255, 0.8);
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.8);
 }
 
 .preloader-info {

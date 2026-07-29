@@ -1,5 +1,5 @@
 /**
- * Módulo del Preloader de Carga Inteligente (SVG Circle Progress & Module Readiness)
+ * Módulo del Preloader de Carga Inteligente (SVG Circle Progress, Bot Icon & Component Readiness)
  */
 
 let preloaderEl = null;
@@ -20,18 +20,23 @@ export function initPreloader() {
   preloaderEl.innerHTML = `
     <div class="preloader-card">
       <div class="preloader-ring-wrapper">
-        <svg class="preloader-svg" width="130" height="130" viewBox="0 0 120 120">
+        <svg class="preloader-svg" width="140" height="140" viewBox="0 0 120 120">
           <circle class="preloader-circle-bg" cx="60" cy="60" r="${CIRCLE_RADIUS}" />
           <circle class="preloader-circle-progress" cx="60" cy="60" r="${CIRCLE_RADIUS}" />
         </svg>
-        <div class="preloader-percent-box">
+        
+        <!-- Centro del Anillo: Icono del Bot Celeste Animado + Porcentaje -->
+        <div class="preloader-center-content">
+          <div class="preloader-bot-badge">
+            <i class="bx bx-bot preloader-bot-icon"></i>
+          </div>
           <span id="preloader-percent" class="preloader-percent-num">0%</span>
         </div>
       </div>
 
       <div class="preloader-info">
         <h3 class="preloader-title">Gerardo Medina</h3>
-        <p id="preloader-status" class="preloader-status-text">⚡ Iniciando componentes...</p>
+        <p id="preloader-status" class="preloader-status-text">🤖 Iniciando Asistente Virtual GerAssist con IA...</p>
       </div>
 
       <div class="preloader-dots">
@@ -76,7 +81,7 @@ export function updatePreloaderProgress(percent, label) {
   if (clamped >= 100) {
     setTimeout(() => {
       finishPreloader();
-    }, 400);
+    }, 450);
   }
 }
 
