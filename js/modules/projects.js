@@ -23,16 +23,15 @@ export function renderProjects(projects, lang) {
   const currentTexts = texts[lang] || texts.es;
 
   const aosAnimations = [
-    "fade-right",  // Ingresa desde la izquierda
-    "fade-down",   // Ingresa desde arriba
-    "fade-left",   // Ingresa desde la derecha
-    "fade-up",     // Ingresa desde abajo
+    "fade-right",
+    "fade-down",
+    "fade-left",
+    "fade-up",
     "zoom-in-right",
     "zoom-in-left"
   ];
 
   projects.forEach((project, index) => {
-    // 1. Tarjeta de Proyecto
     const projectCard = document.createElement("article");
     projectCard.className = "projects__links";
     projectCard.dataset.aos = aosAnimations[index % aosAnimations.length];
@@ -42,9 +41,8 @@ export function renderProjects(projects, lang) {
     const fullDesc = (project.description && (project.description[lang] || project.description.es)) || "";
     const shortDesc = fullDesc.length > 100 ? fullDesc.substring(0, 100) + "..." : fullDesc;
 
-    const thumbnailAlt = lang === 'es' 
-      ? `Captura de portada del proyecto ${titleText}` 
-      : `Thumbnail screenshot for project ${titleText}`;
+    const thumbnailAlt = (project.imageAlt && (project.imageAlt[lang] || project.imageAlt.es)) || 
+      (lang === 'es' ? `Captura de portada del proyecto ${titleText}` : `Thumbnail screenshot for project ${titleText}`);
 
     const popoverAlt = lang === 'es'
       ? `Vista previa ampliada y detallada del proyecto ${titleText}`
@@ -84,7 +82,6 @@ export function renderProjects(projects, lang) {
       </div>
     `;
 
-    // 2. Elemento Popover fuera de la tarjeta para aislarlo del flujo grid
     const popoverDiv = document.createElement("div");
     popoverDiv.id = `popover-${index}`;
     popoverDiv.setAttribute("popover", "auto");

@@ -11,6 +11,7 @@ import { initContactForm } from './modules/contact.js';
 import { initDataStore } from './modules/dataStore.js';
 import { initHome } from './modules/home.js';
 import { initAbout } from './modules/about.js';
+import { initFooterContact } from './modules/footerContact.js';
 import { initAdminModal, openAdminModal } from './modules/adminModal.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -22,6 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Inicializar Sección Sobre Mí Dinámica
   initAbout();
+
+  // Inicializar Datos de Contacto y Footer Dinámicos
+  initFooterContact();
 
   // Inicializar Navegación y Menú
   initNavigation();

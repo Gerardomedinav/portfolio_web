@@ -2,25 +2,20 @@
  * Módulo de Manejo del Formulario de Contacto (AJAX URLSearchParams Formspree)
  */
 import { getLang } from './i18n.js';
-
-// URL Endpoint Real de Formspree vinculado a gerardomedinavv@gmail.com
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mvzeyrzq';
+import { getContactData } from './dataStore.js';
 
 export function initContactForm() {
   const form = document.getElementById('contact-form');
   const statusDiv = document.getElementById('contact-form-status');
   if (!form || !statusDiv) return;
 
-  // Limpiar cualquier residuo previo de bloqueos de localStorage
   try {
     localStorage.removeItem('portfolio_contact_submissions');
   } catch (e) {}
 
-  // Guardar HTML original del botón de envío para restauración limpia
   const submitBtn = form.querySelector('button[type="submit"]');
   const defaultBtnHTML = submitBtn ? submitBtn.innerHTML : '<i class="bx bx-paper-plane"></i> Enviar Mensaje';
 
-  // Ocultar alerta de estado anterior cuando el usuario empiece a escribir un nuevo mensaje
   form.addEventListener('input', () => {
     if (statusDiv.style.display !== 'none' && !submitBtn.disabled) {
       statusDiv.style.display = 'none';
@@ -33,8 +28,9 @@ export function initContactForm() {
     e.preventDefault();
 
     const lang = getLang();
+    const contactData = getContactData();
+    const targetEndpoint = contactData.formspreeEndpoint || 'https://formspree.io/f/mvzeyrzq';
 
-    // 1. Validación de contenido mínimo
     const messageInput = form.querySelector('textarea[name="message"]');
     const messageText = messageInput ? messageInput.value.trim() : '';
 
@@ -50,7 +46,6 @@ export function initContactForm() {
       return;
     }
 
-    // Textos de estado
     const loadingText = lang === 'es' ? 'Enviando mensaje...' : 'Sending message...';
     const successMessage = lang === 'es'
       ? '¡Gracias por escribir! Tu mensaje ha sido enviado correctamente. Me pondré en contacto contigo a la brevedad.'
@@ -59,7 +54,6 @@ export function initContactForm() {
       ? 'Hubo un inconveniente al procesar la solicitud. Por favor intenta de nuevo en un momento.'
       : 'There was an issue processing your request. Please try again in a moment.';
 
-    // Estado enviando en el botón
     if (submitBtn) {
       submitBtn.disabled = true;
       submitBtn.innerHTML = `<i class="bx bx-loader-alt bx-spin"></i> ${loadingText}`;
@@ -72,8 +66,7 @@ export function initContactForm() {
     const formData = new FormData(form);
 
     try {
-      // Envío en formato URLSearchParams (El estándar óptimo aceptado por Formspree)
-      const response = await fetch(FORMSPREE_ENDPOINT, {
+      const response = await fetch(targetEndpoint, {
         method: 'POST',
         body: new URLSearchParams(formData),
         headers: {

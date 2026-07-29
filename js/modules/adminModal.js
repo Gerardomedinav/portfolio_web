@@ -1,15 +1,12 @@
 /**
- * Módulo del Panel de Administración y Modales CRUD (Login + Banner + About + Projects Editor)
+ * Módulo del Panel de Administración y Modales CRUD (Login + Banner + About + Projects + Skills + Contact/Footer + Alt Text)
  */
 import { isAuthenticated, login, logout, changePassword } from './auth.js';
-import { getBannerData, saveBannerData, resetBannerData, getAboutData, saveAboutData, resetAboutData, getProjectsData, saveProjectsData, resetProjectsData } from './dataStore.js';
+import { getBannerData, saveBannerData, resetBannerData, getAboutData, saveAboutData, resetAboutData, getProjectsData, saveProjectsData, resetProjectsData, getSkillsData, saveSkillsData, resetSkillsData, getContactData, saveContactData, resetContactData } from './dataStore.js';
 import { getLang } from './i18n.js';
 
 let modalContainer = null;
 
-/**
- * Crea o recupera el contenedor modal principal para inyección dinámica
- */
 function getModalContainer() {
   if (!modalContainer) {
     modalContainer = document.createElement('div');
@@ -21,9 +18,6 @@ function getModalContainer() {
   return modalContainer;
 }
 
-/**
- * Abre la ventana modal según el estado de autenticación
- */
 export function openAdminModal() {
   const container = getModalContainer();
   container.innerHTML = '';
@@ -36,9 +30,6 @@ export function openAdminModal() {
   }
 }
 
-/**
- * Cierra la ventana modal
- */
 export function closeAdminModal() {
   if (modalContainer) {
     modalContainer.style.display = 'none';
@@ -46,9 +37,6 @@ export function closeAdminModal() {
   }
 }
 
-/**
- * Convierte un archivo local cargado a DataURL (Base64)
- */
 function readFileAsDataURL(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -58,9 +46,6 @@ function readFileAsDataURL(file) {
   });
 }
 
-/**
- * Renderiza la interfaz de inicio de sesión (Login)
- */
 function renderLoginModal(container) {
   const lang = getLang();
 
@@ -149,14 +134,13 @@ function renderLoginModal(container) {
   }, 100);
 }
 
-/**
- * Renderiza el panel completo CRUD de administración (Banner + About + Projects)
- */
 async function renderCrudPanel(container) {
   const lang = getLang();
   const bannerData = getBannerData();
   const aboutData = getAboutData();
   let projectsData = await getProjectsData();
+  let skillsData = await getSkillsData();
+  const contactData = getContactData();
 
   let uploadedProfileImg = bannerData.profileImg || '';
   let uploadedCvEs = bannerData.cv?.es || '';
@@ -183,7 +167,7 @@ async function renderCrudPanel(container) {
       <!-- Pestañas de navegación -->
       <div class="admin-tabs" role="tablist">
         <button type="button" class="admin-tab active" data-tab="tab-banner" role="tab" aria-selected="true">
-          <i class="bx bx-home"></i> ${lang === 'es' ? '1. Banner / Inicio' : '1. Banner / Home'}
+          <i class="bx bx-home"></i> ${lang === 'es' ? '1. Banner' : '1. Banner'}
         </button>
         <button type="button" class="admin-tab" data-tab="tab-about" role="tab" aria-selected="false">
           <i class="bx bx-user"></i> ${lang === 'es' ? '2. Sobre Mí' : '2. About Me'}
@@ -191,8 +175,14 @@ async function renderCrudPanel(container) {
         <button type="button" class="admin-tab" data-tab="tab-projects" role="tab" aria-selected="false">
           <i class="bx bx-briefcase"></i> ${lang === 'es' ? '3. Proyectos' : '3. Projects'}
         </button>
+        <button type="button" class="admin-tab" data-tab="tab-skills" role="tab" aria-selected="false">
+          <i class="bx bx-code-alt"></i> ${lang === 'es' ? '4. Habilidades' : '4. Skills'}
+        </button>
+        <button type="button" class="admin-tab" data-tab="tab-contact" role="tab" aria-selected="false">
+          <i class="bx bx-envelope"></i> ${lang === 'es' ? '5. Contacto & Footer' : '5. Contact & Footer'}
+        </button>
         <button type="button" class="admin-tab" data-tab="tab-security" role="tab" aria-selected="false">
-          <i class="bx bx-key"></i> ${lang === 'es' ? 'Seguridad / Clave' : 'Security / Key'}
+          <i class="bx bx-key"></i> ${lang === 'es' ? 'Clave' : 'Key'}
         </button>
       </div>
 
@@ -231,7 +221,7 @@ async function renderCrudPanel(container) {
             </div>
           </div>
 
-          <h4 class="admin-section-subtitle" style="margin-top: 1.2rem;"><i class="bx bx-image-add"></i> Archivos Multimedia</h4>
+          <h4 class="admin-section-subtitle" style="margin-top: 1.2rem;"><i class="bx bx-image-add"></i> Archivos Multimedia & Accesibilidad</h4>
           <div class="admin-form-grid">
             <div class="admin-field admin-field--full">
               <label>Foto de Perfil Principal:</label>
@@ -247,6 +237,16 @@ async function renderCrudPanel(container) {
                   <span id="banner-img-filename" class="admin-file-name">Imagen activa</span>
                 </div>
               </div>
+            </div>
+
+            <div class="admin-field">
+              <label for="banner-img-alt-es">Texto Alt Foto (Español):</label>
+              <input type="text" id="banner-img-alt-es" value="${escapeAttr(bannerData.profileImgAlt?.es || 'Fotografía de Gerardo Medina, desarrollador Full Stack')}" required />
+            </div>
+
+            <div class="admin-field">
+              <label for="banner-img-alt-en">Alt Text Photo (English):</label>
+              <input type="text" id="banner-img-alt-en" value="${escapeAttr(bannerData.profileImgAlt?.en || 'Photograph of Gerardo Medina, Full Stack Developer')}" required />
             </div>
 
             <div class="admin-field">
@@ -322,20 +322,32 @@ async function renderCrudPanel(container) {
             <textarea id="about-text-en" rows="6" class="admin-textarea" required>${escapeAttr(aboutData.text?.en || '')}</textarea>
           </div>
 
-          <h4 class="admin-section-subtitle" style="margin-top: 1.2rem;"><i class="bx bx-image"></i> Fotografía Secundaria (Sobre Mí)</h4>
-          <div class="admin-field admin-field--full">
-            <label>Foto de Sobre Mí:</label>
-            <div class="admin-file-picker-group">
-              <div class="admin-preview-thumb">
-                <img id="about-img-preview" src="${uploadedAboutPhotoImg}" alt="Previsualización Sobre Mí" />
+          <h4 class="admin-section-subtitle" style="margin-top: 1.2rem;"><i class="bx bx-image"></i> Fotografía Secundaria & Accesibilidad</h4>
+          <div class="admin-form-grid">
+            <div class="admin-field admin-field--full">
+              <label>Foto de Sobre Mí:</label>
+              <div class="admin-file-picker-group">
+                <div class="admin-preview-thumb">
+                  <img id="about-img-preview" src="${uploadedAboutPhotoImg}" alt="Previsualización Sobre Mí" />
+                </div>
+                <div class="admin-file-input-wrapper">
+                  <input type="file" id="about-img-file" accept="image/*" class="admin-file-hidden" />
+                  <label for="about-img-file" class="admin-btn admin-btn--secondary">
+                    <i class="bx bx-cloud-upload"></i> Seleccionar Imagen de Sobre Mí
+                  </label>
+                  <span id="about-img-filename" class="admin-file-name">Imagen activa</span>
+                </div>
               </div>
-              <div class="admin-file-input-wrapper">
-                <input type="file" id="about-img-file" accept="image/*" class="admin-file-hidden" />
-                <label for="about-img-file" class="admin-btn admin-btn--secondary">
-                  <i class="bx bx-cloud-upload"></i> Seleccionar Imagen de Sobre Mí
-                </label>
-                <span id="about-img-filename" class="admin-file-name">Imagen activa</span>
-              </div>
+            </div>
+
+            <div class="admin-field">
+              <label for="about-img-alt-es">Texto Alt Foto (Español):</label>
+              <input type="text" id="about-img-alt-es" value="${escapeAttr(aboutData.photoImgAlt?.es || 'Fotografía de Gerardo Medina')}" required />
+            </div>
+
+            <div class="admin-field">
+              <label for="about-img-alt-en">Alt Text Photo (English):</label>
+              <input type="text" id="about-img-alt-en" value="${escapeAttr(aboutData.photoImgAlt?.en || 'Photograph of Gerardo Medina')}" required />
             </div>
           </div>
 
@@ -361,7 +373,6 @@ async function renderCrudPanel(container) {
           </button>
         </div>
 
-        <!-- Contenedor del Formulario de Edición / Creación (Oculto por defecto) -->
         <div id="project-editor-container" class="admin-subcard" style="display:none;">
           <h4 id="project-editor-title" class="admin-subcard-title">Crear Nuevo Proyecto</h4>
           <form id="project-editor-form" class="admin-form">
@@ -385,7 +396,6 @@ async function renderCrudPanel(container) {
               </div>
             </div>
 
-            <!-- Imagen del proyecto -->
             <div class="admin-field admin-field--full" style="margin-top:0.75rem;">
               <label>Imagen / Portada del Proyecto:</label>
               <div class="admin-file-picker-group">
@@ -399,6 +409,17 @@ async function renderCrudPanel(container) {
                   </label>
                   <span id="proj-img-filename" class="admin-file-name">Imagen actual</span>
                 </div>
+              </div>
+            </div>
+
+            <div class="admin-form-grid" style="margin-top:0.5rem;">
+              <div class="admin-field">
+                <label for="proj-img-alt-es">Texto Alt Portada (Español):</label>
+                <input type="text" id="proj-img-alt-es" placeholder="ej: Captura de portada del proyecto..." />
+              </div>
+              <div class="admin-field">
+                <label for="proj-img-alt-en">Alt Text Cover (English):</label>
+                <input type="text" id="proj-img-alt-en" placeholder="e.g. Thumbnail screenshot..." />
               </div>
             </div>
 
@@ -422,11 +443,7 @@ async function renderCrudPanel(container) {
           </form>
         </div>
 
-        <!-- Lista de Proyectos Registrados -->
-        <div id="projects-items-list" class="admin-projects-list">
-          <!-- Se inyectan dinámicamente -->
-        </div>
-
+        <div id="projects-items-list" class="admin-projects-list"></div>
         <div id="admin-projects-status" class="admin-status" style="display:none; margin-top:1rem;"></div>
 
         <div class="admin-footer-btn-group" style="margin-top:1.5rem;">
@@ -436,7 +453,141 @@ async function renderCrudPanel(container) {
         </div>
       </div>
 
-      <!-- Pestaña 4: Seguridad / Clave -->
+      <!-- Pestaña 4: Habilidades (Skills) CRUD -->
+      <div id="tab-skills" class="admin-tab-content" role="tabpanel" style="display:none;">
+        <div class="admin-projects-toolbar">
+          <div class="admin-category-selector">
+            <button type="button" class="admin-cat-btn active" data-category="languages">Lenguajes (${skillsData.languages?.length || 0})</button>
+            <button type="button" class="admin-cat-btn" data-category="frameworks">Frameworks (${skillsData.frameworks?.length || 0})</button>
+            <button type="button" class="admin-cat-btn" data-category="tools">Herramientas (${skillsData.tools?.length || 0})</button>
+          </div>
+          <button type="button" id="btn-add-new-skill" class="admin-btn admin-btn--primary">
+            <i class="bx bx-plus-circle"></i> + Agregar Tecnología
+          </button>
+        </div>
+
+        <div id="skill-editor-container" class="admin-subcard" style="display:none;">
+          <h4 id="skill-editor-title" class="admin-subcard-title">Agregar Nueva Tecnología</h4>
+          <form id="skill-editor-form" class="admin-form">
+            <input type="hidden" id="skill-edit-category" value="languages" />
+            <input type="hidden" id="skill-edit-index" value="-1" />
+            <div class="admin-form-grid">
+              <div class="admin-field">
+                <label for="skill-category-select">Categoría:</label>
+                <select id="skill-category-select" class="admin-select">
+                  <option value="languages">Lenguajes de Programación</option>
+                  <option value="frameworks">Frameworks y Librerías</option>
+                  <option value="tools">Herramientas y Entornos</option>
+                </select>
+              </div>
+              <div class="admin-field">
+                <label for="skill-name">Nombre de la Tecnología:</label>
+                <input type="text" id="skill-name" placeholder="ej: Node.js" required />
+              </div>
+              <div class="admin-field admin-field--full">
+                <label for="skill-link">URL Sitio Oficial / Documentación:</label>
+                <input type="url" id="skill-link" placeholder="https://nodejs.org" required />
+              </div>
+            </div>
+
+            <div class="admin-field admin-field--full" style="margin-top:0.75rem;">
+              <label>Logo / Icono de la Tecnología:</label>
+              <div class="admin-file-picker-group">
+                <div class="admin-preview-thumb">
+                  <img id="skill-img-preview" src="./assets/icon/icons8-javascript.svg" alt="Previsualización logo" />
+                </div>
+                <div class="admin-file-input-wrapper">
+                  <input type="file" id="skill-img-file" accept="image/*" class="admin-file-hidden" />
+                  <label for="skill-img-file" class="admin-btn admin-btn--secondary">
+                    <i class="bx bx-image-add"></i> Seleccionar Logo desde Equipo
+                  </label>
+                  <span id="skill-img-filename" class="admin-file-name">Logo actual</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="admin-form-grid" style="margin-top:0.5rem;">
+              <div class="admin-field">
+                <label for="skill-img-alt-es">Texto Alt Logo (Español):</label>
+                <input type="text" id="skill-img-alt-es" placeholder="ej: Logo de Node.js..." />
+              </div>
+              <div class="admin-field">
+                <label for="skill-img-alt-en">Alt Text Logo (English):</label>
+                <input type="text" id="skill-img-alt-en" placeholder="e.g. Logo of Node.js..." />
+              </div>
+            </div>
+
+            <div class="admin-footer-btn-group" style="margin-top:1rem;">
+              <button type="button" id="btn-cancel-skill" class="admin-btn admin-btn--secondary">
+                Cancelar
+              </button>
+              <button type="submit" class="admin-btn admin-btn--primary">
+                <i class="bx bx-check"></i> Guardar Tecnología
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div id="skills-items-list" class="admin-projects-list"></div>
+        <div id="admin-skills-status" class="admin-status" style="display:none; margin-top:1rem;"></div>
+
+        <div class="admin-footer-btn-group" style="margin-top:1.5rem;">
+          <button type="button" id="admin-reset-skills-btn" class="admin-btn admin-btn--danger">
+            <i class="bx bx-refresh"></i> Restablecer Habilidades por Defecto
+          </button>
+        </div>
+      </div>
+
+      <!-- Pestaña 5: Contacto & Footer -->
+      <div id="tab-contact" class="admin-tab-content" role="tabpanel" style="display:none;">
+        <form id="admin-contact-form" class="admin-form">
+          <h4 class="admin-section-subtitle"><i class="bx bx-envelope"></i> Formulario de Contacto & Datos Directos</h4>
+          <div class="admin-form-grid">
+            <div class="admin-field admin-field--full">
+              <label for="contact-endpoint">Endpoint Formspree (URL de envíos AJAX):</label>
+              <input type="url" id="contact-endpoint" value="${escapeAttr(contactData.formspreeEndpoint || 'https://formspree.io/f/mvzeyrzq')}" required />
+            </div>
+
+            <div class="admin-field">
+              <label for="contact-phone">Teléfono / WhatsApp:</label>
+              <input type="text" id="contact-phone" value="${escapeAttr(contactData.phone || '')}" required />
+            </div>
+
+            <div class="admin-field">
+              <label for="contact-location-es">Ubicación (Español):</label>
+              <input type="text" id="contact-location-es" value="${escapeAttr(contactData.location?.es || '')}" required />
+            </div>
+
+            <div class="admin-field admin-field--full">
+              <label for="contact-location-en">Location (English):</label>
+              <input type="text" id="contact-location-en" value="${escapeAttr(contactData.location?.en || '')}" required />
+            </div>
+          </div>
+
+          <h4 class="admin-section-subtitle" style="margin-top: 1.2rem;"><i class="bx bx-copyright"></i> Pie de Página (Footer Copyright)</h4>
+          <div class="admin-field">
+            <label for="footer-copy-es">Copyright Text (Español):</label>
+            <input type="text" id="footer-copy-es" value="${escapeAttr(contactData.footerCopyright?.es || '')}" required />
+          </div>
+          <div class="admin-field">
+            <label for="footer-copy-en">Copyright Text (English):</label>
+            <input type="text" id="footer-copy-en" value="${escapeAttr(contactData.footerCopyright?.en || '')}" required />
+          </div>
+
+          <div id="admin-contact-status" class="admin-status" style="display:none;"></div>
+
+          <div class="admin-footer-btn-group">
+            <button type="button" id="admin-reset-contact-btn" class="admin-btn admin-btn--danger">
+              <i class="bx bx-refresh"></i> Restablecer Contacto & Footer
+            </button>
+            <button type="submit" class="admin-btn admin-btn--primary">
+              <i class="bx bx-save"></i> Guardar Cambios de Contacto
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Pestaña 6: Seguridad / Clave -->
       <div id="tab-security" class="admin-tab-content" role="tabpanel" style="display:none;">
         <form id="admin-pass-form" class="admin-form">
           <div class="admin-field">
@@ -462,7 +613,7 @@ async function renderCrudPanel(container) {
     </div>
   `;
 
-  // Renderizar la lista de proyectos en la Pestaña 3
+  // === Lógica Pestaña 3: Proyectos ===
   const projectsListContainer = container.querySelector('#projects-items-list');
   const projectEditorContainer = container.querySelector('#project-editor-container');
   const projectEditorTitle = container.querySelector('#project-editor-title');
@@ -506,7 +657,6 @@ async function renderCrudPanel(container) {
       projectsListContainer.appendChild(item);
     });
 
-    // Listeners de Editar y Eliminar
     projectsListContainer.querySelectorAll('.btn-edit-proj').forEach(btn => {
       btn.addEventListener('click', () => {
         const index = parseInt(btn.dataset.index, 10);
@@ -541,6 +691,9 @@ async function renderCrudPanel(container) {
       container.querySelector('#proj-demo').value = proj.demo || '';
       container.querySelector('#proj-desc-es').value = proj.description?.es || '';
       container.querySelector('#proj-desc-en').value = proj.description?.en || '';
+      container.querySelector('#proj-img-alt-es').value = proj.imageAlt?.es || '';
+      container.querySelector('#proj-img-alt-en').value = proj.imageAlt?.en || '';
+
       currentProjectImgData = proj.image || '';
       if (projImgPreview) projImgPreview.src = currentProjectImgData;
       if (projImgFilename) projImgFilename.textContent = 'Imagen actual retenida';
@@ -557,7 +710,6 @@ async function renderCrudPanel(container) {
     projectEditorContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
-  // Listener para el file input de imagen del proyecto
   const projImgFileInput = container.querySelector('#proj-img-file');
   const projImgPreview = container.querySelector('#proj-img-preview');
   const projImgFilename = container.querySelector('#proj-img-filename');
@@ -585,11 +737,13 @@ async function renderCrudPanel(container) {
     });
   }
 
-  // Formulario Submit de Proyecto
   if (projectEditorForm) {
     projectEditorForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const editIndex = parseInt(projectEditIndexInput.value, 10);
+
+      const altEs = container.querySelector('#proj-img-alt-es').value.trim();
+      const altEn = container.querySelector('#proj-img-alt-en').value.trim();
 
       const newProjObj = {
         title: {
@@ -597,6 +751,10 @@ async function renderCrudPanel(container) {
           en: container.querySelector('#proj-title-en').value.trim()
         },
         image: currentProjectImgData || './assets/img/projects/siga_formosa.png',
+        imageAlt: {
+          es: altEs,
+          en: altEn
+        },
         github: container.querySelector('#proj-github').value.trim(),
         demo: container.querySelector('#proj-demo').value.trim(),
         description: {
@@ -608,7 +766,7 @@ async function renderCrudPanel(container) {
       if (editIndex >= 0 && editIndex < projectsData.length) {
         projectsData[editIndex] = newProjObj;
       } else {
-        projectsData.unshift(newProjObj); // Agregar al inicio
+        projectsData.unshift(newProjObj);
       }
 
       saveProjectsData(projectsData);
@@ -617,7 +775,6 @@ async function renderCrudPanel(container) {
     });
   }
 
-  // Reset Proyectos
   const btnResetProjects = container.querySelector('#admin-reset-projects-btn');
   if (btnResetProjects) {
     btnResetProjects.addEventListener('click', async () => {
@@ -631,7 +788,256 @@ async function renderCrudPanel(container) {
 
   renderProjectsAdminList();
 
-  // Escuchadores de Archivos Generales (Banner / About)
+  // === Lógica Pestaña 4: Habilidades (Skills) ===
+  let activeSkillCategory = 'languages';
+  const skillsListContainer = container.querySelector('#skills-items-list');
+  const skillEditorContainer = container.querySelector('#skill-editor-container');
+  const skillEditorTitle = container.querySelector('#skill-editor-title');
+  const skillEditorForm = container.querySelector('#skill-editor-form');
+  const skillEditIndexInput = container.querySelector('#skill-edit-index');
+  const skillEditCategoryInput = container.querySelector('#skill-edit-category');
+  const skillCategorySelect = container.querySelector('#skill-category-select');
+
+  let currentSkillImgData = '';
+
+  function renderSkillsAdminList() {
+    if (!skillsListContainer) return;
+    skillsListContainer.innerHTML = '';
+
+    const list = skillsData[activeSkillCategory] || [];
+
+    if (list.length === 0) {
+      skillsListContainer.innerHTML = '<p class="admin-empty-text">No hay tecnologías registradas en esta categoría.</p>';
+      return;
+    }
+
+    list.forEach((skill, idx) => {
+      const item = document.createElement('div');
+      item.className = 'admin-project-item';
+
+      item.innerHTML = `
+        <div class="admin-project-thumb">
+          <img src="${skill.image}" alt="${skill.name}" />
+        </div>
+        <div class="admin-project-info">
+          <h5>${skill.name}</h5>
+          <span class="admin-project-links-preview">${skill.link ? skill.link : 'Sin Link'}</span>
+        </div>
+        <div class="admin-project-actions">
+          <button type="button" class="admin-icon-btn btn-edit-skill" data-index="${idx}" title="Editar tecnología">
+            <i class="bx bx-edit"></i>
+          </button>
+          <button type="button" class="admin-icon-btn admin-icon-btn--danger btn-del-skill" data-index="${idx}" title="Eliminar tecnología">
+            <i class="bx bx-trash"></i>
+          </button>
+        </div>
+      `;
+
+      skillsListContainer.appendChild(item);
+    });
+
+    skillsListContainer.querySelectorAll('.btn-edit-skill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const index = parseInt(btn.dataset.index, 10);
+        openSkillEditor(activeSkillCategory, index);
+      });
+    });
+
+    skillsListContainer.querySelectorAll('.btn-del-skill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const index = parseInt(btn.dataset.index, 10);
+        const skillName = skillsData[activeSkillCategory][index]?.name || 'esta tecnología';
+        if (confirm(`¿Estás seguro de eliminar "${skillName}"?`)) {
+          skillsData[activeSkillCategory].splice(index, 1);
+          saveSkillsData(skillsData);
+          renderSkillsAdminList();
+          updateCategoryCounters();
+        }
+      });
+    });
+  }
+
+  function updateCategoryCounters() {
+    const catBtns = container.querySelectorAll('.admin-cat-btn');
+    if (catBtns.length >= 3) {
+      catBtns[0].textContent = `Lenguajes (${skillsData.languages?.length || 0})`;
+      catBtns[1].textContent = `Frameworks (${skillsData.frameworks?.length || 0})`;
+      catBtns[2].textContent = `Herramientas (${skillsData.tools?.length || 0})`;
+    }
+  }
+
+  const catBtns = container.querySelectorAll('.admin-cat-btn');
+  catBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      catBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeSkillCategory = btn.dataset.category;
+      renderSkillsAdminList();
+    });
+  });
+
+  function openSkillEditor(category = 'languages', index = -1) {
+    skillEditCategoryInput.value = category;
+    skillEditIndexInput.value = index;
+    if (skillCategorySelect) skillCategorySelect.value = category;
+
+    const skillImgPreview = container.querySelector('#skill-img-preview');
+    const skillImgFilename = container.querySelector('#skill-img-filename');
+
+    if (index >= 0 && skillsData[category] && skillsData[category][index]) {
+      const skill = skillsData[category][index];
+      skillEditorTitle.textContent = `Editar Tecnología: ${skill.name}`;
+      container.querySelector('#skill-name').value = skill.name || '';
+      container.querySelector('#skill-link').value = skill.link || '';
+      container.querySelector('#skill-img-alt-es').value = skill.imageAlt?.es || '';
+      container.querySelector('#skill-img-alt-en').value = skill.imageAlt?.en || '';
+
+      currentSkillImgData = skill.image || '';
+      if (skillImgPreview) skillImgPreview.src = currentSkillImgData;
+      if (skillImgFilename) skillImgFilename.textContent = 'Logo actual retenido';
+    } else {
+      skillEditorTitle.textContent = '+ Agregar Nueva Tecnología';
+      skillEditorForm.reset();
+      skillEditCategoryInput.value = category;
+      skillEditIndexInput.value = -1;
+      if (skillCategorySelect) skillCategorySelect.value = category;
+      currentSkillImgData = './assets/icon/icons8-javascript.svg';
+      if (skillImgPreview) skillImgPreview.src = currentSkillImgData;
+      if (skillImgFilename) skillImgFilename.textContent = 'Selecciona un logo';
+    }
+
+    skillEditorContainer.style.display = 'block';
+    skillEditorContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  const skillImgFileInput = container.querySelector('#skill-img-file');
+  const skillImgPreview = container.querySelector('#skill-img-preview');
+  const skillImgFilename = container.querySelector('#skill-img-filename');
+
+  if (skillImgFileInput) {
+    skillImgFileInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        skillImgFilename.textContent = `Logo: ${file.name}`;
+        currentSkillImgData = await readFileAsDataURL(file);
+        if (skillImgPreview) skillImgPreview.src = currentSkillImgData;
+      }
+    });
+  }
+
+  const btnAddNewSkill = container.querySelector('#btn-add-new-skill');
+  if (btnAddNewSkill) {
+    btnAddNewSkill.addEventListener('click', () => openSkillEditor(activeSkillCategory, -1));
+  }
+
+  const btnCancelSkill = container.querySelector('#btn-cancel-skill');
+  if (btnCancelSkill) {
+    btnCancelSkill.addEventListener('click', () => {
+      skillEditorContainer.style.display = 'none';
+    });
+  }
+
+  if (skillEditorForm) {
+    skillEditorForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const targetCategory = skillCategorySelect ? skillCategorySelect.value : activeSkillCategory;
+      const editIndex = parseInt(skillEditIndexInput.value, 10);
+
+      const altEs = container.querySelector('#skill-img-alt-es').value.trim();
+      const altEn = container.querySelector('#skill-img-alt-en').value.trim();
+
+      const newSkillObj = {
+        id: container.querySelector('#skill-name').value.trim().toLowerCase().replace(/\s+/g, '-'),
+        name: container.querySelector('#skill-name').value.trim(),
+        image: currentSkillImgData || './assets/icon/icons8-javascript.svg',
+        imageAlt: {
+          es: altEs,
+          en: altEn
+        },
+        link: container.querySelector('#skill-link').value.trim()
+      };
+
+      if (!skillsData[targetCategory]) skillsData[targetCategory] = [];
+
+      if (editIndex >= 0 && editIndex < skillsData[targetCategory].length) {
+        skillsData[targetCategory][editIndex] = newSkillObj;
+      } else {
+        skillsData[targetCategory].unshift(newSkillObj);
+      }
+
+      saveSkillsData(skillsData);
+      activeSkillCategory = targetCategory;
+
+      catBtns.forEach(b => {
+        if (b.dataset.category === activeSkillCategory) b.classList.add('active');
+        else b.classList.remove('active');
+      });
+
+      renderSkillsAdminList();
+      updateCategoryCounters();
+      skillEditorContainer.style.display = 'none';
+    });
+  }
+
+  const btnResetSkills = container.querySelector('#admin-reset-skills-btn');
+  if (btnResetSkills) {
+    btnResetSkills.addEventListener('click', async () => {
+      if (confirm('¿Estás seguro de restablecer todas las habilidades a los valores por defecto?')) {
+        await resetSkillsData();
+        skillsData = await getSkillsData();
+        renderSkillsAdminList();
+        updateCategoryCounters();
+      }
+    });
+  }
+
+  renderSkillsAdminList();
+
+  // === Lógica Pestaña 5: Contacto & Footer ===
+  const contactForm = container.querySelector('#admin-contact-form');
+  const contactStatus = container.querySelector('#admin-contact-status');
+
+  if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const newData = {
+        formspreeEndpoint: container.querySelector('#contact-endpoint').value.trim(),
+        phone: container.querySelector('#contact-phone').value.trim(),
+        location: {
+          es: container.querySelector('#contact-location-es').value.trim(),
+          en: container.querySelector('#contact-location-en').value.trim()
+        },
+        footerCopyright: {
+          es: container.querySelector('#footer-copy-es').value.trim(),
+          en: container.querySelector('#footer-copy-en').value.trim()
+        }
+      };
+
+      const success = saveContactData(newData);
+      contactStatus.style.display = 'block';
+
+      if (success) {
+        contactStatus.className = 'admin-status admin-status--success';
+        contactStatus.innerHTML = '<i class="bx bx-check-circle"></i> ¡Cambios guardados en Contacto & Footer!';
+      } else {
+        contactStatus.className = 'admin-status admin-status--error';
+        contactStatus.innerHTML = '<i class="bx bx-error-circle"></i> Error guardando los cambios.';
+      }
+    });
+  }
+
+  const btnResetContact = container.querySelector('#admin-reset-contact-btn');
+  if (btnResetContact) {
+    btnResetContact.addEventListener('click', () => {
+      if (confirm('¿Restablecer la información de Contacto & Footer a los valores por defecto?')) {
+        resetContactData();
+        renderCrudPanel(container);
+      }
+    });
+  }
+
+  // Escuchadores de Archivos Generales
   const imgFileInput = container.querySelector('#banner-img-file');
   const imgPreview = container.querySelector('#profile-img-preview');
   const imgFilename = container.querySelector('#banner-img-filename');
@@ -684,7 +1090,6 @@ async function renderCrudPanel(container) {
     });
   }
 
-  // Cierre y Logout
   const closeBtn = container.querySelector('#admin-close-x');
   if (closeBtn) closeBtn.addEventListener('click', closeAdminModal);
 
@@ -696,7 +1101,6 @@ async function renderCrudPanel(container) {
     });
   }
 
-  // Cambio de pestañas
   const tabs = container.querySelectorAll('.admin-tab');
   const tabContents = container.querySelectorAll('.admin-tab-content');
 
@@ -737,6 +1141,10 @@ async function renderCrudPanel(container) {
         en: container.querySelector('#banner-role-en').value.trim()
       },
       profileImg: uploadedProfileImg,
+      profileImgAlt: {
+        es: container.querySelector('#banner-img-alt-es').value.trim(),
+        en: container.querySelector('#banner-img-alt-en').value.trim()
+      },
       cv: {
         es: uploadedCvEs,
         en: uploadedCvEn
@@ -787,7 +1195,11 @@ async function renderCrudPanel(container) {
         es: container.querySelector('#about-text-es').value.trim(),
         en: container.querySelector('#about-text-en').value.trim()
       },
-      photoImg: uploadedAboutPhotoImg
+      photoImg: uploadedAboutPhotoImg,
+      photoImgAlt: {
+        es: container.querySelector('#about-img-alt-es').value.trim(),
+        en: container.querySelector('#about-img-alt-en').value.trim()
+      }
     };
 
     const success = saveAboutData(newData);

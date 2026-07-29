@@ -20,17 +20,19 @@ export function renderAbout() {
     textEl.textContent = aboutData.text[lang] || aboutData.text.es;
   }
 
-  // 3. Foto / Imagen Secundaria de Sobre Mí
+  // 3. Foto / Imagen Secundaria de Sobre Mí y Texto Alternativo (Alt Text)
   const fallbackImgEl = document.querySelector('.about-video img');
-  if (fallbackImgEl && aboutData.photoImg) {
-    fallbackImgEl.src = aboutData.photoImg;
+  if (fallbackImgEl) {
+    if (aboutData.photoImg) fallbackImgEl.src = aboutData.photoImg;
+    if (aboutData.photoImgAlt) {
+      fallbackImgEl.alt = aboutData.photoImgAlt[lang] || aboutData.photoImgAlt.es;
+    }
   }
 }
 
 export function initAbout() {
   renderAbout();
 
-  // Escuchar cambios de idioma y cambios en los datos de Sobre Mí
   document.addEventListener('languageChange', () => renderAbout());
   document.addEventListener('aboutDataChange', () => renderAbout());
 }
