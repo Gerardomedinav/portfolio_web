@@ -4,6 +4,7 @@
 
 const STORAGE_BANNER_KEY = "portfolio_banner_data";
 const STORAGE_ABOUT_KEY = "portfolio_about_data";
+const STORAGE_PROJECTS_KEY = "portfolio_projects_data";
 
 // 1. Datos por defecto del Banner / Inicio
 export const defaultBannerData = {
@@ -90,7 +91,7 @@ export function saveBannerData(newData) {
 }
 
 /**
- * Restablece los datos del Banner a los valores por defecto
+ * Restablece los datos del Banner
  */
 export function resetBannerData() {
   try {
@@ -121,7 +122,7 @@ export function getAboutData() {
 }
 
 /**
- * Guarda los datos de la sección Sobre Mí
+ * Guarda los datos de Sobre Mí
  */
 export function saveAboutData(newData) {
   try {
@@ -142,12 +143,64 @@ export function saveAboutData(newData) {
 }
 
 /**
- * Restablece los datos de Sobre Mí a los valores por defecto
+ * Restablece los datos de Sobre Mí
  */
 export function resetAboutData() {
   try {
     localStorage.removeItem(STORAGE_ABOUT_KEY);
     document.dispatchEvent(new CustomEvent("aboutDataChange", { detail: defaultAboutData }));
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+/**
+ * Obtiene los proyectos (desde localStorage o carga inicial desde proyectos.json)
+ */
+export async function getProjectsData() {
+  try {
+    const raw = localStorage.getItem(STORAGE_PROJECTS_KEY);
+    if (raw) {
+      return JSON.parse(raw);
+    }
+  } catch (e) {}
+
+  // Fallback desde el JSON original
+  try {
+    const res = await fetch('./assets/json/proyectos.json');
+    if (res.ok) {
+      const defaultProjects = await res.json();
+      return defaultProjects;
+    }
+  } catch (e) {
+    console.error("Error cargando proyectos.json por defecto:", e);
+  }
+  return [];
+}
+
+/**
+ * Guarda la lista de proyectos en localStorage y notifica cambios
+ */
+export function saveProjectsData(projectsList) {
+  try {
+    localStorage.setItem(STORAGE_PROJECTS_KEY, JSON.stringify(projectsList));
+    document.dispatchEvent(new CustomEvent("projectsDataChange", { detail: projectsList }));
+    return true;
+  } catch (e) {
+    console.error("Error guardando proyectos:", e);
+    return false;
+  }
+}
+
+/**
+ * Restablece la lista de proyectos a los valores originales de proyectos.json
+ */
+export async function resetProjectsData() {
+  try {
+    localStorage.removeItem(STORAGE_PROJECTS_KEY);
+    const originalProjects = await getProjectsData();
+    document.dispatchEvent(new CustomEvent("projectsDataChange", { detail: originalProjects }));
     return true;
   } catch (e) {
     return false;

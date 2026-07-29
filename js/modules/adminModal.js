@@ -1,8 +1,8 @@
 /**
- * Módulo del Panel de Administración y Modales CRUD (Login + Banner & About Editor)
+ * Módulo del Panel de Administración y Modales CRUD (Login + Banner + About + Projects Editor)
  */
 import { isAuthenticated, login, logout, changePassword } from './auth.js';
-import { getBannerData, saveBannerData, resetBannerData, getAboutData, saveAboutData, resetAboutData } from './dataStore.js';
+import { getBannerData, saveBannerData, resetBannerData, getAboutData, saveAboutData, resetAboutData, getProjectsData, saveProjectsData, resetProjectsData } from './dataStore.js';
 import { getLang } from './i18n.js';
 
 let modalContainer = null;
@@ -150,12 +150,13 @@ function renderLoginModal(container) {
 }
 
 /**
- * Renderiza el panel completo CRUD de administración (Banner + About)
+ * Renderiza el panel completo CRUD de administración (Banner + About + Projects)
  */
-function renderCrudPanel(container) {
+async function renderCrudPanel(container) {
   const lang = getLang();
   const bannerData = getBannerData();
   const aboutData = getAboutData();
+  let projectsData = await getProjectsData();
 
   let uploadedProfileImg = bannerData.profileImg || '';
   let uploadedCvEs = bannerData.cv?.es || '';
@@ -186,6 +187,9 @@ function renderCrudPanel(container) {
         </button>
         <button type="button" class="admin-tab" data-tab="tab-about" role="tab" aria-selected="false">
           <i class="bx bx-user"></i> ${lang === 'es' ? '2. Sobre Mí' : '2. About Me'}
+        </button>
+        <button type="button" class="admin-tab" data-tab="tab-projects" role="tab" aria-selected="false">
+          <i class="bx bx-briefcase"></i> ${lang === 'es' ? '3. Proyectos' : '3. Projects'}
         </button>
         <button type="button" class="admin-tab" data-tab="tab-security" role="tab" aria-selected="false">
           <i class="bx bx-key"></i> ${lang === 'es' ? 'Seguridad / Clave' : 'Security / Key'}
@@ -295,7 +299,7 @@ function renderCrudPanel(container) {
         </form>
       </div>
 
-      <!-- Pestaña 2: Sobre Mí (About Me) -->
+      <!-- Pestaña 2: Sobre Mí -->
       <div id="tab-about" class="admin-tab-content" role="tabpanel" style="display:none;">
         <form id="admin-about-form" class="admin-form">
           <h4 class="admin-section-subtitle"><i class="bx bx-detail"></i> Títulos y Descripción (Español)</h4>
@@ -348,7 +352,91 @@ function renderCrudPanel(container) {
         </form>
       </div>
 
-      <!-- Pestaña 3: Seguridad / Clave -->
+      <!-- Pestaña 3: Proyectos CRUD -->
+      <div id="tab-projects" class="admin-tab-content" role="tabpanel" style="display:none;">
+        <div class="admin-projects-toolbar">
+          <h4 class="admin-section-subtitle" style="margin:0;"><i class="bx bx-briefcase"></i> Lista de Proyectos Publicados (${projectsData.length})</h4>
+          <button type="button" id="btn-add-new-project" class="admin-btn admin-btn--primary">
+            <i class="bx bx-plus-circle"></i> + Agregar Nuevo Proyecto
+          </button>
+        </div>
+
+        <!-- Contenedor del Formulario de Edición / Creación (Oculto por defecto) -->
+        <div id="project-editor-container" class="admin-subcard" style="display:none;">
+          <h4 id="project-editor-title" class="admin-subcard-title">Crear Nuevo Proyecto</h4>
+          <form id="project-editor-form" class="admin-form">
+            <input type="hidden" id="project-edit-index" value="-1" />
+            <div class="admin-form-grid">
+              <div class="admin-field">
+                <label for="proj-title-es">Título (Español):</label>
+                <input type="text" id="proj-title-es" required />
+              </div>
+              <div class="admin-field">
+                <label for="proj-title-en">Título (Inglés):</label>
+                <input type="text" id="proj-title-en" required />
+              </div>
+              <div class="admin-field">
+                <label for="proj-github">URL Repositorio GitHub:</label>
+                <input type="url" id="proj-github" required />
+              </div>
+              <div class="admin-field">
+                <label for="proj-demo">URL Demo en Vivo:</label>
+                <input type="url" id="proj-demo" required />
+              </div>
+            </div>
+
+            <!-- Imagen del proyecto -->
+            <div class="admin-field admin-field--full" style="margin-top:0.75rem;">
+              <label>Imagen / Portada del Proyecto:</label>
+              <div class="admin-file-picker-group">
+                <div class="admin-preview-thumb admin-preview-thumb--square">
+                  <img id="proj-img-preview" src="./assets/img/projects/siga_formosa.png" alt="Previsualización proyecto" />
+                </div>
+                <div class="admin-file-input-wrapper">
+                  <input type="file" id="proj-img-file" accept="image/*" class="admin-file-hidden" />
+                  <label for="proj-img-file" class="admin-btn admin-btn--secondary">
+                    <i class="bx bx-image-add"></i> Seleccionar Imagen desde Equipo
+                  </label>
+                  <span id="proj-img-filename" class="admin-file-name">Imagen actual</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="admin-field" style="margin-top:0.75rem;">
+              <label for="proj-desc-es">Descripción Completa (Español):</label>
+              <textarea id="proj-desc-es" rows="4" class="admin-textarea" required></textarea>
+            </div>
+            <div class="admin-field">
+              <label for="proj-desc-en">Descripción Completa (Inglés):</label>
+              <textarea id="proj-desc-en" rows="4" class="admin-textarea" required></textarea>
+            </div>
+
+            <div class="admin-footer-btn-group">
+              <button type="button" id="btn-cancel-project" class="admin-btn admin-btn--secondary">
+                Cancelar
+              </button>
+              <button type="submit" class="admin-btn admin-btn--primary">
+                <i class="bx bx-check"></i> Guardar Proyecto
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Lista de Proyectos Registrados -->
+        <div id="projects-items-list" class="admin-projects-list">
+          <!-- Se inyectan dinámicamente -->
+        </div>
+
+        <div id="admin-projects-status" class="admin-status" style="display:none; margin-top:1rem;"></div>
+
+        <div class="admin-footer-btn-group" style="margin-top:1.5rem;">
+          <button type="button" id="admin-reset-projects-btn" class="admin-btn admin-btn--danger">
+            <i class="bx bx-refresh"></i> Restablecer Todos los Proyectos por Defecto
+          </button>
+        </div>
+      </div>
+
+      <!-- Pestaña 4: Seguridad / Clave -->
       <div id="tab-security" class="admin-tab-content" role="tabpanel" style="display:none;">
         <form id="admin-pass-form" class="admin-form">
           <div class="admin-field">
@@ -374,7 +462,176 @@ function renderCrudPanel(container) {
     </div>
   `;
 
-  // Escuchadores de Carga de Archivos
+  // Renderizar la lista de proyectos en la Pestaña 3
+  const projectsListContainer = container.querySelector('#projects-items-list');
+  const projectEditorContainer = container.querySelector('#project-editor-container');
+  const projectEditorTitle = container.querySelector('#project-editor-title');
+  const projectEditorForm = container.querySelector('#project-editor-form');
+  const projectEditIndexInput = container.querySelector('#project-edit-index');
+
+  let currentProjectImgData = '';
+
+  function renderProjectsAdminList() {
+    if (!projectsListContainer) return;
+    projectsListContainer.innerHTML = '';
+
+    if (projectsData.length === 0) {
+      projectsListContainer.innerHTML = '<p class="admin-empty-text">No hay proyectos registrados.</p>';
+      return;
+    }
+
+    projectsData.forEach((proj, idx) => {
+      const item = document.createElement('div');
+      item.className = 'admin-project-item';
+      const title = (proj.title && (proj.title[lang] || proj.title.es)) || 'Proyecto Sin Título';
+
+      item.innerHTML = `
+        <div class="admin-project-thumb">
+          <img src="${proj.image}" alt="${title}" />
+        </div>
+        <div class="admin-project-info">
+          <h5>${title}</h5>
+          <span class="admin-project-links-preview">${proj.demo ? 'Demo Activa' : 'Sin Demo'} | ${proj.github ? 'GitHub OK' : 'Sin Repo'}</span>
+        </div>
+        <div class="admin-project-actions">
+          <button type="button" class="admin-icon-btn btn-edit-proj" data-index="${idx}" title="Editar proyecto">
+            <i class="bx bx-edit"></i>
+          </button>
+          <button type="button" class="admin-icon-btn admin-icon-btn--danger btn-del-proj" data-index="${idx}" title="Eliminar proyecto">
+            <i class="bx bx-trash"></i>
+          </button>
+        </div>
+      `;
+
+      projectsListContainer.appendChild(item);
+    });
+
+    // Listeners de Editar y Eliminar
+    projectsListContainer.querySelectorAll('.btn-edit-proj').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const index = parseInt(btn.dataset.index, 10);
+        openProjectEditor(index);
+      });
+    });
+
+    projectsListContainer.querySelectorAll('.btn-del-proj').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const index = parseInt(btn.dataset.index, 10);
+        const projTitle = projectsData[index]?.title?.es || 'este proyecto';
+        if (confirm(`¿Estás seguro de eliminar el proyecto "${projTitle}"?`)) {
+          projectsData.splice(index, 1);
+          saveProjectsData(projectsData);
+          renderProjectsAdminList();
+        }
+      });
+    });
+  }
+
+  function openProjectEditor(index = -1) {
+    projectEditIndexInput.value = index;
+    const projImgPreview = container.querySelector('#proj-img-preview');
+    const projImgFilename = container.querySelector('#proj-img-filename');
+
+    if (index >= 0 && projectsData[index]) {
+      const proj = projectsData[index];
+      projectEditorTitle.textContent = `Editar Proyecto: ${proj.title?.es || ''}`;
+      container.querySelector('#proj-title-es').value = proj.title?.es || '';
+      container.querySelector('#proj-title-en').value = proj.title?.en || '';
+      container.querySelector('#proj-github').value = proj.github || '';
+      container.querySelector('#proj-demo').value = proj.demo || '';
+      container.querySelector('#proj-desc-es').value = proj.description?.es || '';
+      container.querySelector('#proj-desc-en').value = proj.description?.en || '';
+      currentProjectImgData = proj.image || '';
+      if (projImgPreview) projImgPreview.src = currentProjectImgData;
+      if (projImgFilename) projImgFilename.textContent = 'Imagen actual retenida';
+    } else {
+      projectEditorTitle.textContent = '+ Agregar Nuevo Proyecto';
+      projectEditorForm.reset();
+      projectEditIndexInput.value = -1;
+      currentProjectImgData = './assets/img/projects/siga_formosa.png';
+      if (projImgPreview) projImgPreview.src = currentProjectImgData;
+      if (projImgFilename) projImgFilename.textContent = 'Selecciona una portada';
+    }
+
+    projectEditorContainer.style.display = 'block';
+    projectEditorContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // Listener para el file input de imagen del proyecto
+  const projImgFileInput = container.querySelector('#proj-img-file');
+  const projImgPreview = container.querySelector('#proj-img-preview');
+  const projImgFilename = container.querySelector('#proj-img-filename');
+
+  if (projImgFileInput) {
+    projImgFileInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        projImgFilename.textContent = `Imagen: ${file.name}`;
+        currentProjectImgData = await readFileAsDataURL(file);
+        if (projImgPreview) projImgPreview.src = currentProjectImgData;
+      }
+    });
+  }
+
+  const btnAddNewProject = container.querySelector('#btn-add-new-project');
+  if (btnAddNewProject) {
+    btnAddNewProject.addEventListener('click', () => openProjectEditor(-1));
+  }
+
+  const btnCancelProject = container.querySelector('#btn-cancel-project');
+  if (btnCancelProject) {
+    btnCancelProject.addEventListener('click', () => {
+      projectEditorContainer.style.display = 'none';
+    });
+  }
+
+  // Formulario Submit de Proyecto
+  if (projectEditorForm) {
+    projectEditorForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const editIndex = parseInt(projectEditIndexInput.value, 10);
+
+      const newProjObj = {
+        title: {
+          es: container.querySelector('#proj-title-es').value.trim(),
+          en: container.querySelector('#proj-title-en').value.trim()
+        },
+        image: currentProjectImgData || './assets/img/projects/siga_formosa.png',
+        github: container.querySelector('#proj-github').value.trim(),
+        demo: container.querySelector('#proj-demo').value.trim(),
+        description: {
+          es: container.querySelector('#proj-desc-es').value.trim(),
+          en: container.querySelector('#proj-desc-en').value.trim()
+        }
+      };
+
+      if (editIndex >= 0 && editIndex < projectsData.length) {
+        projectsData[editIndex] = newProjObj;
+      } else {
+        projectsData.unshift(newProjObj); // Agregar al inicio
+      }
+
+      saveProjectsData(projectsData);
+      renderProjectsAdminList();
+      projectEditorContainer.style.display = 'none';
+    });
+  }
+
+  // Reset Proyectos
+  const btnResetProjects = container.querySelector('#admin-reset-projects-btn');
+  if (btnResetProjects) {
+    btnResetProjects.addEventListener('click', async () => {
+      if (confirm('¿Estás seguro de restablecer la lista de proyectos a los originales por defecto?')) {
+        await resetProjectsData();
+        projectsData = await getProjectsData();
+        renderProjectsAdminList();
+      }
+    });
+  }
+
+  renderProjectsAdminList();
+
+  // Escuchadores de Archivos Generales (Banner / About)
   const imgFileInput = container.querySelector('#banner-img-file');
   const imgPreview = container.querySelector('#profile-img-preview');
   const imgFilename = container.querySelector('#banner-img-filename');
