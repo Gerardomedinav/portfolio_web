@@ -1,0 +1,21 @@
+/* ==========================================================================
+   MAIN.CSS - Hoja de Estilos Principal Modular del Portafolio
+   ========================================================================== */
+
+/* 1. Estilos Globales, Reset y Variables */
+@import url('./style.css');
+
+/* 2. Cabecera y Navegación */
+@import url('./header.css');
+@import url('./nav.css');
+
+/* 3. Secciones Principales */
+@import url('./home.css');
+@import url('./about.css');
+@import url('./projects.css');
+@import url('./skills.css');
+@import url('./contact.css');
+
+/* 4. Pie de Página y Adaptación Responsive */
+@import url('./footer.css');
+@import url('./mediaqueries.css');

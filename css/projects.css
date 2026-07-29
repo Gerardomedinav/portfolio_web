@@ -1,211 +1,468 @@
+/* ==========================================================================
+   PROJECTS.CSS - Diseño Grid Responsivo e Imágenes Completas + Modal Adaptativo
+   ========================================================================== */
+
 .projects {
   text-align: center;
+  padding-top: 2rem;
+  padding-bottom: 4rem;
 }
 
+/* Contenedor Grid Centrado: 3 columnas en escritorio, 2 en tablet, 1 en móvil */
 .projects__container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
-  padding: 2rem;
-  max-width: 1200px;
+  max-width: 1240px;
+  width: 92%;
   margin: 0 auto;
+  justify-content: center;
+  align-items: stretch;
+  padding: 1.5rem 0;
 }
 
+@media screen and (max-width: 1024px) {
+  .projects__container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.75rem;
+  }
+}
 
+@media screen and (max-width: 640px) {
+  .projects__container {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    gap: 1.5rem;
+  }
+}
 
+/* ----------------------------------
+   Tarjeta Principal (Card Container)
+   ---------------------------------- */
 .projects__links {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1.2rem;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  transition: transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1),
+              box-shadow 0.35s cubic-bezier(0.165, 0.84, 0.44, 1),
+              border-color 0.35s ease;
+  height: 100%;
+}
+
+.projects__links:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 36px rgba(0, 120, 255, 0.16);
+  border-color: var(--first-color);
+}
+
+body.dark .projects__links {
+  background: #18202d;
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+body.dark .projects__links:hover {
+  border-color: var(--first-color);
+  box-shadow: 0 18px 40px rgba(0, 170, 255, 0.22);
+}
+
+/* ----------------------------------
+   Contenedor de Imagen (SIN RECORTE - Imagen Completa)
+   ---------------------------------- */
+.project__img-wrapper {
+  width: 100%;
+  height: 210px;
+  padding: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f8fafc, #edf2f7);
+  border-bottom: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+
+body.dark .project__img-wrapper {
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.project__img-wrapper img.project {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  transition: transform 0.4s ease;
+}
+
+.projects__links:hover .project__img-wrapper img.project {
+  transform: scale(1.04);
+}
+
+/* ----------------------------------
+   Cuerpo de la Tarjeta (Texto)
+   ---------------------------------- */
+.project__body {
+  padding: 1.25rem 1.25rem 0.75rem 1.25rem;
+  text-align: left;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.project__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--second-color);
+  margin-bottom: 0.5rem;
+  line-height: 1.35;
+  transition: color 0.3s ease;
+}
+
+body.dark .project__title {
+  color: #ffffff;
+}
+
+.projects__links:hover .project__title {
+  color: #0077cc;
+}
+
+body.dark .projects__links:hover .project__title {
+  color: var(--first-color);
+}
+
+.project__snippet {
+  font-size: 0.85rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin-top: auto;
+}
+
+body.dark .project__snippet {
+  color: #94a3b8;
+}
+
+/* ----------------------------------
+   Pie de Tarjeta y Botones de Acción
+   ---------------------------------- */
+.project__footer {
+  display: flex;
   align-items: center;
   justify-content: space-between;
-
-  width: 300px; /* o usa max-width: 300px si prefieres */
-  min-height: 450px;
-  background-color: aliceblue;
-  padding: 1.5rem 1rem;
-  margin: 0 auto;
-
-  box-shadow: 0 4px 25px rgba(14, 36, 49, 0.068);
-  border-radius: 0.55rem;
-  transition: transform 0.3s ease;
-}
-.projects__links:focus {
-  outline: 2px solid var(--first-color);
-  outline-offset: 2px;
+  padding: 0.85rem 1.25rem 1.1rem 1.25rem;
+  border-top: 1px solid #f1f5f9;
 }
 
-.projects__links img {
-  transition: 1s;
- 
-  width: auto;
-  height: 6rem;
-  object-fit: contain;
-}
-
-.projects__links img:hover {
-  transform: scale(1.05);
-}
-.projects__links:focus {
-  outline: 2px solid var(--first-color);
-  outline-offset: 2px;
+body.dark .project__footer {
+  border-top-color: rgba(255, 255, 255, 0.06);
 }
 
 .project__link-item {
   display: flex;
-  justify-content: center;
   align-items: center;
-  font-size: 1.53rem;
+  gap: 0.4rem;
 }
 
 .project__item {
-  padding: 0 1rem;
-  color: var(--second-color);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 8px;
+  background-color: #f1f5f9;
+  color: #334155;
+  transition: all 0.25s ease;
+}
+
+.project__item i {
+  font-size: 1.05rem;
 }
 
 .project__item:hover {
+  background-color: #0f172a;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.project__item--demo {
+  background-color: rgba(0, 150, 255, 0.1);
+  color: #0077cc;
+}
+
+.project__item--demo:hover {
+  background-color: #0077cc;
+  color: #ffffff;
+}
+
+body.dark .project__item {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #cbd5e0;
+}
+
+body.dark .project__item:hover {
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+body.dark .project__item--demo {
+  background-color: rgba(0, 170, 255, 0.18);
   color: var(--first-color);
 }
-.project__item:focus {
-  outline: 3px solid #89cbf1; /* Color contrastante */
-  outline-offset: 4px;        /* Separación para que no tape el icono */
-  border-radius: 6px;         /* Borde redondeado para coincidir con tu diseño */
+
+body.dark .project__item--demo:hover {
+  background-color: var(--first-color);
+  color: #0f172a;
 }
 
-.project__item:focus-visible {
-  outline: 3px solid #9ebcf3;
-  outline-offset: 4px;
-}
-.project__item:active {
-  color: #0056b3; /* Color más oscuro al hacer clic */
-}
-.project__item:active:focus {
-  outline: 3px solid #003f7f; /* Color más oscuro al hacer clic */
-  outline-offset: 4px;
-  border-radius: 6px; /* Borde redondeado para coincidir con tu diseño */
-}
-
-
+/* Botón "Leer más" */
 .project__more-btn {
-  margin-top: 0.5rem;
-  padding: 0.4rem 0.8rem;
-  font-size: 0.9rem;
-  background-color:  #0050a8;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.4rem 0.85rem;
+  font-family: var(--poppins);
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #0056b3, #0077cc);
+  color: #ffffff;
   border: none;
-  color: white;
-  border-radius: 0.3rem;
+  border-radius: 8px;
   cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0, 86, 179, 0.2);
+  transition: all 0.25s ease;
+}
+
+.project__more-btn i {
+  font-size: 1.05rem;
+  transition: transform 0.25s ease;
 }
 
 .project__more-btn:hover {
-  background-color: #0056b3;
-}
-.project__more-btn:focus {
-  outline: 2px solid #0056b3;
-  outline-offset: 2px;
-}
-.project__more-btn:active {
-  background-color: #003f7f;     
-}           
-
-/* ============================= */
-/* Estilos para el fondo oscuro */
-/* ============================= */
-.project__overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 998;
+  background: linear-gradient(135deg, #004494, #0056b3);
+  box-shadow: 0 5px 14px rgba(0, 86, 179, 0.35);
+  transform: translateY(-2px);
 }
 
-/* ============================= */
-/* Estilos para el popover      */
-/* ============================= */
+.project__more-btn:hover i {
+  transform: translateX(3px);
+}
+
+/* ----------------------------------
+   Popover Modal Dialog (Adaptativo y Scrollable)
+   ---------------------------------- */
 .project__popover {
+  display: none;
   width: 90%;
-  max-width: 800px;
-  padding: 2rem;
-  border-radius: 1rem;
-  background-color: #fff;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  margin: 0 auto; /* Centra el contenedor */
-  left: 0;
-  right: 0;
-  top: 15%; /* Intenta subirlo un poco */
+  max-width: 680px;
+  max-height: 82vh;
+  padding: 0;
+  border-radius: 1.25rem;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  margin: auto;
+  inset: 0;
+  position: fixed;
+  flex-direction: column;
+  z-index: 1000;
 }
 
-/* Imagen dentro del popover - duplicamos su tamaño visual */
-.project__popover-img {
-  display: block;
-  margin: 0 auto 1.5rem auto;
-  transform: scale(1.2); /* Aumentar al 200% */
-  transform-origin: center;
-  max-width: none; /* Evita que se limite por el max-width del contenedor */
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  border-radius: 0.75rem;
+.project__popover:popover-open {
+  display: flex !important;
 }
 
-.project__popover-title {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  font-weight: bold;
-}
-
-.project__popover-desc {
-  font-size: 1.05rem;
-  color: #333;
-  margin-bottom: 1rem;
-}
-
-.project__popover-links {
-  margin-top: 1rem;
+/* Botón 'X' flotante en la esquina superior derecha */
+.project__popover-close-top {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 60;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.7);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 1rem;
-}
-
-.project__popover-link {
-  text-decoration: none;
-  color: #021f3f;
-  font-weight: bold;
-}
-.project__popover-link:hover {
-  color: #0056b3;
-}
-.project__popover-link:focus {
-  outline: 2px solid #0056b3;
-  outline-offset: 2px;
-}
-.project__popover-link:active {
-  color: #003f7f;
-}
-
-.project__close-btn {
-  margin-top: 1.5rem;
-  padding: 0.6rem 1rem;
-  background-color: #87b2f3;
-  border: none;
-  color: rgb(14, 12, 12);
-  font-size: 1rem;
-  border-radius: 0.4rem;
+  font-size: 1.4rem;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(8px);
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.project__close-btn:hover {
-  background-color: #36a0f7;
+.project__popover-close-top:hover {
+  background: rgba(225, 29, 72, 0.9);
+  color: #ffffff;
+  transform: scale(1.1) rotate(90deg);
+  box-shadow: 0 6px 16px rgba(225, 29, 72, 0.4);
 }
-.project__close-btn:focus {
-  outline: 2px solid #0056b3;
-  outline-offset: 2px;
+
+body.dark .project__popover {
+  background-color: #1e293b;
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #f8fafc;
 }
 
 .project__popover::backdrop {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(6px);
+}
+
+.project__popover-header {
+  width: 100%;
+  height: 180px;
+  padding: 0.75rem;
+  background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #cbd5e0;
+  flex-shrink: 0;
+}
+
+body.dark .project__popover-header {
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.project__popover-img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.project__popover-body {
+  padding: 1.25rem 1.75rem 1.5rem 1.75rem;
+  text-align: left;
+  overflow-y: auto;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.project__popover-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--second-color);
+  margin-bottom: 0.75rem;
+}
+
+body.dark .project__popover-title {
+  color: #ffffff;
+}
+
+.project__popover-desc {
+  font-size: 0.925rem;
+  line-height: 1.6;
+  color: #475569;
+  margin-bottom: 1.25rem;
+}
+
+body.dark .project__popover-desc {
+  color: #cbd5e0;
+}
+
+.project__popover-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+body.dark .project__popover-footer {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+.project__popover-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.project__popover-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  border-radius: 8px;
+  background-color: #f1f5f9;
+  color: #0f172a;
+  transition: all 0.25s ease;
+}
+
+.project__popover-link:hover {
+  background-color: #0f172a;
+  color: #ffffff;
+}
+
+.project__popover-link--demo {
+  background-color: #0077cc;
+  color: #ffffff;
+}
+
+.project__popover-link--demo:hover {
+  background-color: #0056b3;
+}
+
+body.dark .project__popover-link {
+  background-color: #334155;
+  color: #ffffff;
+}
+
+body.dark .project__popover-link:hover {
+  background-color: #475569;
+}
+
+.project__close-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.45rem 1rem;
+  background-color: #e2e8f0;
+  border: none;
+  color: #334155;
+  font-family: var(--poppins);
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.project__close-btn:hover {
+  background-color: #cbd5e0;
+  color: #0f172a;
+}
+
+body.dark .project__close-btn {
+  background-color: #334155;
+  color: #e2e8f0;
+}
+
+body.dark .project__close-btn:hover {
+  background-color: #475569;
+  color: #ffffff;
 }

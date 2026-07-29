@@ -9,16 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <link type="image/png" sizes="100x100" rel="icon" href="./assets/icon/icons8-rocket-32.png" />
-    <link rel="stylesheet" href="./css/style.css" />
-    <link rel="stylesheet" href="./css/header.css" />
-    <link rel="stylesheet" href="./css/nav.css" />
-    <link rel="stylesheet" href="./css/home.css" />
-    <link rel="stylesheet" href="./css/about.css" />
-    <link rel="stylesheet" href="./css/projects.css" />
-    <link rel="stylesheet" href="./css/skills.css" />
-    <link rel="stylesheet" href="./css/contact.css" />
-    <link rel="stylesheet" href="./css/footer.css" />
-    <link rel="stylesheet" href="./css/mediaqueries.css" />
+    <link rel="stylesheet" href="./css/main.css" />
 
     <title>Gerardo Medina – Full Stack Developer Juniior</title>
     <!-- Google tag (gtag.js) -->
@@ -104,7 +95,7 @@
 
       <section class="home" id="home" aria-labelledby="home-heading">
         <!-- Video de fondo con descripción accesible -->
-        <video autoplay muted loop playsinline class="video-bg" aria-describedby="video-description">
+        <video autoplay muted loop playsinline preload="metadata" class="video-bg" aria-describedby="video-description">
           <source src="./assets/img/video/fondo_Programando.mp4" type="video/mp4" />
           Tu navegador no soporta el video.
         </video>
@@ -124,13 +115,14 @@
 
             <!-- Botón accesible para descargar o ver CV -->
             <a
-              href="#"
+              href="./assets/CV_Gerardo_Medina_Villalba_español.pdf"
               target="_blank"
+              rel="noopener noreferrer"
               class="button"
               data-aos="fade-down"
               data-i18n="resume"
               role="button"
-              aria-label="Open resume in a new tab"
+              aria-label="Previsualizar Currículum Vitae de Gerardo Medina (PDF en nueva pestaña)"
             >
               Resume
             </a>
@@ -173,7 +165,8 @@
           <div data-aos="fade-down" class="home__img">
             <img
               src="./assets/img/profile/yo.PNG"
-              alt="Foto de Gerardo Medina, desarrollador Full Stack"
+              alt="Fotografía de Gerardo Medina, desarrollador Full Stack"
+              data-i18n-alt="profilePhotoAlt"
               class="home__img-perfil"
               aria-describedby="foto_descripcion"
             />
@@ -186,12 +179,13 @@
 
         <div data-aos="zoom-in" class="about__container h-grid">
           <div class="about__img">
-            <video autoplay muted loop playsinline class="about-video" aria-describedby="about-video-desc">
+            <video autoplay muted loop playsinline preload="metadata" class="about-video" aria-describedby="about-video-desc">
               <source src="./assets/img/profile/imagen_animada.mp4" type="video/mp4" />
               <!-- Fallback para navegadores antiguos -->
               <img
                 src="./assets/img/profile/perfil2.JPG"
                 alt="Fotografía de Gerardo Medina, desarrollador Full Stack, sonriendo y vistiendo camisa oscura"
+                data-i18n-alt="aboutPhotoAlt"
               />
             </video>
             <p id="about-video-desc" class="visually-hidden">
@@ -201,7 +195,7 @@
           </div>
 
           <div data-aos="zoom-in" class="about__content">
-            <h2 class="about__subtitle" data-i18n="aboutSubtitle">I'm Gerardo Medina</h2>
+            <h2 class="about__subtitle" data-i18n="aboutSubtitle">Desarrollador Full Stack enfocado en calidad, accesibilidad y experiencia de usuario</h2>
             <p id="about-photo-desc" class="visually-hidden">
               Hombre de tez blanca, cabello corto con canas, ojos marrones, usa lentes, alrededor de 40 años, con
               expresión amable y profesional.
@@ -266,67 +260,148 @@
         </div>
       </section>
 
-      <section class="contact h-grid" id="contact" aria-labelledby="contact-title">
-        <h2 id="contact-title" data-aos="fade-down" class="section-title" data-i18n="contact">Contact:</h2>
+      <section class="contact section" id="contact" aria-labelledby="contact-title">
+        <h2 id="contact-title" data-aos="fade-down" class="section-title" data-i18n="contact">Contacto</h2>
 
         <p data-aos="fade-down" class="contact__text" data-i18n="contactText">
-          Call me, write me an e-mail, or connect and chat with me on Linkedin.
+          Lláma, escríbeme un correo electrónico o conéctate y chatea conmigo en Linkedin.
         </p>
 
-        <div data-aos="fade-down" class="contact__social">
-          <!-- Email -->
-          <div class="contact__email">
-            <i class="bx bx-envelope icon" aria-hidden="true"></i>
-            <address class="contact__email-content">
-              <a href="mailto:gerardomedinavv@gmail.com" aria-label="Send an email to Gerardo Medina">
-                gerardomedinavv@gmail.com
-              </a>
-            </address>
-          </div>
+        <div data-aos="fade-down" class="contact__container">
+          <!-- Tarjeta Izquierda: Formulario de contacto -->
+          <form id="contact-form" class="contact__form" aria-label="Formulario de contacto">
+            <!-- Campo Honeypot Trampa para Spam-bots -->
+            <input type="text" name="_gotcha" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none !important;" />
+            <h3 class="contact__card-title" data-i18n="contactFormTitle">Envíame un mensaje</h3>
+            <div class="contact__input-group">
+              <input
+                type="text"
+                name="name"
+                class="contact__input"
+                data-i18n-placeholder="contactNamePlaceholder"
+                placeholder="Nombre completo"
+                required
+                aria-required="true"
+                aria-label="Tu Nombre"
+              />
+              <input
+                type="email"
+                name="email"
+                class="contact__input"
+                data-i18n-placeholder="contactEmailPlaceholder"
+                placeholder="Correo electrónico"
+                required
+                aria-required="true"
+                aria-label="Tu Correo electrónico"
+              />
+            </div>
 
-          <!-- Teléfono -->
-          <div class="contact__phone">
-            <i class="bx bxs-phone icon" aria-hidden="true"></i>
-            <a href="tel:+5493704857048" class="contact__phone-content" aria-label="Call Gerardo Medina">
-              +54 9 3704 857048
-            </a>
-          </div>
+            <input
+              type="text"
+              name="subject"
+              class="contact__input"
+              data-i18n-placeholder="contactSubjectPlaceholder"
+              placeholder="Asunto del mensaje"
+              required
+              aria-required="true"
+              aria-label="Asunto del mensaje"
+            />
 
-          <!-- Ubicación -->
-          <div class="contact__map">
-            <i class="bx bxs-map icon" aria-hidden="true"></i>
-            <address class="contact__map-content">
-              Formosa, Argentina
-              <span class="visually-hidden">Current location of Gerardo Medina</span>
-            </address>
-          </div>
+            <textarea
+              name="message"
+              rows="5"
+              class="contact__input contact__textarea"
+              data-i18n-placeholder="contactMessagePlaceholder"
+              placeholder="Escribe tu mensaje aquí..."
+              required
+              aria-required="true"
+              aria-label="Mensaje de contacto"
+            ></textarea>
 
-          <!-- Redes Sociales -->
-          <div class="icon-social">
-            <a
-              href="https://www.linkedin.com/in/gerardomedinav/"
-              target="_blank"
-              class="icon-contact"
-              aria-label="Visit Gerardo Medina's LinkedIn profile"
-            >
-              <i class="bx bxl-linkedin" aria-hidden="true"></i>
-            </a>
-            <a
-              href="mailto:gerardomedinavv@gmail.com"
-              target="_blank"
-              class="icon-contact"
-              aria-label="Send an email to Gerardo Medina via Gmail"
-            >
-              <i class="bx bxl-gmail" aria-hidden="true"></i>
-            </a>
-            <a
-              href="https://github.com/gerardomedinav"
-              target="_blank"
-              class="icon-contact"
-              aria-label="Visit Gerardo Medina's GitHub profile"
-            >
-              <i class="bx bxl-github" aria-hidden="true"></i>
-            </a>
+            <button type="submit" class="button contact__button" data-i18n="contactSend">
+              <i class="bx bx-paper-plane"></i> Enviar Mensaje
+            </button>
+
+            <!-- Banner de estado del formulario -->
+            <div id="contact-form-status" class="contact__status" role="alert" aria-live="polite"></div>
+          </form>
+
+          <!-- Tarjeta Derecha: Información y Redes -->
+          <div class="contact__social">
+            <div>
+              <h3 class="contact__card-title" data-i18n="contactInfoTitle">Información de Contacto</h3>
+              <p class="contact__card-desc" data-i18n="contactInfoDesc">¿Tenés un proyecto en mente o querés conectar? Escribime directamente o a través de mis redes:</p>
+
+              <div class="contact__info-list">
+                <!-- Email -->
+                <div class="contact__info-item">
+                  <div class="contact__info-icon">
+                    <i class="bx bx-envelope" aria-hidden="true"></i>
+                  </div>
+                  <div class="contact__info-details">
+                    <span class="contact__info-label">Email</span>
+                    <a href="mailto:gerardomedinavv@gmail.com" class="contact__info-value" aria-label="Enviar correo a Gerardo Medina">
+                      gerardomedinavv@gmail.com
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Teléfono -->
+                <div class="contact__info-item">
+                  <div class="contact__info-icon">
+                    <i class="bx bxs-phone" aria-hidden="true"></i>
+                  </div>
+                  <div class="contact__info-details">
+                    <span class="contact__info-label" data-i18n="contactPhoneLabel">Teléfono / WhatsApp</span>
+                    <a href="tel:+5493704857048" class="contact__info-value contact__info-value--phone" aria-label="Llamar a Gerardo Medina">
+                      +54 9 3704 857048
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Ubicación -->
+                <div class="contact__info-item">
+                  <div class="contact__info-icon">
+                    <i class="bx bxs-map" aria-hidden="true"></i>
+                  </div>
+                  <div class="contact__info-details">
+                    <span class="contact__info-label" data-i18n="contactLocationLabel">Ubicación</span>
+                    <span class="contact__info-value">Formosa, Argentina</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Redes Sociales -->
+            <div>
+              <div class="contact__social-header" data-i18n="contactSocialsLabel">Conéctate conmigo:</div>
+              <div class="icon-social">
+                <a
+                  href="https://www.linkedin.com/in/gerardomedinav/"
+                  target="_blank"
+                  class="icon-contact"
+                  aria-label="Visit Gerardo Medina's LinkedIn profile"
+                >
+                  <i class="bx bxl-linkedin" aria-hidden="true"></i>
+                </a>
+                <a
+                  href="mailto:gerardomedinavv@gmail.com"
+                  target="_blank"
+                  class="icon-contact"
+                  aria-label="Send an email to Gerardo Medina via Gmail"
+                >
+                  <i class="bx bxl-gmail" aria-hidden="true"></i>
+                </a>
+                <a
+                  href="https://github.com/gerardomedinav"
+                  target="_blank"
+                  class="icon-contact"
+                  aria-label="Visit Gerardo Medina's GitHub profile"
+                >
+                  <i class="bx bxl-github" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -352,7 +427,8 @@
               height="32"
               width="88"
               src="https://www.w3.org/WAI/WCAG21/wcag2.1AA-v"
-              alt="Level AA conformance, W3C WAI Web Content Accessibility Guidelines 2.1"
+              data-i18n-alt="wcagBadgeAlt"
+              alt="Insignia de conformidad Nivel AA de las Guías de Accesibilidad W3C WAI WCAG 2.1"
             />
           </a>
         </div>
@@ -406,6 +482,67 @@
       <div id="widget-panel" class="widget-panel" hidden>
         <h3 class="widget-title" data-i18n="widgetTitle">Panel de Accesibilidad</h3>
 
+        <!-- Lector de voz -->
+        <div class="widget-item">
+          <label data-i18n="widgetVoice">Lectura de Voz</label>
+          <div class="widget-btn-group">
+            <button id="tts-play" aria-label="Reproducir lectura de voz" title="Reproducir">
+              <i class="bx bx-play" aria-hidden="true"></i>
+            </button>
+            <button id="tts-pause" aria-label="Pausar lectura de voz" title="Pausar">
+              <i class="bx bx-pause" aria-hidden="true"></i>
+            </button>
+            <button id="tts-stop" aria-label="Detener lectura de voz" title="Detener">
+              <i class="bx bx-stop" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Filtros de color y Daltonismo -->
+        <div class="widget-item">
+          <label for="accessibility-filter" data-i18n="widgetFilter">Filtro / Daltonismo</label>
+          <select id="accessibility-filter" aria-label="Seleccionar filtro de color">
+            <option value="normal" data-i18n="filterNormal">Normal</option>
+            <option value="monochrome" data-i18n="filterMonochrome">Monocromático (Daltonismo)</option>
+            <option value="contrast" data-i18n="filterContrast">Alto Contraste</option>
+            <option value="invert" data-i18n="filterInvert">Invertir Colores</option>
+          </select>
+        </div>
+
+        <!-- Tamaño de fuente -->
+        <div class="widget-item">
+          <label data-i18n="widgetFontSize">Tamaño de Fuente</label>
+          <div class="widget-btn-group">
+            <button id="font-decrease" aria-label="Reducir tamaño de letra">A-</button>
+            <button id="font-reset" aria-label="Tamaño de letra normal">A</button>
+            <button id="font-increase" aria-label="Aumentar tamaño de letra">A+</button>
+          </div>
+        </div>
+
+        <!-- Espaciado de lectura (Dislexia) -->
+        <div class="widget-item">
+          <label for="toggle-spacing" data-i18n="widgetSpacing">Espaciado Lectura</label>
+          <button id="toggle-spacing" aria-pressed="false" aria-label="Alternar espaciado de lectura para dislexia">
+            <i class="bx bx-text" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <!-- Resaltar Enlaces -->
+        <div class="widget-item">
+          <label for="toggle-highlight-links" data-i18n="widgetLinks">Resaltar Enlaces</label>
+          <button id="toggle-highlight-links" aria-pressed="false" aria-label="Resaltar enlaces e interactivos">
+            <i class="bx bx-link-external" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <!-- Pausar Animaciones (TDA / Concentración) -->
+        <div class="widget-item">
+          <label for="toggle-animations" data-i18n="widgetAnimations">Pausar Animaciones</label>
+          <button id="toggle-animations" aria-pressed="false" aria-label="Pausar o desactivar animaciones y efectos de movimiento para TDA y falta de concentración">
+            <i class="bx bx-stop-circle" id="animations-icon" aria-hidden="true"></i>
+          </button>
+        </div>
+
         <!-- Control de videos -->
         <div class="widget-item">
           <label for="toggle-video" data-i18n="widgetVideo">Videos</label>
@@ -430,14 +567,16 @@
             <option value="es">Español</option>
           </select>
         </div>
+
+        <!-- Restablecer Todo -->
+        <div class="widget-item widget-item--full">
+          <button id="accessibility-reset-all" class="widget-reset-btn" aria-label="Restablecer todos los ajustes de accesibilidad">
+            <i class="bx bx-refresh"></i> <span data-i18n="widgetReset">Restablecer Todo</span>
+          </button>
+        </div>
       </div>
     </div>
-    <script src="./js/app.js"></script>
-    <script src="./js/proyectos.js"></script>
-
-    <script src="./js/skill.js"></script>
-    <script src="./js/oscuro.js"></script>
-    <script src="./js/idioma.js"></script>
+    <script type="module" src="./js/main.js"></script>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>

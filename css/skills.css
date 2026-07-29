@@ -34,20 +34,31 @@
 }
 .skills {
   background-color: #f0f8ff;
+  overflow: hidden; /* Evitar desbordamiento por trayectorias de meteorito */
+}
+
+body.dark .skills {
+  background-color: #0f172a;
 }
 
 .skills__name {
+  position: relative;
   display: flex;
-  flex-direction: column; /* ← Esto hace que el texto vaya debajo */
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   gap: 0.3rem;
-  width: 80px; /* Ajustá según necesidad */
+  width: 80px;
   margin: 0.5rem;
   text-decoration: none;
   font-weight: 600;
   color: inherit;
+  opacity: 0; /* Se revela progresivamente con la entrada de meteorito */
+}
+
+.skills__name.aos-animate {
+  opacity: 1;
 }
 
 .skills__name img {
@@ -55,6 +66,250 @@
   height: 100px;
   object-fit: contain;
   flex-shrink: 0;
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.35s ease;
+}
+
+.skills__name:hover img {
+  transform: scale(1.22);
+  filter: drop-shadow(0 0 12px rgba(0, 170, 255, 0.6));
+}
+
+/* Sombra blanca sutil por defecto en Modo Oscuro para contrastar logos oscuros/negros */
+body.dark .skills__name img {
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.5));
+}
+
+body.dark .skills__name:hover img {
+  transform: scale(1.22);
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.85)) drop-shadow(0 0 16px rgba(56, 189, 248, 0.65));
+}
+
+/* ==========================================
+   ONDA DE CHOQUE (SHOCKWAVE IMPACT RIPPLE & HOVER)
+   ========================================== */
+.skills__name::after {
+  content: '';
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 3px solid rgba(0, 170, 255, 0.95);
+  background: radial-gradient(circle, rgba(0, 170, 255, 0.35) 0%, rgba(0, 170, 255, 0) 75%);
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.2);
+  z-index: 1;
+}
+
+body.dark .skills__name::after {
+  border-color: rgba(56, 189, 248, 0.95);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.45) 0%, rgba(56, 189, 248, 0) 75%);
+}
+
+.skills__name.aos-animate::after {
+  animation: shockwaveRipple 0.65s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation-delay: calc(var(--meteor-delay, 0ms) + 0.42s);
+}
+
+.skills__name.is-hover-impact::after {
+  animation: shockwaveHover 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+  animation-delay: 0s !important;
+}
+
+@keyframes shockwaveRipple {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.2);
+    box-shadow: 0 0 0 0 rgba(0, 170, 255, 0.8);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2.9);
+    box-shadow: 0 0 32px 10px rgba(0, 170, 255, 0);
+    border-color: rgba(0, 170, 255, 0);
+  }
+}
+
+@keyframes shockwaveHover {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.2);
+    box-shadow: 0 0 0 0 rgba(0, 170, 255, 0.8);
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2.8);
+    box-shadow: 0 0 30px 10px rgba(0, 170, 255, 0);
+    border-color: rgba(0, 170, 255, 0);
+  }
+}
+
+/* ==========================================
+   TRAYECTORIAS MULTIDIRECCIONALES DE METEORITO
+   ========================================== */
+
+/* 1. Desde Arriba Izquierda */
+.skills__name[data-aos="meteor-top-left"].aos-animate {
+  animation: meteorTopLeft 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.25) forwards;
+  animation-delay: var(--meteor-delay, 0ms);
+}
+@keyframes meteorTopLeft {
+  0% {
+    opacity: 0;
+    transform: translate3d(-280px, -280px, 0) scale(2.2) rotate(-30deg);
+    filter: drop-shadow(-15px -15px 20px rgba(0, 170, 255, 0.9)) brightness(1.6);
+  }
+  75% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(0.88) rotate(0deg);
+    filter: drop-shadow(0 0 15px rgba(0, 170, 255, 0.7)) brightness(1.2);
+  }
+  88% {
+    transform: scale(1.15);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 0px transparent) brightness(1);
+  }
+}
+
+/* 2. Desde Arriba Derecha */
+.skills__name[data-aos="meteor-top-right"].aos-animate {
+  animation: meteorTopRight 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.25) forwards;
+  animation-delay: var(--meteor-delay, 0ms);
+}
+@keyframes meteorTopRight {
+  0% {
+    opacity: 0;
+    transform: translate3d(280px, -280px, 0) scale(2.2) rotate(30deg);
+    filter: drop-shadow(15px -15px 20px rgba(0, 170, 255, 0.9)) brightness(1.6);
+  }
+  75% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(0.88) rotate(0deg);
+    filter: drop-shadow(0 0 15px rgba(0, 170, 255, 0.7)) brightness(1.2);
+  }
+  88% {
+    transform: scale(1.15);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 0px transparent) brightness(1);
+  }
+}
+
+/* 3. Desde Abajo Izquierda */
+.skills__name[data-aos="meteor-bottom-left"].aos-animate {
+  animation: meteorBottomLeft 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.25) forwards;
+  animation-delay: var(--meteor-delay, 0ms);
+}
+@keyframes meteorBottomLeft {
+  0% {
+    opacity: 0;
+    transform: translate3d(-280px, 280px, 0) scale(2.2) rotate(-20deg);
+    filter: drop-shadow(-15px 15px 20px rgba(0, 170, 255, 0.9)) brightness(1.6);
+  }
+  75% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(0.88) rotate(0deg);
+    filter: drop-shadow(0 0 15px rgba(0, 170, 255, 0.7)) brightness(1.2);
+  }
+  88% {
+    transform: scale(1.15);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 0px transparent) brightness(1);
+  }
+}
+
+/* 4. Desde Abajo Derecha */
+.skills__name[data-aos="meteor-bottom-right"].aos-animate {
+  animation: meteorBottomRight 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.25) forwards;
+  animation-delay: var(--meteor-delay, 0ms);
+}
+@keyframes meteorBottomRight {
+  0% {
+    opacity: 0;
+    transform: translate3d(280px, 280px, 0) scale(2.2) rotate(20deg);
+    filter: drop-shadow(15px 15px 20px rgba(0, 170, 255, 0.9)) brightness(1.6);
+  }
+  75% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(0.88) rotate(0deg);
+    filter: drop-shadow(0 0 15px rgba(0, 170, 255, 0.7)) brightness(1.2);
+  }
+  88% {
+    transform: scale(1.15);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    filter: drop-shadow(0 0 0px transparent) brightness(1);
+  }
+}
+
+/* 5. Desde Arriba Centro */
+.skills__name[data-aos="meteor-top"].aos-animate {
+  animation: meteorTop 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.25) forwards;
+  animation-delay: var(--meteor-delay, 0ms);
+}
+@keyframes meteorTop {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -320px, 0) scale(2.2);
+    filter: drop-shadow(0 -15px 20px rgba(0, 170, 255, 0.9)) brightness(1.6);
+  }
+  75% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(0.88);
+    filter: drop-shadow(0 0 15px rgba(0, 170, 255, 0.7)) brightness(1.2);
+  }
+  88% {
+    transform: scale(1.15);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: drop-shadow(0 0 0px transparent) brightness(1);
+  }
+}
+
+/* 6. Desde Abajo Centro */
+.skills__name[data-aos="meteor-bottom"].aos-animate {
+  animation: meteorBottom 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.25) forwards;
+  animation-delay: var(--meteor-delay, 0ms);
+}
+@keyframes meteorBottom {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 320px, 0) scale(2.2);
+    filter: drop-shadow(0 15px 20px rgba(0, 170, 255, 0.9)) brightness(1.6);
+  }
+  75% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(0.88);
+    filter: drop-shadow(0 0 15px rgba(0, 170, 255, 0.7)) brightness(1.2);
+  }
+  88% {
+    transform: scale(1.15);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: drop-shadow(0 0 0px transparent) brightness(1);
+  }
 }
 
 /* Contenedor general responsivo */

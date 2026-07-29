@@ -61,45 +61,73 @@
 .show {
   right: 0;
 }
-#language-select {
-  background: transparent;
-  border: none;
-  color: rgb(25, 25, 26);
+/* Selector de idioma en la barra de navegación y widget */
+#language-select-header,
+#language-select-widget {
+  font-family: var(--poppins);
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
+  padding: 0.35rem 1.8rem 0.35rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background-color: rgba(255, 255, 255, 0.85);
+  color: var(--second-color);
   cursor: pointer;
-  padding: 0;
-  /* Quitar estilos por defecto */
+  outline: none;
+  transition: all 0.3s ease;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  /* Para que se ubique bien y se alinee con nav */
-  outline: none;
-  position: relative;
-}
-
-/* Para el dropdown arrow personalizado */
-#language-select {
-  background-image: url('data:image/svg+xml;utf8,<svg fill="%23fff" height="10" viewBox="0 0 24 24" width="10" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23022c43" height="12" viewBox="0 0 24 24" width="12" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
   background-repeat: no-repeat;
   background-position: right 0.5rem center;
-  background-size: 0.65rem;
-  padding-right: 1.5rem;
+  background-size: 0.75rem;
 }
 
-/* Hover similar a nav__link */
-#language-select:hover {
-  border-bottom: 2px solid var(--first-color);
+#language-select-header:hover,
+#language-select-widget:hover {
+  border-color: var(--first-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-/* En dispositivos móviles o tamaños pequeños, ajustar */
+#language-select-header:focus-visible,
+#language-select-widget:focus-visible {
+  border-color: var(--first-color);
+  box-shadow: 0 0 0 2px rgba(0, 150, 255, 0.25);
+}
+
+/* Adaptación a Modo Oscuro */
+body.dark #language-select-header,
+body.dark #language-select-widget {
+  background-color: #1e1e24;
+  color: #f0f0f0;
+  border-color: rgba(255, 255, 255, 0.15);
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23ffffff" height="12" viewBox="0 0 24 24" width="12" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+}
+
+body.dark #language-select-header:hover,
+body.dark #language-select-widget:hover {
+  border-color: var(--first-color);
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+}
+
+body.dark #language-select-header option,
+body.dark #language-select-widget option {
+  background-color: #1e1e24;
+  color: #f0f0f0;
+}
+
+/* En dispositivos móviles o menú hamburguesa */
 @media screen and (max-width: 768px) {
-  #language-select {
-    color: white;
-    background-image: url('data:image/svg+xml;utf8,<svg fill="%23000" height="10" viewBox="0 0 24 24" width="10" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  #language-select-header {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.3);
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23ffffff" height="12" viewBox="0 0 24 24" width="12" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
   }
-  #language-select:hover {
-    border-bottom: 2px solid var(--first-color);
+  #language-select-header option {
+    background-color: var(--second-color);
+    color: #fff;
   }
 }
 
