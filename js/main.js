@@ -10,6 +10,7 @@ import { initAccessibility } from './modules/accessibility.js';
 import { initContactForm } from './modules/contact.js';
 import { initDataStore } from './modules/dataStore.js';
 import { initHome } from './modules/home.js';
+import { initAbout } from './modules/about.js';
 import { initAdminModal, openAdminModal } from './modules/adminModal.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -18,6 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Inicializar Sección Inicio / Banner Dinámico
   initHome();
+
+  // Inicializar Sección Sobre Mí Dinámica
+  initAbout();
 
   // Inicializar Navegación y Menú
   initNavigation();

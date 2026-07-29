@@ -1,8 +1,8 @@
 /**
- * Módulo del Panel de Administración y Modales CRUD (Login + Banner Editor Limpio con Carga de Archivos)
+ * Módulo del Panel de Administración y Modales CRUD (Login + Banner & About Editor)
  */
 import { isAuthenticated, login, logout, changePassword } from './auth.js';
-import { getBannerData, saveBannerData, resetBannerData } from './dataStore.js';
+import { getBannerData, saveBannerData, resetBannerData, getAboutData, saveAboutData, resetAboutData } from './dataStore.js';
 import { getLang } from './i18n.js';
 
 let modalContainer = null;
@@ -104,7 +104,6 @@ function renderLoginModal(container) {
     </div>
   `;
 
-  // Eventos de Login
   const closeBtn = container.querySelector('#admin-close-x');
   if (closeBtn) closeBtn.addEventListener('click', closeAdminModal);
 
@@ -151,17 +150,17 @@ function renderLoginModal(container) {
 }
 
 /**
- * Renderiza el panel completo CRUD de administración (Sin HTML expuesto + Selector de Archivos)
+ * Renderiza el panel completo CRUD de administración (Banner + About)
  */
 function renderCrudPanel(container) {
   const lang = getLang();
   const bannerData = getBannerData();
+  const aboutData = getAboutData();
 
-  // Variables auxiliares para los archivos cargados temporalmente
   let uploadedProfileImg = bannerData.profileImg || '';
-  let uploadedBgVideo = bannerData.bgVideo || '';
   let uploadedCvEs = bannerData.cv?.es || '';
   let uploadedCvEn = bannerData.cv?.en || '';
+  let uploadedAboutPhotoImg = aboutData.photoImg || '';
 
   container.innerHTML = `
     <div class="admin-modal-card admin-crud-card" role="dialog" aria-labelledby="admin-crud-title" aria-modal="true">
@@ -185,12 +184,15 @@ function renderCrudPanel(container) {
         <button type="button" class="admin-tab active" data-tab="tab-banner" role="tab" aria-selected="true">
           <i class="bx bx-home"></i> ${lang === 'es' ? '1. Banner / Inicio' : '1. Banner / Home'}
         </button>
+        <button type="button" class="admin-tab" data-tab="tab-about" role="tab" aria-selected="false">
+          <i class="bx bx-user"></i> ${lang === 'es' ? '2. Sobre Mí' : '2. About Me'}
+        </button>
         <button type="button" class="admin-tab" data-tab="tab-security" role="tab" aria-selected="false">
           <i class="bx bx-key"></i> ${lang === 'es' ? 'Seguridad / Clave' : 'Security / Key'}
         </button>
       </div>
 
-      <!-- Contenido Pestaña 1: Banner / Inicio -->
+      <!-- Pestaña 1: Banner / Inicio -->
       <div id="tab-banner" class="admin-tab-content active" role="tabpanel">
         <form id="admin-banner-form" class="admin-form">
           <h4 class="admin-section-subtitle"><i class="bx bx-text"></i> Texto e Identidad (Español)</h4>
@@ -225,11 +227,10 @@ function renderCrudPanel(container) {
             </div>
           </div>
 
-          <h4 class="admin-section-subtitle" style="margin-top: 1.2rem;"><i class="bx bx-image-add"></i> Archivos Multimedia (Cargar desde tu equipo)</h4>
+          <h4 class="admin-section-subtitle" style="margin-top: 1.2rem;"><i class="bx bx-image-add"></i> Archivos Multimedia</h4>
           <div class="admin-form-grid">
-            <!-- Cargar Foto de Perfil -->
             <div class="admin-field admin-field--full">
-              <label>Foto de Perfil:</label>
+              <label>Foto de Perfil Principal:</label>
               <div class="admin-file-picker-group">
                 <div class="admin-preview-thumb">
                   <img id="profile-img-preview" src="${uploadedProfileImg}" alt="Previsualización" />
@@ -237,14 +238,13 @@ function renderCrudPanel(container) {
                 <div class="admin-file-input-wrapper">
                   <input type="file" id="banner-img-file" accept="image/*" class="admin-file-hidden" />
                   <label for="banner-img-file" class="admin-btn admin-btn--secondary">
-                    <i class="bx bx-cloud-upload"></i> Seleccionar Imagen de Perfil
+                    <i class="bx bx-cloud-upload"></i> Seleccionar Foto de Perfil
                   </label>
-                  <span id="banner-img-filename" class="admin-file-name">Imagen actual activa</span>
+                  <span id="banner-img-filename" class="admin-file-name">Imagen activa</span>
                 </div>
               </div>
             </div>
 
-            <!-- Cargar CV Español -->
             <div class="admin-field">
               <label>CV en Español (PDF):</label>
               <input type="file" id="banner-cv-file-es" accept=".pdf" class="admin-file-hidden" />
@@ -254,7 +254,6 @@ function renderCrudPanel(container) {
               <span id="banner-cves-filename" class="admin-file-name">CV Español activo</span>
             </div>
 
-            <!-- Cargar CV Inglés -->
             <div class="admin-field">
               <label>CV en Inglés (PDF):</label>
               <input type="file" id="banner-cv-file-en" accept=".pdf" class="admin-file-hidden" />
@@ -265,7 +264,7 @@ function renderCrudPanel(container) {
             </div>
           </div>
 
-          <h4 class="admin-section-subtitle" style="margin-top: 1.2rem;"><i class="bx bx-link"></i> Redes Sociales y Contacto</h4>
+          <h4 class="admin-section-subtitle" style="margin-top: 1.2rem;"><i class="bx bx-link"></i> Redes Sociales</h4>
           <div class="admin-form-grid">
             <div class="admin-field">
               <label for="banner-social-linkedin">URL LinkedIn:</label>
@@ -287,16 +286,69 @@ function renderCrudPanel(container) {
 
           <div class="admin-footer-btn-group">
             <button type="button" id="admin-reset-banner-btn" class="admin-btn admin-btn--danger">
-              <i class="bx bx-refresh"></i> Restablecer Valores por Defecto
+              <i class="bx bx-refresh"></i> Restablecer Inicio
             </button>
             <button type="submit" class="admin-btn admin-btn--primary">
-              <i class="bx bx-save"></i> Guardar Cambios Directamente
+              <i class="bx bx-save"></i> Guardar Cambios de Inicio
             </button>
           </div>
         </form>
       </div>
 
-      <!-- Contenido Pestaña 2: Seguridad / Clave -->
+      <!-- Pestaña 2: Sobre Mí (About Me) -->
+      <div id="tab-about" class="admin-tab-content" role="tabpanel" style="display:none;">
+        <form id="admin-about-form" class="admin-form">
+          <h4 class="admin-section-subtitle"><i class="bx bx-detail"></i> Títulos y Descripción (Español)</h4>
+          <div class="admin-field">
+            <label for="about-subtitle-es">Subtítulo (Español):</label>
+            <input type="text" id="about-subtitle-es" value="${escapeAttr(aboutData.subtitle?.es || '')}" required />
+          </div>
+          <div class="admin-field">
+            <label for="about-text-es">Texto Biográfico (Español):</label>
+            <textarea id="about-text-es" rows="6" class="admin-textarea" required>${escapeAttr(aboutData.text?.es || '')}</textarea>
+          </div>
+
+          <h4 class="admin-section-subtitle" style="margin-top: 1.2rem;"><i class="bx bx-world"></i> Títulos y Descripción (Inglés)</h4>
+          <div class="admin-field">
+            <label for="about-subtitle-en">Subtitle (English):</label>
+            <input type="text" id="about-subtitle-en" value="${escapeAttr(aboutData.subtitle?.en || '')}" required />
+          </div>
+          <div class="admin-field">
+            <label for="about-text-en">Biographical Text (English):</label>
+            <textarea id="about-text-en" rows="6" class="admin-textarea" required>${escapeAttr(aboutData.text?.en || '')}</textarea>
+          </div>
+
+          <h4 class="admin-section-subtitle" style="margin-top: 1.2rem;"><i class="bx bx-image"></i> Fotografía Secundaria (Sobre Mí)</h4>
+          <div class="admin-field admin-field--full">
+            <label>Foto de Sobre Mí:</label>
+            <div class="admin-file-picker-group">
+              <div class="admin-preview-thumb">
+                <img id="about-img-preview" src="${uploadedAboutPhotoImg}" alt="Previsualización Sobre Mí" />
+              </div>
+              <div class="admin-file-input-wrapper">
+                <input type="file" id="about-img-file" accept="image/*" class="admin-file-hidden" />
+                <label for="about-img-file" class="admin-btn admin-btn--secondary">
+                  <i class="bx bx-cloud-upload"></i> Seleccionar Imagen de Sobre Mí
+                </label>
+                <span id="about-img-filename" class="admin-file-name">Imagen activa</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="admin-about-status" class="admin-status" style="display:none;"></div>
+
+          <div class="admin-footer-btn-group">
+            <button type="button" id="admin-reset-about-btn" class="admin-btn admin-btn--danger">
+              <i class="bx bx-refresh"></i> Restablecer Sobre Mí
+            </button>
+            <button type="submit" class="admin-btn admin-btn--primary">
+              <i class="bx bx-save"></i> Guardar Cambios de Sobre Mí
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Pestaña 3: Seguridad / Clave -->
       <div id="tab-security" class="admin-tab-content" role="tabpanel" style="display:none;">
         <form id="admin-pass-form" class="admin-form">
           <div class="admin-field">
@@ -322,18 +374,31 @@ function renderCrudPanel(container) {
     </div>
   `;
 
-  // Escuchadores de eventos para los File Inputs (Foto, Video y PDFs)
+  // Escuchadores de Carga de Archivos
   const imgFileInput = container.querySelector('#banner-img-file');
   const imgPreview = container.querySelector('#profile-img-preview');
   const imgFilename = container.querySelector('#banner-img-filename');
-
   if (imgFileInput) {
     imgFileInput.addEventListener('change', async (e) => {
       const file = e.target.files[0];
       if (file) {
-        imgFilename.textContent = `Archivo seleccionado: ${file.name}`;
+        imgFilename.textContent = `Seleccionado: ${file.name}`;
         uploadedProfileImg = await readFileAsDataURL(file);
         if (imgPreview) imgPreview.src = uploadedProfileImg;
+      }
+    });
+  }
+
+  const aboutImgFileInput = container.querySelector('#about-img-file');
+  const aboutImgPreview = container.querySelector('#about-img-preview');
+  const aboutImgFilename = container.querySelector('#about-img-filename');
+  if (aboutImgFileInput) {
+    aboutImgFileInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        aboutImgFilename.textContent = `Seleccionado: ${file.name}`;
+        uploadedAboutPhotoImg = await readFileAsDataURL(file);
+        if (aboutImgPreview) aboutImgPreview.src = uploadedAboutPhotoImg;
       }
     });
   }
@@ -344,7 +409,7 @@ function renderCrudPanel(container) {
     cvEsFileInput.addEventListener('change', async (e) => {
       const file = e.target.files[0];
       if (file) {
-        cvEsFilename.textContent = `PDF cargado: ${file.name}`;
+        cvEsFilename.textContent = `PDF: ${file.name}`;
         uploadedCvEs = await readFileAsDataURL(file);
       }
     });
@@ -356,13 +421,13 @@ function renderCrudPanel(container) {
     cvEnFileInput.addEventListener('change', async (e) => {
       const file = e.target.files[0];
       if (file) {
-        cvEnFilename.textContent = `PDF cargado: ${file.name}`;
+        cvEnFilename.textContent = `PDF: ${file.name}`;
         uploadedCvEn = await readFileAsDataURL(file);
       }
     });
   }
 
-  // Escuchadores de eventos en el panel CRUD
+  // Cierre y Logout
   const closeBtn = container.querySelector('#admin-close-x');
   if (closeBtn) closeBtn.addEventListener('click', closeAdminModal);
 
@@ -394,7 +459,7 @@ function renderCrudPanel(container) {
     });
   });
 
-  // Formulario Banner Submit
+  // Submit Banner
   const bannerForm = container.querySelector('#admin-banner-form');
   const bannerStatus = container.querySelector('#admin-banner-status');
 
@@ -431,25 +496,67 @@ function renderCrudPanel(container) {
 
     if (success) {
       bannerStatus.className = 'admin-status admin-status--success';
-      bannerStatus.innerHTML = '<i class="bx bx-check-circle"></i> ¡Cambios guardados con éxito en la sección Inicio!';
+      bannerStatus.innerHTML = '<i class="bx bx-check-circle"></i> ¡Cambios guardados en la sección Inicio!';
     } else {
       bannerStatus.className = 'admin-status admin-status--error';
-      bannerStatus.innerHTML = '<i class="bx bx-error-circle"></i> No se pudieron guardar los cambios.';
+      bannerStatus.innerHTML = '<i class="bx bx-error-circle"></i> Error guardando los cambios.';
     }
   });
 
-  // Restablecer valores por defecto del Banner
-  const resetBtn = container.querySelector('#admin-reset-banner-btn');
-  if (resetBtn) {
-    resetBtn.addEventListener('click', () => {
-      if (confirm('¿Estás seguro de restablecer la sección Inicio a los valores por defecto?')) {
+  // Reset Banner
+  const resetBannerBtn = container.querySelector('#admin-reset-banner-btn');
+  if (resetBannerBtn) {
+    resetBannerBtn.addEventListener('click', () => {
+      if (confirm('¿Restablecer Inicio a los valores por defecto?')) {
         resetBannerData();
         renderCrudPanel(container);
       }
     });
   }
 
-  // Formulario Cambiar Contraseña Submit
+  // Submit About Me
+  const aboutForm = container.querySelector('#admin-about-form');
+  const aboutStatus = container.querySelector('#admin-about-status');
+
+  aboutForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const newData = {
+      subtitle: {
+        es: container.querySelector('#about-subtitle-es').value.trim(),
+        en: container.querySelector('#about-subtitle-en').value.trim()
+      },
+      text: {
+        es: container.querySelector('#about-text-es').value.trim(),
+        en: container.querySelector('#about-text-en').value.trim()
+      },
+      photoImg: uploadedAboutPhotoImg
+    };
+
+    const success = saveAboutData(newData);
+    aboutStatus.style.display = 'block';
+
+    if (success) {
+      aboutStatus.className = 'admin-status admin-status--success';
+      aboutStatus.innerHTML = '<i class="bx bx-check-circle"></i> ¡Cambios guardados en la sección Sobre Mí!';
+    } else {
+      aboutStatus.className = 'admin-status admin-status--error';
+      aboutStatus.innerHTML = '<i class="bx bx-error-circle"></i> Error guardando los cambios.';
+    }
+  });
+
+  // Reset About Me
+  const resetAboutBtn = container.querySelector('#admin-reset-about-btn');
+  if (resetAboutBtn) {
+    resetAboutBtn.addEventListener('click', () => {
+      if (confirm('¿Restablecer la sección Sobre Mí a los valores por defecto?')) {
+        resetAboutData();
+        renderCrudPanel(container);
+      }
+    });
+  }
+
+  // Submit Pass
   const passForm = container.querySelector('#admin-pass-form');
   const passStatus = container.querySelector('#admin-pass-status');
 
