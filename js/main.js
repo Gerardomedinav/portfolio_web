@@ -18,13 +18,13 @@ import { initPreloader, updatePreloaderProgress } from './modules/preloader.js';
 
 // Inicializar Preloader inmediatamente
 initPreloader();
-updatePreloaderProgress(15, '⚡ Cargando arquitectura visual y estilos modulares...');
+updatePreloaderProgress(20, '⚡ Cargando arquitectura visual y estilos modulares...');
 
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
     // Paso 1: Almacén Central de Datos y Seguridad SHA-256
     initDataStore();
-    updatePreloaderProgress(35, '🔑 Inicializando almacén de datos DataStore...');
+    updatePreloaderProgress(45, '🔑 Inicializando almacén DataStore y cifrado SHA-256...');
 
     setTimeout(() => {
       // Paso 2: Secciones dinámicas (Banner, Sobre Mí, Contacto y Footer)
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
       initNavigation();
       initTheme();
       initI18n();
-      updatePreloaderProgress(60, '💼 Cargando proyectos, habilidades y recursos...');
+      updatePreloaderProgress(70, '💼 Cargando proyectos, habilidades y recursos dinámicos...');
 
       setTimeout(() => {
         // Paso 3: Componentes avanzados, proyectos y habilidades
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         initSkills();
         initContactForm();
         initAccessibility();
-        updatePreloaderProgress(85, '🤖 Conectando Asistente Virtual GerAssist con IA...');
+        updatePreloaderProgress(90, '🤖 Conectando Asistente Virtual GerAssist con IA...');
 
         setTimeout(() => {
           // Paso 4: GerAssist & Panel de Administración CRUD
@@ -57,8 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
               openAdminModal();
             });
           }
-        }, 300);
-      }, 250);
-    }, 200);
-  }, 100);
+        }, 700);
+      }, 750);
+    }, 650);
+  }, 500);
 });
