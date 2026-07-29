@@ -5,19 +5,19 @@
 [![Accessibility](https://img.shields.io/badge/WCAG_2.1_AA-100%25-blue?style=for-the-badge)](https://www.w3.org/WAI/standards-guidelines/wcag/)
 [![Performance](https://img.shields.io/badge/Performance-96%25-orange?style=for-the-badge)](https://pagespeed.web.dev/)
 
-Bienvenido al repositorio del **Portafolio Web Profesional de Gerardo Medina** (Full Stack Developer Jr.).
+Bienvenido al repositorio oficial del **Portafolio Web Profesional de Gerardo Medina** (Full Stack Developer Jr.).
 
-Este proyecto destaca mis proyectos y habilidades a la vez que sirve como caso de estudio en **Desarrollo Web Moderno, Accesibilidad Universal (WCAG 2.1 AA), Internacionalización (i18n), Comunicación Asíncrona (AJAX Formspree), Endurecimiento de Seguridad (Hardening)** y un **Sistema de Administración CRUD Multisección Criptográfico**.
+Este proyecto destaca mis proyectos y habilidades a la vez que sirve como caso de estudio completo en **Desarrollo Web Moderno, Accesibilidad Universal (WCAG 2.1 AA), Internacionalización (i18n), Comunicación Asíncrona (AJAX Formspree), Endurecimiento de Seguridad (Hardening)** y un **Sistema de Administración CRUD Multisección Criptográfico Reactivo**.
 
 ---
 
-## ✨ Funcionalidades Principales
+## ✨ Funcionalidades Principales y Arquitectura
 
 ### 🔑 1. Sistema de Administración CRUD Multisección (Fases 0 a 5)
 El portafolio incluye un **Panel de Administración Inteligente y Seguro** accesible mediante el icono de la llave (🔑) en el encabezado:
-* **Seguridad Criptográfica Nativa (SHA-256):** Autenticación mediante `crypto.subtle.digest` con contraseñas hash guardadas de forma segura. El HTML del panel no existe en la página hasta ingresar la clave correcta (previniendo inspección en DevTools).
+* **Autenticación Criptográfica Nativa (SHA-256):** Verificación de claves con la Web Crypto API (`crypto.subtle.digest`) y token de sesión en `sessionStorage`. El HTML del panel no existe en la página hasta ingresar la clave correcta (previniendo inspección en DevTools).
 * **Edición Limpia en Texto Plano:** Formulario intuitivo sin etiquetas HTML expuestas. Los campos dividen Saludos, Nombres y Profesiones en texto limpio y el código aplica los colores y formato automáticamente.
-* **Carga Directa de Archivos Locales (`<input type="file">`):** Selector de archivos de la computadora con previsualización en tiempo real para fotos de perfil, imágenes de proyectos, logos y PDFs de CVs.
+* **Carga Directa de Archivos Locales (`<input type="file">`):** Selector de archivos de la computadora con previsualización en tiempo real para foto de perfil, foto de Sobre Mí, portadas de proyectos, logos y PDFs de CVs.
 * **Gestión de Texto Alternativo (Alt Text WCAG 2.1 AA):** Todos los cargadores de imagen permiten ingresar o modificar el **Texto Alt bilingüe (ES / EN)** para garantizar la accesibilidad completa.
 * **Pestañas CRUD Organizadas:**
   1. **Banner / Inicio:** Saludos, Nombre, Profesión, Foto de Perfil, CVs en PDF y Redes Sociales.
@@ -45,11 +45,21 @@ Panel flotante interactivo (`.widget-panel`) integrado estéticamente con el tem
 * **🔤 Escalado Tipográfico Dinámico:** Controles para ajustar el tamaño de fuente (`A-`, `A`, `A+`).
 * **📖 Espaciado de Lectura (Dislexia):** Optimización del interlineado y espaciado de texto para facilitar la lectura.
 * **🔗 Resaltado de Hipervínculos:** Indicadores visuales destacados en todos los enlaces interactivos.
-* **⏸️ Pausar Animaciones (TDA / Concentración):** Desactivación instantánea de todo tipo de movimiento y efectos para personas con TDA o trastornos de atención.
+* **⏸️ Pausar Animaciones y Videos (TDA / Concentración):** Desactivación instantánea de todo tipo de movimiento, videos de fondo y efectos para personas con TDA o trastornos de atención.
+* **Badge de Conformidad W3C:** Insignia interactiva oficial de conformidad WCAG 2.1 AA en el pie de página.
 
-### 🌓 5. Modo Oscuro / Claro
+### 🌓 5. Modo Oscuro / Claro & Animaciones
 * **Sincronización Unificada:** Alternancia fluida de tema visual mediante la clase `.dark` en el `body`.
-* **Detección Automática:** Detección de la preferencia del sistema operativo (`prefers-color-scheme`).
+* **Animaciones de Impacto y Scroll:** Efectos AOS (Animate On Scroll), animación meteorito multidireccional y ondas de choque expansivas (`@keyframes shockwaveHover`) en las tarjetas de habilidades.
+
+---
+
+## 🛠️ Tecnologías Utilizadas
+
+- **Frontend Core:** HTML5 Semántico, Vanilla CSS3 (Variables CSS, Flexbox, CSS Grid, Modulares), Vanilla JavaScript (ES Modules).
+- **Seguridad & Hashing:** Web Crypto API (`crypto.subtle.digest` SHA-256), Content Security Policy (CSP), HTTP Headers en `vercel.json`.
+- **Formularios & Estado:** AJAX / Fetch API (`URLSearchParams`), Formspree, Web Storage API (`localStorage` & `sessionStorage`).
+- **Accesibilidad & Librerías:** WCAG 2.1 AA, Web Speech API (TTS), Boxicons, AOS (Animate On Scroll).
 
 ---
 
@@ -96,3 +106,20 @@ portfolio_web/
 ├── vercel.json               # Configuración de despliegue y seguridad Vercel (CSP)
 └── README.md                 # Documentación del proyecto
 ```
+
+---
+
+## 💻 Ejecución Local
+
+Para ejecutar el proyecto en tu entorno local:
+
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/Gerardomedinav/portfolio_web.git
+   cd portfolio_web
+   ```
+2. Inicia un servidor web local (por ejemplo con Live Server en VS Code o npx):
+   ```bash
+   npx http-server -p 8080
+   ```
+3. Abre en tu navegador `http://localhost:8080`.
