@@ -32,6 +32,7 @@ Este documento sirve como memoria y guía contextual de referencia para cualquie
   - `adminModal.js`: Inyección dinámica del modal de Login y del panel de administración CRUD multisección.
   - `contact.js`: Formulario de contacto interactivo con envíos asíncronos directos (AJAX) vía Formspree.
   - `accessibility.js`: Suite avanzada de accesibilidad WCAG 2.1 AA (Lector de voz TTS, Daltonismo/Filtros de color, tamaño de texto A-/A/A+, espaciado de lectura para dislexia, resaltado de enlaces, pausar animaciones TDAH y restablecer todo).
+  - `preloader.js`: Pantalla de carga inteligente con anillo SVG de progreso (0% a 100%), inicialización secuencial de módulos y transición de desenfoque.
 
 ### 2. Backend Serverless & IA
 - **`api/chat.js` (Vercel Serverless Function):** Proxy de servidor seguro en Node.js que procesa peticiones de IA leyendo `process.env.AI_API_KEY` de forma privada sin exponer credenciales.

@@ -14,52 +14,51 @@ import { initAbout } from './modules/about.js';
 import { initFooterContact } from './modules/footerContact.js';
 import { initAdminModal, openAdminModal } from './modules/adminModal.js';
 import { initChatbot } from './modules/chatbotModal.js';
+import { initPreloader, updatePreloaderProgress } from './modules/preloader.js';
+
+// Inicializar Preloader inmediatamente
+initPreloader();
+updatePreloaderProgress(15, '⚡ Cargando arquitectura visual y estilos modulares...');
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Inicializar Almacén Central de Datos
-  initDataStore();
+  setTimeout(() => {
+    // Paso 1: Almacén Central de Datos y Seguridad SHA-256
+    initDataStore();
+    updatePreloaderProgress(35, '🔑 Inicializando almacén de datos DataStore...');
 
-  // Inicializar Sección Inicio / Banner Dinámico
-  initHome();
+    setTimeout(() => {
+      // Paso 2: Secciones dinámicas (Banner, Sobre Mí, Contacto y Footer)
+      initHome();
+      initAbout();
+      initFooterContact();
+      initNavigation();
+      initTheme();
+      initI18n();
+      updatePreloaderProgress(60, '💼 Cargando proyectos, habilidades y recursos...');
 
-  // Inicializar Sección Sobre Mí Dinámica
-  initAbout();
+      setTimeout(() => {
+        // Paso 3: Componentes avanzados, proyectos y habilidades
+        initProjects();
+        initSkills();
+        initContactForm();
+        initAccessibility();
+        updatePreloaderProgress(85, '🤖 Conectando Asistente Virtual GerAssist con IA...');
 
-  // Inicializar Datos de Contacto y Footer Dinámicos
-  initFooterContact();
+        setTimeout(() => {
+          // Paso 4: GerAssist & Panel de Administración CRUD
+          initChatbot();
+          initAdminModal();
+          updatePreloaderProgress(100, '🚀 ¡Portafolio listo! Bienvenido...');
 
-  // Inicializar Navegación y Menú
-  initNavigation();
-
-  // Inicializar Tema Oscuro / Claro
-  initTheme();
-
-  // Inicializar Motor de Traducciones (i18n)
-  initI18n();
-
-  // Inicializar Carga Dinámica de Proyectos
-  initProjects();
-
-  // Inicializar Carga Dinámica de Habilidades
-  initSkills();
-
-  // Inicializar Formulario de Contacto
-  initContactForm();
-
-  // Inicializar Suite de Accesibilidad (Voz, Daltonismo, Tipografía)
-  initAccessibility();
-
-  // Inicializar Asistente Virtual Inteligente (GerAssist)
-  initChatbot();
-
-  // Inicializar Modal de Administración & CRUD
-  initAdminModal();
-
-  // Escuchador para el botón de acceso de administración (🔑)
-  const adminBtn = document.getElementById('admin-access-btn');
-  if (adminBtn) {
-    adminBtn.addEventListener('click', () => {
-      openAdminModal();
-    });
-  }
+          // Escuchador para el botón de acceso de administración (🔑)
+          const adminBtn = document.getElementById('admin-access-btn');
+          if (adminBtn) {
+            adminBtn.addEventListener('click', () => {
+              openAdminModal();
+            });
+          }
+        }, 300);
+      }, 250);
+    }, 200);
+  }, 100);
 });

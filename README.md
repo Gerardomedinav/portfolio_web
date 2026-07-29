@@ -53,7 +53,10 @@ Panel flotante interactivo (`.widget-panel`) integrado estéticamente con el tem
 * **🔤 Escalado Tipográfico Dinámico:** Controles para ajustar el tamaño de fuente (`A-`, `A`, `A+`).
 * **📖 Espaciado de Lectura (Dislexia):** Optimización del interlineado y espaciado de texto para facilitar la lectura.
 * **🔗 Resaltado de Hipervínculos:** Indicadores visuales destacados en todos los enlaces interactivos.
-* **⏸️ Pausar Animaciones y Videos (TDAH / Concentración):** Desactivación instantánea de todo tipo de movimiento para personas con TDAH.
+### ⏳ 6. Pantalla de Carga Inteligente y Preloader Interactivo (`preloader.js`)
+* **Anillo de Progreso SVG Dinámico:** Indicador circular animado en SVG con contador en tiempo real (`0%` a `100%`).
+* **Secuencia de Carga por Módulos:** Muestra de forma altamente visual e intuitiva la inicialización paso a paso de los componentes (*Arquitectura CSS, Almacén DataStore, Proyectos, Habilidades y Conexión con el Asistente GerAssist*).
+* **Transición Fluida de Desvanecimiento:** Desaparición elegante con efecto de desenfoque y desenfoque óptico una vez alcanzado el 100%, garantizando una interacción fluida en redes móviles y servicios Jamstack como Vercel.
 
 ---
 
