@@ -1,42 +1,48 @@
 {
   "profile": {
     "name": "Gerardo Medina",
-    "title": "Full Stack Developer & Data Analyst / Data Scientist Profile",
+    "title": "Full Stack Developer & Futuro Data Scientist / Data Analyst",
     "degrees": [
-      "Técnico Universitario en Programación",
-      "Técnico Universitario en Análisis y Diseño de Software",
-      "Cursando Licenciatura en Educación Tecnológica en la UTN (Universidad Tecnológica Nacional)"
+      "Técnico Universitario en Programación (Base sólida de código y lógica)",
+      "Técnico Universitario en Análisis y Diseño de Software (Arquitectura y estructura)",
+      "Licenciatura en Tecnología Educativa (LTE) en la UTN - Universidad Tecnológica Nacional (En curso)"
+    ],
+    "certifications_and_courses": [
+      "Especialización continua en Análisis de Datos y Data Science",
+      "Modelos de Lenguaje (LLMs e Inteligencia Artificial)",
+      "Ciberseguridad y Hardening Web",
+      "Capacitación constante en nuevas tecnologías"
     ],
     "mindset": [
-      "Pensamiento Analítico y Análisis de Datos (Data Science & Data Analytics)",
-      "Accesibilidad Web Universal (WCAG 2.1 AA)",
+      "Proyección constante hacia Data Science & Data Analytics respaldado por bases de ingeniería",
+      "Accesibilidad Web Universal (WCAG 2.1 AA) e inclusión humana",
       "Búsqueda de Impacto Real en cada desarrollo",
-      "Empatía, Escucha Activa y Orientación al Usuario",
-      "Trabajo en Equipo y Transferencia de Conocimiento"
+      "Empatía, Inteligencia Emocional y Trabajo en Equipo (15+ años en gestión)",
+      "Transferencia de Conocimiento y Mentoría (Formación LTE UTN)"
     ],
     "experience": "Más de 15 años de experiencia en gestión, atención al cliente y administración en el negocio familiar al por menor, lo que aportó una sólida inteligencia emocional, empatía y orientación a resultados.",
-    "vision": "Aportar valor en equipos de desarrollo orientados a la calidad, aplicando pensamiento analítico, ciencia de datos y accesibilidad universal, mientras continuo mi formación constante para mentorear y formar a nuevas generaciones."
+    "vision": "Aportar valor inmediato en equipos de desarrollo Full Stack mientras evoluciono activamente hacia la Ciencia de Datos (Data Scientist / Data Analyst), aplicando rigor analítico, accesibilidad universal y educación tecnológica."
   },
   "faqs": [
     {
       "keywords": ["quien sos", "quien es gerardo", "presentate", "quien es", "sobre gerardo"],
-      "answer": "¡Hola! Soy **GerAssist**, el asistente virtual de **Gerardo Medina**. Gerardo es desarrollador Full Stack con un fuerte perfil en **Análisis de Datos (Data Analyst / Data Scientist)** y apasionado por la **Accesibilidad Web (WCAG 2.1 AA)**. Posee títulos universitarios en Programación y en Análisis y Diseño de Software, y actualmente cursa la Licenciatura en Educación Tecnológica en la UTN. Su objetivo en cada proyecto es generar un **impacto real**, aplicando empatía, trabajo en equipo y rigor analítico. ¿Te gustaría conocer sus proyectos o sus habilidades?"
+      "answer": "¡Hola! Soy **GerAssist**, el asistente personal de **Gerardo Medina**. Gerardo es Desarrollador Full Stack con sólidas bases universitarias en **Programación** y **Análisis/Diseño de Software**. Actualmente cursa la **Licenciatura en Tecnología Educativa (LTE) en la UTN** y se capacita continuamente en **Análisis de Datos, Modelos de Lenguaje (LLMs / IA) y Ciberseguridad**, apuntando a consolidarse como **Data Scientist / Data Analyst**. Es un apasionado por la **Accesibilidad Web (WCAG 2.1 AA)** y el impacto real. ¿Qué te interesaría saber sobre él?"
     },
     {
-      "keywords": ["estudios", "educacion", "universidad", "utn", "carrera", "titulo"],
-      "answer": "Gerardo cuenta con una sólida formación académica universitaria:\n\n1. 🎓 **Técnico Universitario en Programación**.\n2. 🎓 **Técnico Universitario en Análisis y Diseño de Software**.\n3. 🚀 **Licenciatura en Educación Tecnológica en la UTN** (en curso), orientada a potenciar equipos y compartir saberes tecnopedagógicos.\n\nAdemás, se mantiene en capacitación constante en desarrollo Full Stack, Data Science y Accesibilidad."
+      "keywords": ["estudios", "educacion", "universidad", "utn", "carrera", "titulo", "cursos"],
+      "answer": "Gerardo posee un trayecto académico y de formación continua impecable:\n\n1. 🎓 **Técnico Universitario en Programación** (Base sólida de lógica y desarrollo).\n2. 🎓 **Técnico Universitario en Análisis y Diseño de Software** (Arquitectura de datos y sistemas).\n3. 🚀 **Licenciatura en Tecnología Educativa (LTE) en la UTN** (En desarrollo activo).\n4. 💡 **Formación Continua:** Cursos avanzados en **Análisis de Datos**, **LLMs / Inteligencia Artificial** y **Ciberseguridad**."
     },
     {
       "keywords": ["contacto", "contratar", "email", "telefono", "whatsapp", "linkedin", "formulario"],
-      "answer": "¡Excelente! Podés contactar a Gerardo directamente a través de cualquiera de estos canales:\n\n- 📩 **Formulario de la Web:** Sección Contacto en el menú.\n- 💼 **LinkedIn:** [linkedin.com/in/gerardomedinav](https://www.linkedin.com/in/gerardomedinav/)\n- ✉️ **Gmail:** [gerardomedinavv@gmail.com](mailto:gerardomedinavv@gmail.com)\n- 📱 **WhatsApp:** +54 9 3704 857048\n\n¿Querés que te prepare un mensaje o tenés alguna consulta específica sobre sus proyectos?"
+      "answer": "¡Excelente! Podés fijar una cita o contactar a Gerardo directamente:\n\n- 📩 **Formulario de la Web:** Sección Contacto en el menú.\n- 💼 **LinkedIn:** [linkedin.com/in/gerardomedinav](https://www.linkedin.com/in/gerardomedinav/)\n- ✉️ **Gmail:** [gerardomedinavv@gmail.com](mailto:gerardomedinavv@gmail.com)\n- 📱 **WhatsApp:** +54 9 3704 857048\n\n¿Querés que te acompañe paso a paso a escribirle desde el formulario?"
     },
     {
       "keywords": ["accesibilidad", "wcag", "inclusiva", "dislexia", "daltonismo", "tts"],
-      "answer": "La **Accesibilidad Web (WCAG 2.1 AA)** es uno de los pilares fundamentales de Gerardo. Él cree firmemente en una web más inclusiva y humana. En este mismo portafolio implementó un panel con **Lector de voz (TTS)**, **filtros para daltonismo**, **escalado de fuente**, **modo dislexia**, **pausal de animaciones TDAH** y auditoría 100% de textos alternativos (`alt`) bilingües."
+      "answer": "La **Accesibilidad Web (WCAG 2.1 AA)** es un compromiso central para Gerardo. En este portafolio implementó un panel accesible con **Lector de voz (TTS)**, **filtros de daltonismo**, **escalado de fuente**, **modo dislexia**, **pausador TDAH** y textos `alt` bilingües."
     },
     {
-      "keywords": ["datos", "data", "analista", "cientifico", "analitico", "data science"],
-      "answer": "Gerardo combina el desarrollo web con el **Pensamiento Analítico y el Análisis de Datos (Data Science / Analytics)**. Utiliza Python, SQL, PostgreSQL y estructuras de datos para transformar problemas complejos en soluciones respaldadas por métricas e impacto real medible."
+      "keywords": ["datos", "data", "analista", "cientifico", "analitico", "data science", "llm", "ai"],
+      "answer": "Gracias a su formación universitaria en programación y análisis de software, Gerardo tiene bases sólidas para procesar y estructurar información. Actualmente está canalizando su perfil profesional hacia la **Ciencia de Datos (Data Scientist / Data Analyst)** a través de capacitaciones constantes en Análisis de Datos, **Modelos de Lenguaje (LLMs / IA)** y Ciberseguridad."
     }
   ],
   "projects": [
@@ -44,15 +50,15 @@
       "name": "SIGA Formosa",
       "concept": "Sistema de gestión integral para la toma de decisiones y organización institucional.",
       "tech": "PHP, MySQL, HTML5, CSS3, JavaScript",
-      "analytical_impact": "Optimización del flujo de datos, reducción de tiempos de procesamiento de trámites y toma de decisiones basada en información precisa.",
-      "accessibility": "Interfaz accesible y diseño adaptativo responsivo."
+      "analytical_impact": "Bases de datos relacionales, optimización del flujo de datos y procesamiento de trámites institucionales.",
+      "accessibility": "Interfaz accesible y adaptativa."
     },
     {
       "name": "Gerardo Medina Portfolio Web",
-      "concept": "Portafolio web bilingüe, interactivo, accesible y con Panel CRUD de Administración Criptográfico.",
-      "tech": "Vanilla JS (ES Modules), CSS3 Modular, HTML5 Semántico, Formspree AJAX, Web Crypto API SHA-256, Vercel CSP",
-      "analytical_impact": "Arquitectura Jamstack de alto rendimiento (96% en PageSpeed) con cero almacenamiento expuesto y 100% de accesibilidad WCAG 2.1 AA.",
-      "accessibility": "Suite completa de accesibilidad con voz TTS, filtros de daltonismo y textos alt bilingües."
+      "concept": "Portafolio web bilingüe, accesible, con Asistente Virtual GerAssist y Panel CRUD Criptográfico.",
+      "tech": "Vanilla JS (ES Modules), Prompt Engineering, Serverless Node.js (Vercel), Web Crypto API SHA-256, CSP",
+      "analytical_impact": "Arquitectura Jamstack optimizada (96% en PageSpeed), 0 vulnerabilidades expuestas y 100% accesibilidad WCAG 2.1 AA.",
+      "accessibility": "Suite completa con lector TTS, daltonismo y textos alt bilingües."
     }
   ]
 }
