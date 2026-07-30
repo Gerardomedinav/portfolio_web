@@ -1615,12 +1615,199 @@ body.dark .bot-cta-link {
 }
 
 .preloader-title {
-  font-size: 1.25rem;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  font-size: 1.5rem;
   font-weight: 700;
-  margin-bottom: 0.35rem;
-  background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+  margin-bottom: 0.4rem;
+  perspective: 1000px;
+}
+
+.preloader-letter-space {
+  width: 0.35em;
+  display: inline-block;
+}
+
+.preloader-letter {
+  position: relative;
+  display: inline-block;
+  opacity: 0;
+  color: #ffffff;
+  text-shadow: 0 0 14px rgba(56, 189, 248, 0.85);
+  background: linear-gradient(135deg, #ffffff 0%, #38bdf8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* Onda expansiva (Ripple) cuando cada letra impacta en su lugar */
+.preloader-letter-ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid rgba(56, 189, 248, 0.95);
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.5) 0%, rgba(56, 189, 248, 0) 75%);
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.2);
+  z-index: -1;
+  animation: preloaderLetterRipple 0.65s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  animation-delay: calc(var(--meteor-delay, 0ms) + 0.42s);
+}
+
+@keyframes preloaderLetterRipple {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.2);
+    box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.9);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2.6);
+    box-shadow: 0 0 35px 12px rgba(56, 189, 248, 0);
+    border-color: rgba(56, 189, 248, 0);
+  }
+}
+
+/* Trayectorias de cometa/meteorito por letra */
+.preloader-letter.meteor-top-left {
+  animation: pMeteorTopLeft 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.25) forwards;
+  animation-delay: var(--meteor-delay, 0ms);
+}
+@keyframes pMeteorTopLeft {
+  0% {
+    opacity: 0;
+    transform: translate3d(-180px, -180px, 0) scale(2.5) rotate(-35deg);
+    filter: blur(8px);
+  }
+  70% {
+    opacity: 1;
+    transform: translate3d(12px, 8px, 0) scale(1.15) rotate(5deg);
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    filter: blur(0px);
+  }
+}
+
+.preloader-letter.meteor-top {
+  animation: pMeteorTop 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.25) forwards;
+  animation-delay: var(--meteor-delay, 0ms);
+}
+@keyframes pMeteorTop {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -200px, 0) scale(2.3) rotate(15deg);
+    filter: blur(8px);
+  }
+  70% {
+    opacity: 1;
+    transform: translate3d(0, 10px, 0) scale(1.15) rotate(-3deg);
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    filter: blur(0px);
+  }
+}
+
+.preloader-letter.meteor-top-right {
+  animation: pMeteorTopRight 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.25) forwards;
+  animation-delay: var(--meteor-delay, 0ms);
+}
+@keyframes pMeteorTopRight {
+  0% {
+    opacity: 0;
+    transform: translate3d(180px, -180px, 0) scale(2.5) rotate(35deg);
+    filter: blur(8px);
+  }
+  70% {
+    opacity: 1;
+    transform: translate3d(-12px, 8px, 0) scale(1.15) rotate(-5deg);
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    filter: blur(0px);
+  }
+}
+
+.preloader-letter.meteor-bottom-right {
+  animation: pMeteorBottomRight 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.25) forwards;
+  animation-delay: var(--meteor-delay, 0ms);
+}
+@keyframes pMeteorBottomRight {
+  0% {
+    opacity: 0;
+    transform: translate3d(180px, 180px, 0) scale(2.5) rotate(-30deg);
+    filter: blur(8px);
+  }
+  70% {
+    opacity: 1;
+    transform: translate3d(-10px, -8px, 0) scale(1.15) rotate(4deg);
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    filter: blur(0px);
+  }
+}
+
+.preloader-letter.meteor-bottom {
+  animation: pMeteorBottom 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.25) forwards;
+  animation-delay: var(--meteor-delay, 0ms);
+}
+@keyframes pMeteorBottom {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 200px, 0) scale(2.3) rotate(-15deg);
+    filter: blur(8px);
+  }
+  70% {
+    opacity: 1;
+    transform: translate3d(0, -10px, 0) scale(1.15) rotate(3deg);
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    filter: blur(0px);
+  }
+}
+
+.preloader-letter.meteor-bottom-left {
+  animation: pMeteorBottomLeft 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.25) forwards;
+  animation-delay: var(--meteor-delay, 0ms);
+}
+@keyframes pMeteorBottomLeft {
+  0% {
+    opacity: 0;
+    transform: translate3d(-180px, 180px, 0) scale(2.5) rotate(30deg);
+    filter: blur(8px);
+  }
+  70% {
+    opacity: 1;
+    transform: translate3d(10px, -8px, 0) scale(1.15) rotate(-4deg);
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    filter: blur(0px);
+  }
 }
 
 .preloader-status-text {

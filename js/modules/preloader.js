@@ -1,5 +1,5 @@
 /**
- * Módulo del Preloader de Carga Inteligente (SVG Circle Progress, Bot Icon & Component Readiness)
+ * Módulo del Preloader de Carga Inteligente (SVG Circle Progress, Animación Meteorito de Letras & Component Readiness)
  */
 
 let preloaderEl = null;
@@ -9,6 +9,26 @@ let statusLabelEl = null;
 
 const CIRCLE_RADIUS = 54;
 const CIRCLE_CIRCUMFERENCE = 2 * Math.PI * CIRCLE_RADIUS; // ~339.29
+
+function buildMeteorTitleHTML(text) {
+  const directions = [
+    'meteor-top-left',
+    'meteor-top',
+    'meteor-top-right',
+    'meteor-bottom-right',
+    'meteor-bottom',
+    'meteor-bottom-left'
+  ];
+
+  return text.split('').map((char, index) => {
+    if (char === ' ') {
+      return `<span class="preloader-letter-space">&nbsp;</span>`;
+    }
+    const dir = directions[index % directions.length];
+    const delay = index * 80; // 80ms escalonado entre cada letra
+    return `<span class="preloader-letter ${dir}" style="--meteor-delay: ${delay}ms;">${char}<span class="preloader-letter-ripple"></span></span>`;
+  }).join('');
+}
 
 export function initPreloader() {
   if (document.getElementById('app-preloader')) return;
@@ -35,7 +55,9 @@ export function initPreloader() {
       </div>
 
       <div class="preloader-info">
-        <h3 class="preloader-title">Gerardo Medina</h3>
+        <h3 class="preloader-title" aria-label="Gerardo Medina">
+          ${buildMeteorTitleHTML('Gerardo Medina')}
+        </h3>
         <p id="preloader-status" class="preloader-status-text">🤖 Iniciando Asistente Virtual GerAssist con IA...</p>
       </div>
 
