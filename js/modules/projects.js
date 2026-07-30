@@ -1,5 +1,5 @@
 /**
- * Módulo de Carga y Renderizado Dinámico de Proyectos con Modales Multisección Simultáneos
+ * Módulo de Carga y Renderizado Dinámico de Proyectos con Modales Multisección Simultáneos a Nivel DOM Raíz
  */
 import { getLang, texts } from './i18n.js';
 import { getProjectsData } from './dataStore.js';
@@ -19,6 +19,9 @@ export function renderProjects(projects, lang) {
   if (!container) return;
 
   container.innerHTML = "";
+
+  // Limpiar cualquier popover o backdrop residual previo del DOM
+  document.querySelectorAll('.project__popover, .project-modal-backdrop').forEach(el => el.remove());
 
   const currentTexts = texts[lang] || texts.es;
 
@@ -120,7 +123,8 @@ export function renderProjects(projects, lang) {
     `;
 
     container.appendChild(projectCard);
-    container.appendChild(popoverDiv);
+    // IMPORTANTE: Se adjunta a document.body para evitar aislamiento de z-index provocado por stacking contexts internos
+    document.body.appendChild(popoverDiv);
   });
 
   initProjectModals();
@@ -170,6 +174,17 @@ function initProjectModals() {
       } else if (targetPop) {
         closeAllProjectModals();
         const backdrop = getProjectBackdrop();
+
+        // Mover backdrop y popover al final de body para que esten en la misma jerarquia
+        document.body.appendChild(backdrop);
+        document.body.appendChild(targetPop);
+
+        // Si GerAssist existe, asegurar que GerAssist este despus de targetPop en el DOM
+        const botRoot = document.getElementById('gerassist-widget-root');
+        if (botRoot) {
+          document.body.appendChild(botRoot);
+        }
+
         backdrop.classList.add('is-open');
         backdrop.style.display = 'block';
 
@@ -218,6 +233,16 @@ export function openProjectModalByName(queryText) {
     closeAllProjectModals();
 
     const backdrop = getProjectBackdrop();
+
+    // Mover elementos al final de body para coordinar la pila DOM
+    document.body.appendChild(backdrop);
+    document.body.appendChild(matchedPopover);
+
+    const botRoot = document.getElementById('gerassist-widget-root');
+    if (botRoot) {
+      document.body.appendChild(botRoot);
+    }
+
     backdrop.classList.add('is-open');
     backdrop.style.display = 'block';
 
