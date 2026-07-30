@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     }
 
     const apiKey = process.env.AI_API_KEY || process.env.ANTHROPIC_API_KEY;
-    const provider = process.env.AI_PROVIDER || 'anthropic'; // 'anthropic', 'groq', 'openrouter', 'gemini'
+    const provider = process.env.AI_PROVIDER || 'gemini'; // 'gemini', 'anthropic', 'groq', 'openrouter'
 
     const systemPrompt = `Sos GerAssist, el asistente virtual inteligente oficial de Gerardo Medina.
 Tu personalidad es la de un EXPERTO EN MARKETING Y VENTAS TÉCNICAS, Director de Talento y Representante Comercial de alto nivel.
@@ -56,6 +56,50 @@ Actualmente está cursando la **Licenciatura en Educación Tecnológica en la UT
 ¿Te gustaría consultar sobre sus proyectos, su perfil analítico o coordinar un contacto directo a través de su formulario o LinkedIn?`;
 
       return res.status(200).json({ reply: fallbackResponse, simulated: true });
+    }
+
+    // Integración con Google Gemini API (Free Tier de Google AI Studio)
+    if (provider === 'gemini' || provider === 'google') {
+      const geminiModel = process.env.GEMINI_MODEL || 'gemini-2.0-flash';
+      const geminiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/${geminiModel}:generateContent?key=${apiKey}`;
+
+      const contents = [
+        ...(conversationHistory || []).map(msg => ({
+          role: msg.role === 'user' ? 'user' : 'model',
+          parts: [{ text: msg.content }]
+        })),
+        {
+          role: 'user',
+          parts: [{ text: message }]
+        }
+      ];
+
+      const response = await fetch(geminiEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          system_instruction: {
+            parts: [{ text: systemPrompt }]
+          },
+          contents: contents,
+          generationConfig: {
+            maxOutputTokens: 350,
+            temperature: 0.7
+          }
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.error('Error Google Gemini API:', errorData);
+        throw new Error(errorData.error?.message || `Error en Google Gemini API (${response.status})`);
+      }
+
+      const data = await response.json();
+      const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No se pudo generar una respuesta.';
+      return res.status(200).json({ reply });
     }
 
     // Integración con Anthropic Claude API
