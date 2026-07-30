@@ -289,7 +289,7 @@ function appendMessage(container, sender, text) {
   container.appendChild(wrapper);
 }
 
-let botSynth = window.speechSynthesis;
+let botSynth = typeof window !== 'undefined' ? window.speechSynthesis : null;
 
 export function speakBotMessage(rawText, speakBtn = null) {
   if (!botSynth) return;
@@ -315,57 +315,84 @@ export function speakBotMessage(rawText, speakBtn = null) {
   const lang = getLang();
   utterance.lang = lang === 'es' ? 'es-ES' : 'en-US';
   utterance.rate = 0.95;
+  utterance.pitch = 1.0;
+
+  // Cargar lista de voces disponibles en el navegador
+  const voices = botSynth.getVoices();
+  if (voices && voices.length > 0) {
+    const targetLang = lang === 'es' ? 'es' : 'en';
+    const matchedVoice = voices.find(v => v.lang.toLowerCase().startsWith(targetLang) || v.lang.toLowerCase().includes(targetLang));
+    if (matchedVoice) {
+      utterance.voice = matchedVoice;
+    }
+  }
 
   document.querySelectorAll('.bot-speak-btn').forEach(b => b.classList.remove('speaking'));
 
   if (speakBtn) {
     speakBtn.classList.add('speaking');
     utterance.onend = () => speakBtn.classList.remove('speaking');
-    utterance.onerror = () => speakBtn.classList.remove('speaking');
+    utterance.onerror = (e) => {
+      console.warn('Error en SpeechSynthesis:', e);
+      speakBtn.classList.remove('speaking');
+    };
   }
 
   botSynth.speak(utterance);
 }
 
 function setupSpeechRecognition(inputEl, micBtn) {
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const SpeechRecognition = typeof window !== 'undefined' ? (window.SpeechRecognition || window.webkitSpeechRecognition) : null;
 
   if (!SpeechRecognition) {
-    micBtn.style.display = 'none';
+    micBtn.setAttribute('title', 'Dictado por voz no soportado en este navegador');
+    micBtn.style.opacity = '0.5';
+    micBtn.addEventListener('click', () => {
+      alert('Tu navegador no soporta el reconocimiento de voz nativo. Te recomendamos utilizar Google Chrome, Microsoft Edge o Safari.');
+    });
     return;
   }
 
-  const recognition = new SpeechRecognition();
-  recognition.continuous = false;
-  recognition.interimResults = true;
+  let recognition = null;
   let isListening = false;
 
-  recognition.onstart = () => {
-    isListening = true;
-    micBtn.classList.add('listening');
-    micBtn.setAttribute('title', 'Escuchando... Haz clic para detener');
-    inputEl.placeholder = getLang() === 'es' ? 'Escuchando... Hablá ahora 🎙️' : 'Listening... Speak now 🎙️';
-  };
+  function createRecognition() {
+    const rec = new SpeechRecognition();
+    rec.continuous = false;
+    rec.interimResults = true;
 
-  recognition.onresult = (event) => {
-    let transcript = '';
-    for (let i = event.resultIndex; i < event.results.length; i++) {
-      transcript += event.results[i][0].transcript;
-    }
-    inputEl.value = transcript;
-  };
+    rec.onstart = () => {
+      isListening = true;
+      micBtn.classList.add('listening');
+      micBtn.setAttribute('title', 'Escuchando... Haz clic para detener');
+      inputEl.placeholder = getLang() === 'es' ? 'Escuchando... Hablá ahora 🎙️' : 'Listening... Speak now 🎙️';
+    };
 
-  recognition.onerror = (event) => {
-    console.warn('Error en micrófono:', event.error);
-    stopMic();
-  };
+    rec.onresult = (event) => {
+      let transcript = '';
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        transcript += event.results[i][0].transcript;
+      }
+      inputEl.value = transcript;
+    };
 
-  recognition.onend = () => {
-    stopMic();
-    if (inputEl.value.trim()) {
-      inputEl.focus();
-    }
-  };
+    rec.onerror = (event) => {
+      console.warn('Error en micrófono:', event.error);
+      stopMic();
+      if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+        alert('Por favor, permite el acceso al micrófono en los permisos de tu navegador para usar el dictado por voz.');
+      }
+    };
+
+    rec.onend = () => {
+      stopMic();
+      if (inputEl.value.trim()) {
+        inputEl.focus();
+      }
+    };
+
+    return rec;
+  }
 
   function stopMic() {
     isListening = false;
@@ -375,16 +402,32 @@ function setupSpeechRecognition(inputEl, micBtn) {
     inputEl.placeholder = lang === 'es' ? 'Escribe o dicta tu mensaje...' : 'Type or dictate your message...';
   }
 
-  micBtn.addEventListener('click', () => {
-    if (isListening) {
+  micBtn.addEventListener('click', async () => {
+    if (isListening && recognition) {
       recognition.stop();
-    } else {
-      recognition.lang = getLang() === 'es' ? 'es-ES' : 'en-US';
+      return;
+    }
+
+    // Solicitar permiso de micrófono de forma explícita
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       try {
-        recognition.start();
-      } catch (e) {
-        console.warn('Error al activar dictado por voz:', e);
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        stream.getTracks().forEach(track => track.stop());
+      } catch (err) {
+        console.warn('Permiso de micrófono denegado:', err);
+        alert('Se requiere permiso de micrófono para activar el dictado por voz.');
+        return;
       }
+    }
+
+    recognition = createRecognition();
+    recognition.lang = getLang() === 'es' ? 'es-ES' : 'en-US';
+
+    try {
+      recognition.start();
+    } catch (e) {
+      console.warn('Error iniciando dictado:', e);
+      stopMic();
     }
   });
 }
