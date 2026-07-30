@@ -260,7 +260,7 @@ function handleSmartNavigationAndFill(userText, botReply) {
     setFontScaleAction('increase');
     return;
   }
-  if (userLower.includes('reducir') || userLower.includes('achicar') || userLower.includes('letra chica') || userLower.includes('letra pequeña') || userLower.includes('texto pequeño') || userLower.includes('mas pequeña') || userLower.includes('más pequeña') || userLower.includes('mas chica') || userLower.includes('más chica')) {
+  if (userLower.includes('reducir') || userLower.includes('disminuir') || userLower.includes('achicar') || userLower.includes('bajar') || userLower.includes('letra chica') || userLower.includes('letra pequeña') || userLower.includes('texto pequeño') || userLower.includes('mas pequeña') || userLower.includes('más pequeña') || userLower.includes('mas chica') || userLower.includes('más chica')) {
     setFontScaleAction('decrease');
     return;
   }
