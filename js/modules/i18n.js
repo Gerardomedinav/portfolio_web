@@ -201,6 +201,8 @@ export function translatePage(lang) {
  */
 export function updateResumeLink(lang) {
   const resumeLink = document.querySelector('a[data-i18n="resume"]');
+  const botCvLink = document.getElementById('bot-cta-cv');
+
   if (resumeLink) {
     if (lang === 'es') {
       resumeLink.href = './assets/CV_Gerardo_Medina_Villalba_español.pdf';
@@ -213,6 +215,14 @@ export function updateResumeLink(lang) {
     resumeLink.rel = 'noopener noreferrer';
     // Remover atributo download para permitir previsualización antes de descargar
     resumeLink.removeAttribute('download');
+  }
+
+  if (botCvLink) {
+    if (lang === 'es') {
+      botCvLink.href = './assets/CV_Gerardo_Medina_Villalba_español.pdf';
+    } else {
+      botCvLink.href = './assets/CV_Gerardo_Medina_Villalba_EN.pdf';
+    }
   }
 }
 

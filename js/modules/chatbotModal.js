@@ -310,6 +310,18 @@ function handleSmartNavigationAndFill(userText, botReply) {
     }
     return;
   }
+
+  // 6. Detección de Intención de CV / Currículum -> Cerrar accesibilidad y modales, desplazar a #home donde se encuentra el botón de descarga de CV
+  const cvKeywords = ['cv', 'curriculum', 'currículum', 'resume', 'hoja de vida', 'descargar cv', 'ver cv'];
+  if (cvKeywords.some(kw => userLower.includes(kw))) {
+    closeAccessibilityPanel();
+    closeAllProjectModals();
+    const homeSection = document.getElementById('home');
+    if (homeSection) {
+      homeSection.scrollIntoView({ behavior: 'smooth' });
+    }
+    return;
+  }
 }
 
 /**
