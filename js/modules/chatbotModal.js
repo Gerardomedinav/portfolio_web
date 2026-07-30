@@ -277,8 +277,9 @@ function handleSmartNavigationAndFill(userText, botReply) {
     return;
   }
 
-  // 3. Detección de Intención de Sobre Mí / UTN -> Desplazar a #about
+  // 3. Detección de Intención de Sobre Mí / UTN -> Cerrar modal de proyecto anterior y desplazar a #about
   if (userLower.includes('sobre mi') || userLower.includes('utn') || userLower.includes('perfil') || userLower.includes('estudios') || userLower.includes('trayectoria')) {
+    closeAllProjectModals();
     const aboutSection = document.getElementById('about');
     if (aboutSection) {
       aboutSection.scrollIntoView({ behavior: 'smooth' });
@@ -286,8 +287,9 @@ function handleSmartNavigationAndFill(userText, botReply) {
     return;
   }
 
-  // 4. Detección de Intención de Habilidades -> Desplazar a #skills
+  // 4. Detección de Intención de Habilidades -> Cerrar modal de proyecto anterior y desplazar a #skills
   if (userLower.includes('habilidad') || userLower.includes('skills') || userLower.includes('tecnolog') || userLower.includes('framework') || userLower.includes('herramienta')) {
+    closeAllProjectModals();
     const skillsSection = document.getElementById('skills');
     if (skillsSection) {
       skillsSection.scrollIntoView({ behavior: 'smooth' });
