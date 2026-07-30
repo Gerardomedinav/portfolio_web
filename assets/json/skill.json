@@ -97,7 +97,7 @@
     {
       "id": "azure",
       "name": "Azure",
-      "image": "./assets/icon/azure.png",
+      "image": "./assets/icon/Azure.png",
       "link": "https://learn.microsoft.com/en-us/azure/"
     },
     {
