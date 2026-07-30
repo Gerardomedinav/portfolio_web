@@ -60,7 +60,7 @@ Actualmente está cursando la **Licenciatura en Educación Tecnológica en la UT
 
     // Integración con Google Gemini API (Free Tier de Google AI Studio)
     if (provider === 'gemini' || provider === 'google') {
-      const geminiModel = process.env.GEMINI_MODEL || 'gemini-2.0-flash';
+      const geminiModel = process.env.GEMINI_MODEL || 'gemini-flash-latest';
       const geminiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/${geminiModel}:generateContent?key=${apiKey}`;
 
       const contents = [
