@@ -1653,6 +1653,20 @@ body.dark .bot-cta-link {
   40% { transform: scale(1); opacity: 1; box-shadow: 0 0 10px var(--first-color); }
 }
 
+/* Animación de resalte para navegación inteligente de proyectos y secciones */
+@keyframes highlightPulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 170, 255, 0.7); }
+  50% { transform: scale(1.04); box-shadow: 0 0 30px 10px rgba(0, 170, 255, 0.9); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 170, 255, 0); }
+}
+
+.highlight-pulse {
+  animation: highlightPulse 2s ease-in-out 2 !important;
+  border-radius: 1rem;
+  z-index: 10;
+}
+
+
 
 
 

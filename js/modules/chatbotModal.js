@@ -1,5 +1,5 @@
 /**
- * Módulo de la Interfaz Interactiva de GerAssist (Chatbot Floating Widget)
+ * Módulo de la Interfaz Interactiva de GerAssist (Chatbot Floating Widget con Navegación Inteligente y Pre-rellenado de Contacto)
  */
 import { sendMessageToGerAssist } from './botService.js';
 import { getLang } from './i18n.js';
@@ -51,7 +51,7 @@ export function renderChatbotWidget() {
           <div class="bot-msg-avatar"><i class="bx bx-bot"></i></div>
           <div class="bot-msg-bubble">
             ${lang === 'es' 
-              ? '¡Hola! 👋 Qué gusto saludarte. Soy <strong>GerAssist</strong>, el asistente de <strong>Gerardo Medina</strong>.<br /><br />Estoy aquí para contarte sobre su perfil como <strong>Desarrollador Full Stack & Analista de Datos</strong>, sus estudios en la <strong>UTN</strong> y el <strong>impacto real</strong> de sus proyectos. ¿Sobre qué te gustaría saber más?' 
+              ? '¡Hola! 👋 Qué gusto saludarte. Soy <strong>GerAssist</strong>, el asistente personal de <strong>Gerardo Medina</strong>.<br /><br />Estoy aquí para contarte sobre su perfil como <strong>Desarrollador Full Stack & Analista de Datos</strong>, sus estudios en la <strong>UTN</strong> y el <strong>impacto real</strong> de sus proyectos. ¿Sobre qué te gustaría saber más?' 
               : "Hi! 👋 Great to meet you. I am <strong>GerAssist</strong>, Gerardo Medina's AI assistant.<br /><br />I am here to tell you about his <strong>Full Stack & Data Analyst</strong> background, his <strong>UTN</strong> studies, and the <strong>real impact</strong> of his projects. What would you like to know more about?"}
           </div>
         </div>
@@ -89,13 +89,13 @@ export function renderChatbotWidget() {
 
       <!-- Footer CTA Directo -->
       <div class="bot-cta-footer">
-        <a href="#contact" class="bot-cta-link" id="bot-cta-contact-form">
+        <button type="button" class="bot-cta-link" id="bot-cta-contact-form">
           <i class="bx bx-envelope"></i> Formulario
-        </a>
+        </button>
         <a href="https://www.linkedin.com/in/gerardomedinav/" target="_blank" rel="noopener noreferrer" class="bot-cta-link">
           <i class="bx bxl-linkedin"></i> LinkedIn
         </a>
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=gerardomedinavv@gmail.com" target="_blank" rel="noopener noreferrer" class="bot-cta-link">
+        <a href="mailto:gerardomedinavv@gmail.com" target="_blank" rel="noopener noreferrer" class="bot-cta-link">
           <i class="bx bxl-gmail"></i> Gmail
         </a>
       </div>
@@ -114,8 +114,9 @@ export function renderChatbotWidget() {
   const ctaContactForm = widgetContainer.querySelector('#bot-cta-contact-form');
 
   if (ctaContactForm) {
-    ctaContactForm.addEventListener('click', () => {
-      windowEl.hidden = true;
+    ctaContactForm.addEventListener('click', (e) => {
+      e.preventDefault();
+      triggerContactAutoFill();
     });
   }
 
@@ -130,6 +131,25 @@ export function renderChatbotWidget() {
 
   closeBtn.addEventListener('click', () => {
     windowEl.hidden = true;
+  });
+
+  // Escuchador de clics en enlaces dentro de la conversación
+  messagesContainer.addEventListener('click', (e) => {
+    const targetLink = e.target.closest('a');
+    if (targetLink) {
+      const href = targetLink.getAttribute('href') || '';
+      if (href === '#contact' || href.includes('#contact')) {
+        e.preventDefault();
+        triggerContactAutoFill();
+      } else if (href.startsWith('#')) {
+        e.preventDefault();
+        const targetSec = document.querySelector(href);
+        if (targetSec) {
+          windowEl.hidden = true;
+          targetSec.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }
   });
 
   // Sugerencias rápidas (Pills)
@@ -157,7 +177,7 @@ export function renderChatbotWidget() {
     typingEl.style.display = 'flex';
     scrollToBottom(messagesContainer);
 
-    // Guardar en historial acotado (últimos 4 mensajes)
+    // Guardar en historial acotado (últimos 8 mensajes)
     conversationHistory.push({ role: 'user', content: userText });
     if (conversationHistory.length > 8) conversationHistory = conversationHistory.slice(-8);
 
@@ -169,6 +189,9 @@ export function renderChatbotWidget() {
     if (result && result.reply) {
       appendMessage(messagesContainer, 'bot', result.reply);
       conversationHistory.push({ role: 'assistant', content: result.reply });
+
+      // 3. Ejecutar Navegación Inteligente y Pre-rellenado de Contacto si aplica
+      handleSmartNavigationAndFill(userText, result.reply);
     } else {
       appendMessage(messagesContainer, 'bot', 'Disculpa, no pude procesar esa consulta. Puedes escribir a Gerardo directamente desde la sección Contacto.');
     }
@@ -201,6 +224,7 @@ function formatMarkdownText(str) {
   return String(str || '')
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/\[(.*?)\]\((#.*?)\)/g, '<a href="$2" class="bot-internal-link">$1</a>')
     .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
     .replace(/\n/g, '<br />');
 }
@@ -208,6 +232,117 @@ function formatMarkdownText(str) {
 function scrollToBottom(el) {
   if (el) {
     el.scrollTop = el.scrollHeight;
+  }
+}
+
+/**
+ * Función de Navegación Inteligente y Resalte de Secciones
+ */
+function handleSmartNavigationAndFill(userText, botReply) {
+  const userLower = (userText || '').toLowerCase().trim();
+  const botLower = (botReply || '').toLowerCase().trim();
+
+  // 1. Detección de Intención de Contactar -> Desplazar a #contact y pre-rellenar formulario
+  if (
+    userLower.includes('contact') || 
+    userLower.includes('contrat') || 
+    userLower.includes('email') || 
+    userLower.includes('correo') ||
+    userLower.includes('escribir') ||
+    userLower.includes('mensaje') ||
+    botLower.includes('vías oficiales')
+  ) {
+    // Si la consulta fue sobre contacto, ofrecer desplazamiento suave a la sección
+    setTimeout(() => triggerContactAutoFill(), 1200);
+    return;
+  }
+
+  // 2. Detección de Intención de Proyectos -> Desplazar a #projects y resaltar tarjeta específica
+  const projectKeywords = [
+    'proyecto', 'proyectos', 'siga', 'analytics', 'python', 'nexo', 'proyecoins',
+    'ahorcado', 'entrevigas', 'bytezar', 'planificador', 'codigo urbano', 'catalogo'
+  ];
+
+  if (projectKeywords.some(kw => userLower.includes(kw))) {
+    const projectsSection = document.getElementById('projects');
+    if (projectsSection) {
+      projectsSection.scrollIntoView({ behavior: 'smooth' });
+
+      // Buscar si mencionó un proyecto específico para resaltarlo en pantalla
+      const projectCards = document.querySelectorAll('.project__card, .projects__name, .skills__name');
+      projectCards.forEach(card => {
+        const cardText = card.textContent.toLowerCase();
+        if (
+          (userLower.includes('siga') && cardText.includes('siga')) ||
+          (userLower.includes('python') && cardText.includes('python')) ||
+          (userLower.includes('nexo') && cardText.includes('nexo')) ||
+          (userLower.includes('proyecoins') && cardText.includes('proyecoins')) ||
+          (userLower.includes('ahorcado') && cardText.includes('ahorcado')) ||
+          (userLower.includes('entrevigas') && cardText.includes('entrevigas')) ||
+          (userLower.includes('bytezar') && cardText.includes('bytezar'))
+        ) {
+          card.classList.remove('highlight-pulse');
+          void card.offsetWidth;
+          card.classList.add('highlight-pulse');
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
+    }
+    return;
+  }
+
+  // 3. Detección de Intención de Sobre Mí / UTN -> Desplazar a #about
+  if (userLower.includes('sobre mi') || userLower.includes('utn') || userLower.includes('perfil') || userLower.includes('estudios') || userLower.includes('trayectoria')) {
+    const aboutSection = document.getElementById('about');
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: 'smooth' });
+    }
+    return;
+  }
+
+  // 4. Detección de Intención de Habilidades -> Desplazar a #skills
+  if (userLower.includes('habilidad') || userLower.includes('skills') || userLower.includes('tecnolog') || userLower.includes('framework') || userLower.includes('herramienta')) {
+    const skillsSection = document.getElementById('skills');
+    if (skillsSection) {
+      skillsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+    return;
+  }
+}
+
+/**
+ * Pre-rellena el formulario de contacto con un borrador personalizado y desplaza al usuario
+ */
+export function triggerContactAutoFill(customDraftMessage = null) {
+  const contactSection = document.getElementById('contact');
+  const windowEl = document.getElementById('gerassist-window');
+
+  if (contactSection) {
+    contactSection.scrollIntoView({ behavior: 'smooth' });
+
+    const messageInput = document.querySelector('textarea[name="message"]');
+    const subjectInput = document.querySelector('input[name="subject"]');
+    const nameInput = document.querySelector('input[name="name"]');
+
+    if (messageInput) {
+      const defaultDraft = `¡Hola Gerardo! Estuve navegando por tu portafolio web y conversando con GerAssist. Me interesa ponerme en contacto contigo para conversar sobre una propuesta laboral / proyecto de desarrollo y análisis de datos.`;
+      messageInput.value = customDraftMessage || defaultDraft;
+    }
+
+    if (subjectInput && !subjectInput.value) {
+      subjectInput.value = `Contacto directo - Vía GerAssist`;
+    }
+
+    // Ocultar modal del bot para visibilidad completa del formulario
+    if (windowEl) windowEl.hidden = true;
+
+    setTimeout(() => {
+      if (nameInput && !nameInput.value) {
+        nameInput.focus();
+      } else if (messageInput) {
+        messageInput.focus();
+      }
+    }, 450);
   }
 }
 
