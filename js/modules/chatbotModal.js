@@ -3,7 +3,7 @@
  */
 import { sendMessageToGerAssist } from './botService.js';
 import { getLang } from './i18n.js';
-import { openProjectModalByName } from './projects.js';
+import { openProjectModalByName, closeAllProjectModals } from './projects.js';
 
 let widgetContainer = null;
 let conversationHistory = [];
@@ -300,6 +300,9 @@ function handleSmartNavigationAndFill(userText, botReply) {
  * Pre-rellena el formulario de contacto con un borrador personalizado y desplaza al usuario
  */
 export function triggerContactAutoFill(customDraftMessage = null) {
+  // 1. Cerrar automáticamente cualquier modal de proyecto que esté abierto
+  closeAllProjectModals();
+
   const contactSection = document.getElementById('contact');
   const windowEl = document.getElementById('gerassist-window');
 
