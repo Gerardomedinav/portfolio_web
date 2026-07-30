@@ -1273,9 +1273,14 @@ export function initAdminModal() {
   });
 
   document.addEventListener('adminAuthChange', (e) => {
-    if (modalContainer && modalContainer.style.display === 'flex') {
-      if (!e.detail.loggedIn) {
+    if (!e.detail.loggedIn) {
+      if (modalContainer && modalContainer.style.display === 'flex') {
         renderLoginModal(modalContainer);
+      }
+      if (e.detail.reason === 'inactivity') {
+        alert(getLang() === 'es'
+          ? '🔒 Por motivos de seguridad, su sesión de administración se ha cerrado automáticamente tras 15 minutos de inactividad.'
+          : '🔒 For security reasons, your admin session was automatically logged out after 15 minutes of inactivity.');
       }
     }
   });
