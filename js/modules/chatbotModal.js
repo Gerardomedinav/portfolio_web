@@ -111,44 +111,6 @@ export function renderChatbotWidget() {
         </a>
       </div>
     </div>
-  `;
-
-      <!-- Indicador de Escritura -->
-      <div id="gerassist-typing" class="bot-typing-indicator" style="display:none;">
-        <div class="bot-dots">
-          <span></span><span></span><span></span>
-        </div>
-        <span class="bot-typing-text">GerAssist está pensando...</span>
-      </div>
-
-      <!-- Formulario de Entrada -->
-      <form id="gerassist-form" class="bot-input-form">
-        <input 
-          type="text" 
-          id="gerassist-input" 
-          placeholder="${lang === 'es' ? 'Escribe tu mensaje aquí...' : 'Type your message here...'}" 
-          autocomplete="off" 
-          required 
-        />
-        <button type="submit" class="bot-send-btn" aria-label="Enviar mensaje">
-          <i class="bx bx-paper-plane"></i>
-        </button>
-      </form>
-
-      <!-- Footer CTA Directo -->
-      <div class="bot-cta-footer">
-        <button type="button" class="bot-cta-link" id="bot-cta-contact-form">
-          <i class="bx bx-envelope"></i> Formulario
-        </button>
-        <a href="https://www.linkedin.com/in/gerardomedinav/" target="_blank" rel="noopener noreferrer" class="bot-cta-link">
-          <i class="bx bxl-linkedin"></i> LinkedIn
-        </a>
-        <a href="mailto:gerardomedinavv@gmail.com" target="_blank" rel="noopener noreferrer" class="bot-cta-link">
-          <i class="bx bxl-gmail"></i> Gmail
-        </a>
-      </div>
-    </div>
-  `;
 
   document.body.appendChild(widgetContainer);
 
