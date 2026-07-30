@@ -1,9 +1,164 @@
 /**
  * Endpoint Serverless en Vercel (/api/chat)
- * Oculta y protege las llaves de API de IA (Anthropic / Groq / OpenRouter / Gemini).
+ * Sistema de cascada Multi-Proveedor IA (Gemini -> Groq -> OpenRouter -> Ollama Local -> Anthropic).
+ * Si la API Key o cuota del proveedor principal falla o se agota, conmuta automáticamente en tiempo real al siguiente.
  */
+
+async function callGemini(apiKey, systemPrompt, conversationHistory, message) {
+  const geminiModel = process.env.GEMINI_MODEL || 'gemini-flash-latest';
+  const geminiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/${geminiModel}:generateContent?key=${apiKey}`;
+
+  const contents = [
+    ...(conversationHistory || []).map(msg => ({
+      role: msg.role === 'user' ? 'user' : 'model',
+      parts: [{ text: msg.content }]
+    })),
+    { role: 'user', parts: [{ text: message }] }
+  ];
+
+  const response = await fetch(geminiEndpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      system_instruction: { parts: [{ text: systemPrompt }] },
+      contents: contents,
+      generationConfig: { maxOutputTokens: 4000, temperature: 0.7 }
+    })
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.error?.message || `Gemini API HTTP ${response.status}`);
+  }
+
+  const data = await response.json();
+  const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
+  if (!reply) throw new Error('Gemini devolvió respuesta vacía.');
+  return reply;
+}
+
+async function callGroq(apiKey, systemPrompt, conversationHistory, message) {
+  const modelName = process.env.GROQ_MODEL || 'llama-3.1-8b-instant';
+  const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${apiKey}`
+    },
+    body: JSON.stringify({
+      model: modelName,
+      max_tokens: 1000,
+      messages: [
+        { role: 'system', content: systemPrompt },
+        ...(conversationHistory || []).map(msg => ({
+          role: msg.role === 'user' ? 'user' : 'assistant',
+          content: msg.content
+        })),
+        { role: 'user', content: message }
+      ]
+    })
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.error?.message || `Groq API HTTP ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data.choices?.[0]?.message?.content;
+}
+
+async function callOpenRouter(apiKey, systemPrompt, conversationHistory, message) {
+  const modelName = process.env.OPENROUTER_MODEL || 'meta-llama/llama-3-8b-instruct:free';
+  const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${apiKey}`
+    },
+    body: JSON.stringify({
+      model: modelName,
+      max_tokens: 1000,
+      messages: [
+        { role: 'system', content: systemPrompt },
+        ...(conversationHistory || []).map(msg => ({
+          role: msg.role === 'user' ? 'user' : 'assistant',
+          content: msg.content
+        })),
+        { role: 'user', content: message }
+      ]
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error(`OpenRouter API HTTP ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data.choices?.[0]?.message?.content;
+}
+
+async function callOllama(systemPrompt, conversationHistory, message) {
+  const ollamaHost = process.env.OLLAMA_HOST || 'http://127.0.0.1:11434';
+  const ollamaModel = process.env.OLLAMA_MODEL || 'llama3';
+
+  const response = await fetch(`${ollamaHost}/v1/chat/completions`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: ollamaModel,
+      max_tokens: 1000,
+      messages: [
+        { role: 'system', content: systemPrompt },
+        ...(conversationHistory || []).map(msg => ({
+          role: msg.role === 'user' ? 'user' : 'assistant',
+          content: msg.content
+        })),
+        { role: 'user', content: message }
+      ]
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error(`Ollama local HTTP ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data.choices?.[0]?.message?.content || data.message?.content;
+}
+
+async function callAnthropic(apiKey, systemPrompt, conversationHistory, message) {
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01'
+    },
+    body: JSON.stringify({
+      model: 'claude-3-haiku-20240307',
+      max_tokens: 1000,
+      system: systemPrompt,
+      messages: [
+        ...(conversationHistory || []).map(msg => ({
+          role: msg.role === 'user' ? 'user' : 'assistant',
+          content: msg.content
+        })),
+        { role: 'user', content: message }
+      ]
+    })
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.error?.message || `Anthropic API HTTP ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data.content?.[0]?.text;
+}
+
 export default async function handler(req, res) {
-  // Solo permitir solicitudes POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Método no permitido. Utilizar POST.' });
   }
@@ -16,7 +171,6 @@ export default async function handler(req, res) {
     }
 
     const apiKey = process.env.AI_API_KEY || process.env.ANTHROPIC_API_KEY;
-    const provider = process.env.AI_PROVIDER || 'gemini'; // 'gemini', 'anthropic', 'groq', 'openrouter'
 
     const systemPrompt = `Sos GerAssist, el asistente virtual inteligente, carismático y representante comercial oficial de Gerardo Medina.
 
@@ -50,132 +204,54 @@ REGLAS DE RESPUESTA:
 CONTEXTO ADICIONAL DEL PORTAFOLIO:
 ${context || 'Gerardo Medina es Desarrollador Full Stack, estudiante de LTE en la UTN y capacitándose en Data Science, LLMs y Ciberseguridad.'}`;
 
-    // Si no hay API Key configurada aún en Vercel, responder con un fallback simulado inteligente
-    if (!apiKey) {
-      const fallbackResponse = `¡Hola! Soy **GerAssist**. Gerardo es un **Desarrollador Full Stack y Analista de Datos (Data Science / Data Analytics)** apasionado por la **Accesibilidad Universal (WCAG 2.1 AA)** y el **impacto real** en cada proyecto.
+    // Determinar la secuencia de conmutación (Fallback Chain)
+    const primaryProvider = (process.env.AI_PROVIDER || 'gemini').toLowerCase();
 
-Actualmente está cursando la **Licenciatura en Educación Tecnológica en la UTN** y cuenta con títulos de Técnico en Programación y en Análisis y Diseño de Software, más 15+ años de experiencia en gestión de personas y empatía en el trabajo en equipo.
+    const fallbackPipeline = [];
+    if (primaryProvider === 'gemini') fallbackPipeline.push('gemini', 'groq', 'openrouter', 'ollama', 'anthropic');
+    else if (primaryProvider === 'groq') fallbackPipeline.push('groq', 'gemini', 'openrouter', 'ollama', 'anthropic');
+    else if (primaryProvider === 'ollama') fallbackPipeline.push('ollama', 'gemini', 'groq', 'openrouter', 'anthropic');
+    else fallbackPipeline.push(primaryProvider, 'gemini', 'groq', 'openrouter', 'ollama', 'anthropic');
 
-¿Te gustaría consultar sobre sus proyectos, su perfil analítico o coordinar un contacto directo a través de su formulario o LinkedIn?`;
+    const uniqueProviders = [...new Set(fallbackPipeline)];
 
-      return res.status(200).json({ reply: fallbackResponse, simulated: true });
-    }
+    let lastError = null;
 
-    // Integración con Google Gemini API (Free Tier de Google AI Studio)
-    if (provider === 'gemini' || provider === 'google') {
-      const geminiModel = process.env.GEMINI_MODEL || 'gemini-flash-latest';
-      const geminiEndpoint = `https://generativelanguage.googleapis.com/v1beta/models/${geminiModel}:generateContent?key=${apiKey}`;
+    for (const prov of uniqueProviders) {
+      try {
+        let reply = null;
+        const key = process.env[`${prov.toUpperCase()}_API_KEY`] || apiKey;
 
-      const contents = [
-        ...(conversationHistory || []).map(msg => ({
-          role: msg.role === 'user' ? 'user' : 'model',
-          parts: [{ text: msg.content }]
-        })),
-        {
-          role: 'user',
-          parts: [{ text: message }]
+        if (prov === 'gemini' && key) {
+          reply = await callGemini(key, systemPrompt, conversationHistory, message);
+        } else if (prov === 'groq' && key) {
+          reply = await callGroq(key, systemPrompt, conversationHistory, message);
+        } else if (prov === 'openrouter' && key) {
+          reply = await callOpenRouter(key, systemPrompt, conversationHistory, message);
+        } else if (prov === 'ollama') {
+          reply = await callOllama(systemPrompt, conversationHistory, message);
+        } else if (prov === 'anthropic' && (key || process.env.ANTHROPIC_API_KEY)) {
+          reply = await callAnthropic(key || process.env.ANTHROPIC_API_KEY, systemPrompt, conversationHistory, message);
         }
-      ];
 
-      const response = await fetch(geminiEndpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          system_instruction: {
-            parts: [{ text: systemPrompt }]
-          },
-          contents: contents,
-          generationConfig: {
-            maxOutputTokens: 4000,
-            temperature: 0.7
-          }
-        })
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        console.error('Error Google Gemini API:', errorData);
-        throw new Error(errorData.error?.message || `Error en Google Gemini API (${response.status})`);
+        if (reply) {
+          return res.status(200).json({ reply, providerUsed: prov });
+        }
+      } catch (err) {
+        console.warn(`[AI Fallback] El proveedor '${prov}' falló o no está disponible. Intentando con el siguiente en la cascada... Motivo:`, err.message);
+        lastError = err;
       }
-
-      const data = await response.json();
-      const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No se pudo generar una respuesta.';
-      return res.status(200).json({ reply });
     }
 
-    // Integración con Anthropic Claude API
-    if (provider === 'anthropic') {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': apiKey,
-          'anthropic-version': '2023-06-01'
-        },
-        body: JSON.stringify({
-          model: 'claude-3-haiku-20240307',
-          max_tokens: 1000,
-          system: systemPrompt,
-          messages: [
-            ...(conversationHistory || []).map(msg => ({
-              role: msg.role === 'user' ? 'user' : 'assistant',
-              content: msg.content
-            })),
-            { role: 'user', content: message }
-          ]
-        })
-      });
+    // Fallback Inteligente si todos los proveedores fallan o no hay llaves configuradas
+    const fallbackResponse = `¡Hola! Soy **GerAssist**. Gerardo Medina es un **Desarrollador Full Stack & Analista de Datos (Data Science / Data Analytics)** apasionado por la **Accesibilidad Universal (WCAG 2.1 AA)**, la educación en la UTN y el trabajo en equipo.
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error('Error Anthropic API:', errorData);
-        throw new Error(errorData.error?.message || 'Error en Anthropic API');
-      }
+¿Te gustaría coordinar una reunión o enviarle una consulta directa desde el formulario de contacto o LinkedIn?`;
 
-      const data = await response.json();
-      const reply = data.content?.[0]?.text || 'No se pudo generar una respuesta.';
-      return res.status(200).json({ reply });
-    }
-
-    // Integración genérica OpenRouter / Groq (Fallback ultrarrápido y económico)
-    const apiEndpoint = provider === 'groq' 
-      ? 'https://api.groq.com/openai/v1/chat/completions'
-      : 'https://openrouter.ai/api/v1/chat/completions';
-
-    const modelName = provider === 'groq' ? 'llama-3.1-8b-instant' : 'meta-llama/llama-3-8b-instruct:free';
-
-    const response = await fetch(apiEndpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
-      },
-      body: JSON.stringify({
-        model: modelName,
-        max_tokens: 1000,
-        messages: [
-          { role: 'system', content: systemPrompt },
-          ...(conversationHistory || []).map(msg => ({
-            role: msg.role === 'user' ? 'user' : 'assistant',
-            content: msg.content
-          })),
-          { role: 'user', content: message }
-        ]
-      })
-    });
-
-    if (!response.ok) {
-      throw new Error(`Error en el proveedor de IA (${provider})`);
-    }
-
-    const data = await response.json();
-    const reply = data.choices?.[0]?.message?.content || 'No se pudo generar una respuesta.';
-    return res.status(200).json({ reply });
+    return res.status(200).json({ reply: fallbackResponse, simulated: true, lastError: lastError?.message });
 
   } catch (error) {
-    console.error('Error en /api/chat:', error);
+    console.error('Error general en /api/chat:', error);
     return res.status(500).json({ 
       error: 'Hubo un inconveniente al procesar la respuesta.',
       details: error.message 
