@@ -242,7 +242,28 @@ function handleSmartNavigationAndFill(userText, botReply) {
   const userLower = (userText || '').toLowerCase().trim();
   const botLower = (botReply || '').toLowerCase().trim();
 
-  // 1. Detección de Intención de Contactar -> Desplazar a #contact y pre-rellenar formulario
+  // 1. Detección de Intención de Proyectos -> Abrir el modal específico del proyecto manteniendo GerAssist abierto
+  const projectKeywords = [
+    'siga', 'analytics', 'python', 'nexo', 'proyecoins',
+    'ahorcado', 'entrevigas', 'bytezar', 'planificador', 'codigo urbano', 'catalogo',
+    'proyecto', 'proyectos'
+  ];
+
+  if (projectKeywords.some(kw => userLower.includes(kw))) {
+    // Intentar abrir la vista previa detallada del proyecto específico
+    const opened = openProjectModalByName(userLower);
+
+    // Si no fue un proyecto específico, desplazar suavemente a la sección de proyectos
+    if (!opened) {
+      const projectsSection = document.getElementById('projects');
+      if (projectsSection) {
+        projectsSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    return;
+  }
+
+  // 2. Detección de Intención de Contactar -> Desplazar a #contact y pre-rellenar formulario
   if (
     userLower.includes('contact') || 
     userLower.includes('contrat') || 
@@ -252,28 +273,7 @@ function handleSmartNavigationAndFill(userText, botReply) {
     userLower.includes('mensaje') ||
     botLower.includes('vías oficiales')
   ) {
-    // Si la consulta fue sobre contacto, ofrecer desplazamiento suave a la sección
     setTimeout(() => triggerContactAutoFill(), 1200);
-    return;
-  }
-
-  // 2. Detección de Intención de Proyectos -> Abrir el modal específico del proyecto manteniendo GerAssist abierto
-  const projectKeywords = [
-    'proyecto', 'proyectos', 'siga', 'analytics', 'python', 'nexo', 'proyecoins',
-    'ahorcado', 'entrevigas', 'bytezar', 'planificador', 'codigo urbano', 'catalogo'
-  ];
-
-  if (projectKeywords.some(kw => userLower.includes(kw))) {
-    // 1. Intentar abrir la vista previa detallada (Popover Modal) del proyecto
-    const opened = openProjectModalByName(userLower);
-
-    // 2. Si no fue un proyecto específico, desplazar suavemente a la sección de proyectos
-    if (!opened) {
-      const projectsSection = document.getElementById('projects');
-      if (projectsSection) {
-        projectsSection.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
     return;
   }
 
