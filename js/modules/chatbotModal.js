@@ -289,20 +289,18 @@ function appendMessage(container, sender, text) {
   container.appendChild(wrapper);
 }
 
-let botSynth = typeof window !== 'undefined' ? window.speechSynthesis : null;
-
 export function speakBotMessage(rawText, speakBtn = null) {
-  if (!botSynth) {
-    botSynth = typeof window !== 'undefined' ? window.speechSynthesis : null;
+  if (typeof window === 'undefined' || !window.speechSynthesis) {
+    alert('Tu navegador no soporta la reproducción de voz en voz alta.');
+    return;
   }
-  if (!botSynth) return;
 
-  if (botSynth.speaking) {
-    botSynth.cancel();
-    if (speakBtn && speakBtn.classList.contains('speaking')) {
-      speakBtn.classList.remove('speaking');
-      return;
-    }
+  const synth = window.speechSynthesis;
+  try {
+    synth.cancel();
+    if (synth.paused) synth.resume();
+  } catch (e) {
+    console.warn('Error en cancel/resume de synth:', e);
   }
 
   const cleanText = String(rawText || '')
@@ -314,34 +312,51 @@ export function speakBotMessage(rawText, speakBtn = null) {
 
   if (!cleanText) return;
 
-  const utterance = new SpeechSynthesisUtterance(cleanText);
-  const lang = getLang();
-  utterance.lang = lang === 'es' ? 'es-ES' : 'en-US';
-  utterance.rate = 0.95;
-  utterance.pitch = 1.0;
+  setTimeout(() => {
+    try {
+      const utterance = new SpeechSynthesisUtterance(cleanText);
+      const lang = getLang();
+      utterance.lang = lang === 'es' ? 'es-ES' : 'en-US';
+      utterance.rate = 1.0;
+      utterance.pitch = 1.0;
+      utterance.volume = 1.0;
 
-  // Cargar lista de voces disponibles en el navegador
-  const voices = botSynth.getVoices();
-  if (voices && voices.length > 0) {
-    const targetLang = lang === 'es' ? 'es' : 'en';
-    const matchedVoice = voices.find(v => v.lang.toLowerCase().startsWith(targetLang) || v.lang.toLowerCase().includes(targetLang));
-    if (matchedVoice) {
-      utterance.voice = matchedVoice;
+      const voices = synth.getVoices();
+      if (voices && voices.length > 0) {
+        const targetLang = lang === 'es' ? 'es' : 'en';
+        const matchedVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith(targetLang));
+        if (matchedVoice) {
+          utterance.voice = matchedVoice;
+        }
+      }
+
+      document.querySelectorAll('.bot-speak-btn').forEach(b => b.classList.remove('speaking'));
+
+      if (speakBtn) {
+        speakBtn.classList.add('speaking');
+        const iconEl = speakBtn.querySelector('i');
+        const textSpan = speakBtn.querySelector('span');
+        if (iconEl) iconEl.className = 'bx bx-volume-full bx-tada';
+        if (textSpan) textSpan.textContent = lang === 'es' ? 'Hablando...' : 'Speaking...';
+
+        utterance.onend = () => {
+          speakBtn.classList.remove('speaking');
+          if (iconEl) iconEl.className = 'bx bx-volume-full';
+          if (textSpan) textSpan.textContent = lang === 'es' ? 'Escuchar' : 'Listen';
+        };
+        utterance.onerror = (err) => {
+          console.warn('Error en emisión de voz:', err);
+          speakBtn.classList.remove('speaking');
+          if (iconEl) iconEl.className = 'bx bx-volume-full';
+          if (textSpan) textSpan.textContent = lang === 'es' ? 'Escuchar' : 'Listen';
+        };
+      }
+
+      synth.speak(utterance);
+    } catch (err) {
+      console.error('Error al reproducir audio:', err);
     }
-  }
-
-  document.querySelectorAll('.bot-speak-btn').forEach(b => b.classList.remove('speaking'));
-
-  if (speakBtn) {
-    speakBtn.classList.add('speaking');
-    utterance.onend = () => speakBtn.classList.remove('speaking');
-    utterance.onerror = (e) => {
-      console.warn('Error en SpeechSynthesis:', e);
-      speakBtn.classList.remove('speaking');
-    };
-  }
-
-  botSynth.speak(utterance);
+  }, 60);
 }
 
 function setupSpeechRecognition(inputEl, micBtn) {
@@ -350,53 +365,16 @@ function setupSpeechRecognition(inputEl, micBtn) {
   if (!SpeechRecognition) {
     micBtn.setAttribute('title', 'Dictado por voz no disponible en este navegador');
     micBtn.style.opacity = '0.5';
-    micBtn.addEventListener('click', () => {
-      alert('Tu navegador no soporta el reconocimiento de voz nativo. Te recomendamos utilizar Google Chrome, Microsoft Edge o Safari.');
+    micBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      alert('Tu navegador no soporta el reconocimiento de voz nativo (Web Speech API). Te recomendamos utilizar Google Chrome, Microsoft Edge o Safari.');
     });
     return;
   }
 
-  let recognition = null;
+  let activeRecognition = null;
   let isListening = false;
-
-  function createRecognition() {
-    const rec = new SpeechRecognition();
-    rec.continuous = false;
-    rec.interimResults = true;
-    rec.lang = getLang() === 'es' ? 'es-ES' : 'en-US';
-
-    rec.onstart = () => {
-      isListening = true;
-      micBtn.classList.add('listening');
-      micBtn.setAttribute('title', 'Escuchando... Haz clic para detener');
-      inputEl.placeholder = getLang() === 'es' ? 'Escuchando... Hablá ahora 🎙️' : 'Listening... Speak now 🎙️';
-    };
-
-    rec.onresult = (event) => {
-      let transcript = '';
-      for (let i = event.resultIndex; i < event.results.length; i++) {
-        transcript += event.results[i][0].transcript;
-      }
-      inputEl.value = transcript;
-    };
-
-    rec.onerror = (event) => {
-      console.warn('Error en micrófono:', event.error);
-      stopMic();
-      if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
-        alert('El acceso al micrófono está bloqueado en tu navegador. Por favor, haz clic en el icono de candado 🔒 en la barra de dirección arriba a la izquierda para permitir el micrófono.');
-      }
-    };
-
-    rec.onend = () => {
-      stopMic();
-      if (inputEl.value.trim()) {
-        inputEl.focus();
-      }
-    };
-
-    return rec;
-  }
 
   function stopMic() {
     isListening = false;
@@ -406,28 +384,65 @@ function setupSpeechRecognition(inputEl, micBtn) {
     inputEl.placeholder = lang === 'es' ? 'Escribe o dicta tu mensaje...' : 'Type or dictate your message...';
   }
 
-  micBtn.addEventListener('click', () => {
-    if (isListening && recognition) {
-      recognition.stop();
+  micBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (isListening && activeRecognition) {
+      try {
+        activeRecognition.stop();
+      } catch (err) {
+        console.warn('Error al detener dictado:', err);
+      }
+      stopMic();
       return;
     }
 
     try {
-      if (!recognition) {
-        recognition = createRecognition();
-      } else {
-        recognition.lang = getLang() === 'es' ? 'es-ES' : 'en-US';
-      }
-      recognition.start();
-    } catch (e) {
-      console.warn('Reiniciando reconocimiento de voz:', e);
-      recognition = createRecognition();
-      try {
-        recognition.start();
-      } catch (err) {
-        console.error('No se pudo iniciar dictado:', err);
+      activeRecognition = new SpeechRecognition();
+      activeRecognition.continuous = false;
+      activeRecognition.interimResults = true;
+      activeRecognition.lang = getLang() === 'es' ? 'es-AR' : 'en-US';
+
+      activeRecognition.onstart = () => {
+        isListening = true;
+        micBtn.classList.add('listening');
+        micBtn.setAttribute('title', 'Escuchando... Haz clic para detener');
+        inputEl.placeholder = getLang() === 'es' ? 'Escuchando... Hablá ahora 🎙️' : 'Listening... Speak now 🎙️';
+      };
+
+      activeRecognition.onresult = (event) => {
+        let transcript = '';
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          transcript += event.results[i][0].transcript;
+        }
+        inputEl.value = transcript;
+      };
+
+      activeRecognition.onerror = (event) => {
+        console.warn('Error en SpeechRecognition:', event.error);
         stopMic();
-      }
+        if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+          alert('El acceso al micrófono fue denegado por el navegador o sistema. Por favor verifica los permisos de micrófono en la barra del navegador o en la configuración de tu equipo.');
+        } else if (event.error === 'network') {
+          alert('Error de red al procesar el reconocimiento de voz. Verifica tu conexión a internet.');
+        } else if (event.error !== 'no-speech') {
+          alert(`Ocurrió un inconveniente con la voz (${event.error}). Intenta presionar el micrófono nuevamente.`);
+        }
+      };
+
+      activeRecognition.onend = () => {
+        stopMic();
+        if (inputEl.value.trim()) {
+          inputEl.focus();
+        }
+      };
+
+      activeRecognition.start();
+    } catch (e) {
+      console.error('Error al iniciar el reconocimiento de voz:', e);
+      stopMic();
+      alert('No se pudo activar el micrófono. Por favor intenta hacer clic nuevamente.');
     }
   });
 }
