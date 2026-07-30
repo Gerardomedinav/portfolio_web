@@ -84,7 +84,7 @@ export function renderProjects(projects, lang) {
 
     const popoverDiv = document.createElement("div");
     popoverDiv.id = `popover-${index}`;
-    popoverDiv.setAttribute("popover", "auto");
+    popoverDiv.setAttribute("popover", "manual");
     popoverDiv.className = "project__popover";
 
     popoverDiv.innerHTML = `
@@ -165,6 +165,52 @@ function initPopoverFallback() {
       }
     });
   });
+}
+
+export function openProjectModalByName(queryText) {
+  if (!queryText) return false;
+  const cleanQuery = queryText.toLowerCase().trim();
+
+  const popovers = document.querySelectorAll('.project__popover');
+  let matchedPopover = null;
+
+  popovers.forEach(pop => {
+    const titleEl = pop.querySelector('.project__popover-title');
+    const titleText = (titleEl ? titleEl.textContent : '').toLowerCase();
+
+    if (
+      (cleanQuery.includes('siga') && titleText.includes('siga')) ||
+      (cleanQuery.includes('nexo') && titleText.includes('nexo')) ||
+      (cleanQuery.includes('proyecoins') && titleText.includes('proyecoins')) ||
+      (cleanQuery.includes('ahorcado') && titleText.includes('ahorcado')) ||
+      (cleanQuery.includes('entrevigas') && titleText.includes('entrevigas')) ||
+      (cleanQuery.includes('bytezar') && titleText.includes('bytezar')) ||
+      (cleanQuery.includes('planificad') && titleText.includes('planificad')) ||
+      (cleanQuery.includes('codigo urbano') && titleText.includes('código urbano')) ||
+      (cleanQuery.includes('catalogo') && titleText.includes('catálogo')) ||
+      (cleanQuery.includes('animal') && titleText.includes('comunitario')) ||
+      (cleanQuery.includes('analytics') && titleText.includes('analytics'))
+    ) {
+      matchedPopover = pop;
+    }
+  });
+
+  if (matchedPopover) {
+    if (typeof matchedPopover.showPopover === 'function') {
+      try {
+        matchedPopover.showPopover();
+      } catch (e) {
+        matchedPopover.style.display = 'flex';
+      }
+    } else {
+      matchedPopover.style.display = 'flex';
+    }
+
+    matchedPopover.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return true;
+  }
+
+  return false;
 }
 
 export function initProjects() {

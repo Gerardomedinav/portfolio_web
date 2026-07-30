@@ -1117,7 +1117,7 @@ body.dark .admin-select {
   position: fixed;
   bottom: 25px;
   right: 25px;
-  z-index: 9990;
+  z-index: 2147483647;
   font-family: 'Poppins', sans-serif;
 }
 

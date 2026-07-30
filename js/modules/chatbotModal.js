@@ -3,6 +3,7 @@
  */
 import { sendMessageToGerAssist } from './botService.js';
 import { getLang } from './i18n.js';
+import { openProjectModalByName } from './projects.js';
 
 let widgetContainer = null;
 let conversationHistory = [];
@@ -256,36 +257,22 @@ function handleSmartNavigationAndFill(userText, botReply) {
     return;
   }
 
-  // 2. Detección de Intención de Proyectos -> Desplazar a #projects y resaltar tarjeta específica
+  // 2. Detección de Intención de Proyectos -> Abrir el modal específico del proyecto manteniendo GerAssist abierto
   const projectKeywords = [
     'proyecto', 'proyectos', 'siga', 'analytics', 'python', 'nexo', 'proyecoins',
     'ahorcado', 'entrevigas', 'bytezar', 'planificador', 'codigo urbano', 'catalogo'
   ];
 
   if (projectKeywords.some(kw => userLower.includes(kw))) {
-    const projectsSection = document.getElementById('projects');
-    if (projectsSection) {
-      projectsSection.scrollIntoView({ behavior: 'smooth' });
+    // 1. Intentar abrir la vista previa detallada (Popover Modal) del proyecto
+    const opened = openProjectModalByName(userLower);
 
-      // Buscar si mencionó un proyecto específico para resaltarlo en pantalla
-      const projectCards = document.querySelectorAll('.project__card, .projects__name, .skills__name');
-      projectCards.forEach(card => {
-        const cardText = card.textContent.toLowerCase();
-        if (
-          (userLower.includes('siga') && cardText.includes('siga')) ||
-          (userLower.includes('python') && cardText.includes('python')) ||
-          (userLower.includes('nexo') && cardText.includes('nexo')) ||
-          (userLower.includes('proyecoins') && cardText.includes('proyecoins')) ||
-          (userLower.includes('ahorcado') && cardText.includes('ahorcado')) ||
-          (userLower.includes('entrevigas') && cardText.includes('entrevigas')) ||
-          (userLower.includes('bytezar') && cardText.includes('bytezar'))
-        ) {
-          card.classList.remove('highlight-pulse');
-          void card.offsetWidth;
-          card.classList.add('highlight-pulse');
-          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      });
+    // 2. Si no fue un proyecto específico, desplazar suavemente a la sección de proyectos
+    if (!opened) {
+      const projectsSection = document.getElementById('projects');
+      if (projectsSection) {
+        projectsSection.scrollIntoView({ behavior: 'smooth' });
+      }
     }
     return;
   }
