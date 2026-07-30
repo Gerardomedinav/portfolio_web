@@ -1,9 +1,10 @@
 /**
- * Módulo de la Interfaz Interactiva de GerAssist (Chatbot Floating Widget con Navegación Inteligente y Pre-rellenado de Contacto)
+ * Módulo de la Interfaz Interactiva de GerAssist (Chatbot Floating Widget con Navegación Inteligente, Accesibilidad y Pre-rellenado)
  */
 import { sendMessageToGerAssist } from './botService.js';
 import { getLang } from './i18n.js';
 import { openProjectModalByName, closeAllProjectModals } from './projects.js';
+import { openAccessibilityPanel, closeAccessibilityPanel } from './navigation.js';
 
 let widgetContainer = null;
 let conversationHistory = [];
@@ -190,7 +191,7 @@ export function renderChatbotWidget() {
       appendMessage(messagesContainer, 'bot', result.reply);
       conversationHistory.push({ role: 'assistant', content: result.reply });
 
-      // 3. Ejecutar Navegación Inteligente y Pre-rellenado de Contacto si aplica
+      // 3. Ejecutar Navegación Inteligente, Accesibilidad y Pre-rellenado si aplica
       handleSmartNavigationAndFill(userText, result.reply);
     } else {
       appendMessage(messagesContainer, 'bot', 'Disculpa, no pude procesar esa consulta. Puedes escribir a Gerardo directamente desde la sección Contacto.');
@@ -236,13 +237,21 @@ function scrollToBottom(el) {
 }
 
 /**
- * Función de Navegación Inteligente y Resalte de Secciones
+ * Función de Navegación Inteligente, Accesibilidad y Resalte de Secciones
  */
 function handleSmartNavigationAndFill(userText, botReply) {
   const userLower = (userText || '').toLowerCase().trim();
   const botLower = (botReply || '').toLowerCase().trim();
 
-  // 1. Detección de Intención de Proyectos -> Abrir el modal específico del proyecto manteniendo GerAssist abierto
+  // 1. Detección de Intención de Accesibilidad -> Abrir panel de accesibilidad y cerrar modales de proyectos
+  const accessKeywords = ['accesibil', 'wcag', 'lector', 'voz', 'daltonis', 'dislex', 'panel de accesib', 'widget'];
+  if (accessKeywords.some(kw => userLower.includes(kw))) {
+    closeAllProjectModals();
+    openAccessibilityPanel();
+    return;
+  }
+
+  // 2. Detección de Intención de Proyectos -> Cerrar accesibilidad y modales anteriores, abrir el nuevo proyecto
   const projectKeywords = [
     'siga', 'analytics', 'python', 'nexo', 'proyecoins',
     'ahorcado', 'entrevigas', 'bytezar', 'planificador', 'codigo urbano', 'catalogo',
@@ -250,10 +259,11 @@ function handleSmartNavigationAndFill(userText, botReply) {
   ];
 
   if (projectKeywords.some(kw => userLower.includes(kw))) {
-    // Intentar abrir la vista previa detallada del proyecto específico
+    closeAccessibilityPanel();
+    closeAllProjectModals();
+
     const opened = openProjectModalByName(userLower);
 
-    // Si no fue un proyecto específico, desplazar suavemente a la sección de proyectos
     if (!opened) {
       const projectsSection = document.getElementById('projects');
       if (projectsSection) {
@@ -263,7 +273,7 @@ function handleSmartNavigationAndFill(userText, botReply) {
     return;
   }
 
-  // 2. Detección de Intención de Contactar -> Desplazar a #contact y pre-rellenar formulario
+  // 3. Detección de Intención de Contactar -> Cerrar accesibilidad y modales anteriores, desplazar a #contact y pre-rellenar
   if (
     userLower.includes('contact') || 
     userLower.includes('contrat') || 
@@ -273,12 +283,15 @@ function handleSmartNavigationAndFill(userText, botReply) {
     userLower.includes('mensaje') ||
     botLower.includes('vías oficiales')
   ) {
-    setTimeout(() => triggerContactAutoFill(), 1200);
+    closeAccessibilityPanel();
+    closeAllProjectModals();
+    setTimeout(() => triggerContactAutoFill(), 500);
     return;
   }
 
-  // 3. Detección de Intención de Sobre Mí / UTN -> Cerrar modal de proyecto anterior y desplazar a #about
+  // 4. Detección de Intención de Sobre Mí / UTN -> Cerrar accesibilidad y modales de proyectos, desplazar a #about
   if (userLower.includes('sobre mi') || userLower.includes('utn') || userLower.includes('perfil') || userLower.includes('estudios') || userLower.includes('trayectoria')) {
+    closeAccessibilityPanel();
     closeAllProjectModals();
     const aboutSection = document.getElementById('about');
     if (aboutSection) {
@@ -287,8 +300,9 @@ function handleSmartNavigationAndFill(userText, botReply) {
     return;
   }
 
-  // 4. Detección de Intención de Habilidades -> Cerrar modal de proyecto anterior y desplazar a #skills
+  // 5. Detección de Intención de Habilidades -> Cerrar accesibilidad y modales de proyectos, desplazar a #skills
   if (userLower.includes('habilidad') || userLower.includes('skills') || userLower.includes('tecnolog') || userLower.includes('framework') || userLower.includes('herramienta')) {
+    closeAccessibilityPanel();
     closeAllProjectModals();
     const skillsSection = document.getElementById('skills');
     if (skillsSection) {
@@ -302,11 +316,11 @@ function handleSmartNavigationAndFill(userText, botReply) {
  * Pre-rellena el formulario de contacto con un borrador personalizado y desplaza al usuario
  */
 export function triggerContactAutoFill(customDraftMessage = null) {
-  // 1. Cerrar automáticamente cualquier modal de proyecto que esté abierto
+  // 1. Cerrar automáticamente cualquier modal de proyecto o panel de accesibilidad abierto
+  closeAccessibilityPanel();
   closeAllProjectModals();
 
   const contactSection = document.getElementById('contact');
-  const windowEl = document.getElementById('gerassist-window');
 
   if (contactSection) {
     contactSection.scrollIntoView({ behavior: 'smooth' });
