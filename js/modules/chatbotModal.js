@@ -5,6 +5,7 @@ import { sendMessageToGerAssist } from './botService.js';
 import { getLang } from './i18n.js';
 import { openProjectModalByName, closeAllProjectModals } from './projects.js';
 import { openAccessibilityPanel, closeAccessibilityPanel } from './navigation.js';
+import { toggleThemeAction } from './theme.js';
 import { 
   triggerTTSAction, 
   setFilterAction, 
@@ -317,6 +318,20 @@ function handleSmartNavigationAndFill(userText, botReply) {
   // G. Restablecer Accesibilidad Completa
   if (userLower.includes('restablecer accesib') || userLower.includes('limpiar accesib') || userLower.includes('reiniciar accesib') || userLower.includes('restablecer todo')) {
     resetAllAccessibilityAction();
+    return;
+  }
+
+  // H. Modo Oscuro / Modo Claro / Tema
+  if (userLower.includes('modo oscuro') || userLower.includes('tema oscuro') || userLower.includes('oscuro')) {
+    toggleThemeAction('dark');
+    return;
+  }
+  if (userLower.includes('modo claro') || userLower.includes('tema claro') || userLower.includes('claro')) {
+    toggleThemeAction('light');
+    return;
+  }
+  if (userLower.includes('cambiar tema') || userLower.includes('cambiar modo')) {
+    toggleThemeAction();
     return;
   }
 

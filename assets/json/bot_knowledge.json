@@ -80,6 +80,14 @@
     {
       "keywords": ["restablecer accesibilidad", "restablecer todo accesibilidad", "limpiar accesibilidad", "reiniciar accesibilidad"],
       "answer": "🔄 **Ajustes de accesibilidad restablecidos.** Restauré el tamaño de letra, colores y filtros a su estado original."
+    },
+    {
+      "keywords": ["modo oscuro", "tema oscuro", "activar modo oscuro", "poner modo oscuro"],
+      "answer": "🌙 **¡Modo Oscuro activado!** He configurado la interfaz en el tema oscuro para reducir el cansancio ocular y brindarte la máxima comodidad visual."
+    },
+    {
+      "keywords": ["modo claro", "tema claro", "activar modo claro", "poner modo claro"],
+      "answer": "☀️ **¡Modo Claro activado!** He cambiado la interfaz al tema claro con alta visibilidad y brillo natural."
     }
   ],
   "projects": [
