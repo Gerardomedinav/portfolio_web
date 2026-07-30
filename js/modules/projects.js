@@ -1,5 +1,5 @@
 /**
- * Módulo de Carga y Renderizado Dinámico de Proyectos con Popovers Aislados
+ * Módulo de Carga y Renderizado Dinámico de Proyectos con Modales Multisección Simultáneos
  */
 import { getLang, texts } from './i18n.js';
 import { getProjectsData } from './dataStore.js';
@@ -84,7 +84,6 @@ export function renderProjects(projects, lang) {
 
     const popoverDiv = document.createElement("div");
     popoverDiv.id = `popover-${index}`;
-    popoverDiv.setAttribute("popover", "manual");
     popoverDiv.className = "project__popover";
 
     popoverDiv.innerHTML = `
@@ -124,46 +123,66 @@ export function renderProjects(projects, lang) {
     container.appendChild(popoverDiv);
   });
 
-  initPopoverFallback();
+  initProjectModals();
 
   if (typeof window !== "undefined" && window.AOS) {
     window.AOS.refresh();
   }
 }
 
-function initPopoverFallback() {
-  const popovers = document.querySelectorAll('.project__popover');
-  popovers.forEach(pop => {
-    if (!pop.matches(':popover-open')) {
-      pop.style.display = 'none';
-    }
-  });
+function getProjectBackdrop() {
+  let backdrop = document.getElementById('project-modal-backdrop');
+  if (!backdrop) {
+    backdrop = document.createElement('div');
+    backdrop.id = 'project-modal-backdrop';
+    backdrop.className = 'project-modal-backdrop';
+    document.body.appendChild(backdrop);
 
-  popovers.forEach(pop => {
-    pop.addEventListener('toggle', (e) => {
-      if (e.newState === 'open') {
-        pop.style.display = 'flex';
-      } else {
-        pop.style.display = 'none';
-      }
+    backdrop.addEventListener('click', () => {
+      closeAllProjectModals();
     });
-  });
+  }
+  return backdrop;
+}
 
+export function closeAllProjectModals() {
+  document.querySelectorAll('.project__popover').forEach(pop => {
+    pop.classList.remove('is-open');
+    pop.style.display = 'none';
+  });
+  const backdrop = document.getElementById('project-modal-backdrop');
+  if (backdrop) {
+    backdrop.classList.remove('is-open');
+    backdrop.style.display = 'none';
+  }
+}
+
+function initProjectModals() {
   document.querySelectorAll('[popovertarget]').forEach(btn => {
     btn.addEventListener('click', (e) => {
+      e.preventDefault();
       const targetId = btn.getAttribute('popovertarget');
       const action = btn.getAttribute('popovertargetaction') || 'toggle';
       const targetPop = document.getElementById(targetId);
 
-      if (targetPop && typeof targetPop.showPopover !== 'function') {
-        e.preventDefault();
-        if (action === 'hide') {
-          targetPop.style.display = 'none';
-        } else {
-          targetPop.style.display = targetPop.style.display === 'flex' ? 'none' : 'flex';
-        }
+      if (action === 'hide') {
+        closeAllProjectModals();
+      } else if (targetPop) {
+        closeAllProjectModals();
+        const backdrop = getProjectBackdrop();
+        backdrop.classList.add('is-open');
+        backdrop.style.display = 'block';
+
+        targetPop.classList.add('is-open');
+        targetPop.style.display = 'flex';
       }
     });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeAllProjectModals();
+    }
   });
 }
 
@@ -196,15 +215,14 @@ export function openProjectModalByName(queryText) {
   });
 
   if (matchedPopover) {
-    if (typeof matchedPopover.showPopover === 'function') {
-      try {
-        matchedPopover.showPopover();
-      } catch (e) {
-        matchedPopover.style.display = 'flex';
-      }
-    } else {
-      matchedPopover.style.display = 'flex';
-    }
+    closeAllProjectModals();
+
+    const backdrop = getProjectBackdrop();
+    backdrop.classList.add('is-open');
+    backdrop.style.display = 'block';
+
+    matchedPopover.classList.add('is-open');
+    matchedPopover.style.display = 'flex';
 
     matchedPopover.scrollIntoView({ behavior: 'smooth', block: 'center' });
     return true;
