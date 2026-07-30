@@ -292,6 +292,9 @@ function appendMessage(container, sender, text) {
 let botSynth = typeof window !== 'undefined' ? window.speechSynthesis : null;
 
 export function speakBotMessage(rawText, speakBtn = null) {
+  if (!botSynth) {
+    botSynth = typeof window !== 'undefined' ? window.speechSynthesis : null;
+  }
   if (!botSynth) return;
 
   if (botSynth.speaking) {
@@ -345,7 +348,7 @@ function setupSpeechRecognition(inputEl, micBtn) {
   const SpeechRecognition = typeof window !== 'undefined' ? (window.SpeechRecognition || window.webkitSpeechRecognition) : null;
 
   if (!SpeechRecognition) {
-    micBtn.setAttribute('title', 'Dictado por voz no soportado en este navegador');
+    micBtn.setAttribute('title', 'Dictado por voz no disponible en este navegador');
     micBtn.style.opacity = '0.5';
     micBtn.addEventListener('click', () => {
       alert('Tu navegador no soporta el reconocimiento de voz nativo. Te recomendamos utilizar Google Chrome, Microsoft Edge o Safari.');
@@ -360,6 +363,7 @@ function setupSpeechRecognition(inputEl, micBtn) {
     const rec = new SpeechRecognition();
     rec.continuous = false;
     rec.interimResults = true;
+    rec.lang = getLang() === 'es' ? 'es-ES' : 'en-US';
 
     rec.onstart = () => {
       isListening = true;
@@ -380,7 +384,7 @@ function setupSpeechRecognition(inputEl, micBtn) {
       console.warn('Error en micrófono:', event.error);
       stopMic();
       if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
-        alert('Por favor, permite el acceso al micrófono en los permisos de tu navegador para usar el dictado por voz.');
+        alert('El acceso al micrófono está bloqueado en tu navegador. Por favor, haz clic en el icono de candado 🔒 en la barra de dirección arriba a la izquierda para permitir el micrófono.');
       }
     };
 
@@ -402,32 +406,28 @@ function setupSpeechRecognition(inputEl, micBtn) {
     inputEl.placeholder = lang === 'es' ? 'Escribe o dicta tu mensaje...' : 'Type or dictate your message...';
   }
 
-  micBtn.addEventListener('click', async () => {
+  micBtn.addEventListener('click', () => {
     if (isListening && recognition) {
       recognition.stop();
       return;
     }
 
-    // Solicitar permiso de micrófono de forma explícita
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        stream.getTracks().forEach(track => track.stop());
-      } catch (err) {
-        console.warn('Permiso de micrófono denegado:', err);
-        alert('Se requiere permiso de micrófono para activar el dictado por voz.');
-        return;
-      }
-    }
-
-    recognition = createRecognition();
-    recognition.lang = getLang() === 'es' ? 'es-ES' : 'en-US';
-
     try {
+      if (!recognition) {
+        recognition = createRecognition();
+      } else {
+        recognition.lang = getLang() === 'es' ? 'es-ES' : 'en-US';
+      }
       recognition.start();
     } catch (e) {
-      console.warn('Error iniciando dictado:', e);
-      stopMic();
+      console.warn('Reiniciando reconocimiento de voz:', e);
+      recognition = createRecognition();
+      try {
+        recognition.start();
+      } catch (err) {
+        console.error('No se pudo iniciar dictado:', err);
+        stopMic();
+      }
     }
   });
 }
