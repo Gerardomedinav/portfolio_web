@@ -145,7 +145,6 @@ export function renderChatbotWidget() {
         e.preventDefault();
         const targetSec = document.querySelector(href);
         if (targetSec) {
-          windowEl.hidden = true;
           targetSec.scrollIntoView({ behavior: 'smooth' });
         }
       }
@@ -332,9 +331,6 @@ export function triggerContactAutoFill(customDraftMessage = null) {
     if (subjectInput && !subjectInput.value) {
       subjectInput.value = `Contacto directo - Vía GerAssist`;
     }
-
-    // Ocultar modal del bot para visibilidad completa del formulario
-    if (windowEl) windowEl.hidden = true;
 
     setTimeout(() => {
       if (nameInput && !nameInput.value) {
