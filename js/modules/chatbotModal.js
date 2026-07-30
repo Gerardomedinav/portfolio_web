@@ -147,8 +147,24 @@ export function renderChatbotWidget() {
       isAutoSpeechActive = !isAutoSpeechActive;
       autoTtsToggleBtn.classList.toggle('active', isAutoSpeechActive);
       const icon = autoTtsToggleBtn.querySelector('i');
-      if (icon) {
-        icon.className = isAutoSpeechActive ? 'bx bx-volume-full' : 'bx bx-volume-mute';
+
+      if (isAutoSpeechActive) {
+        if (icon) icon.className = 'bx bx-volume-full';
+        autoTtsToggleBtn.setAttribute('title', lang === 'es' ? 'Voz de GerAssist activada (Haz clic para silenciar)' : 'GerAssist voice enabled (Click to mute)');
+        
+        // Reproducir el último mensaje de GerAssist si existe
+        const lastBotBubble = messagesContainer.querySelector('.bot-message--bot:last-child .bot-msg-bubble');
+        if (lastBotBubble) {
+          const clone = lastBotBubble.cloneNode(true);
+          const actions = clone.querySelector('.bot-msg-actions');
+          if (actions) actions.remove();
+          const speakBtn = lastBotBubble.querySelector('.bot-speak-btn');
+          speakBotMessage(clone.innerText, speakBtn);
+        }
+      } else {
+        if (icon) icon.className = 'bx bx-volume-mute';
+        autoTtsToggleBtn.setAttribute('title', lang === 'es' ? 'Voz de GerAssist desactivada (Haz clic para activar)' : 'GerAssist voice disabled (Click to enable)');
+        stopBotMessage();
       }
     });
   }
@@ -289,17 +305,38 @@ function appendMessage(container, sender, text) {
   container.appendChild(wrapper);
 }
 
+export function stopBotMessage() {
+  if (typeof window !== 'undefined' && window.speechSynthesis) {
+    try {
+      window.speechSynthesis.cancel();
+    } catch (e) {}
+  }
+  const lang = getLang();
+  document.querySelectorAll('.bot-speak-btn').forEach(b => {
+    b.classList.remove('speaking');
+    const iconEl = b.querySelector('i');
+    const textSpan = b.querySelector('span');
+    if (iconEl) iconEl.className = 'bx bx-volume-full';
+    if (textSpan) textSpan.textContent = lang === 'es' ? 'Escuchar' : 'Listen';
+  });
+}
+
 export function speakBotMessage(rawText, speakBtn = null) {
   if (typeof window === 'undefined' || !window.speechSynthesis) return;
 
   const synth = window.speechSynthesis;
 
-  // Reactivar síntesis de voz si el navegador la tiene en pausa
+  // Si el botón ya está reproduciendo, al volver a hacer clic se DETIENE la voz
+  if (speakBtn && speakBtn.classList.contains('speaking')) {
+    stopBotMessage();
+    return;
+  }
+
+  stopBotMessage();
+
   if (synth.paused) {
     try { synth.resume(); } catch (e) {}
   }
-
-  synth.cancel();
 
   const cleanText = String(rawText || '')
     .replace(/<[^>]*>/g, '')
@@ -324,28 +361,22 @@ export function speakBotMessage(rawText, speakBtn = null) {
     if (matched) utterance.voice = matched;
   }
 
-  document.querySelectorAll('.bot-speak-btn').forEach(b => b.classList.remove('speaking'));
-
   if (speakBtn) {
     speakBtn.classList.add('speaking');
     const iconEl = speakBtn.querySelector('i');
     const textSpan = speakBtn.querySelector('span');
     if (iconEl) iconEl.className = 'bx bx-volume-full bx-tada';
-    if (textSpan) textSpan.textContent = lang === 'es' ? 'Hablando...' : 'Speaking...';
+    if (textSpan) textSpan.textContent = lang === 'es' ? 'Detener' : 'Stop';
 
     utterance.onstart = () => {
       speakBtn.classList.add('speaking');
     };
     utterance.onend = () => {
-      speakBtn.classList.remove('speaking');
-      if (iconEl) iconEl.className = 'bx bx-volume-full';
-      if (textSpan) textSpan.textContent = lang === 'es' ? 'Escuchar' : 'Listen';
+      stopBotMessage();
     };
     utterance.onerror = (err) => {
       console.warn('Error en emisión de voz:', err);
-      speakBtn.classList.remove('speaking');
-      if (iconEl) iconEl.className = 'bx bx-volume-full';
-      if (textSpan) textSpan.textContent = lang === 'es' ? 'Escuchar' : 'Listen';
+      stopBotMessage();
     };
   }
 
