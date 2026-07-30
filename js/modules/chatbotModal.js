@@ -423,11 +423,9 @@ function setupSpeechRecognition(inputEl, micBtn) {
         console.warn('Error en SpeechRecognition:', event.error);
         stopMic();
         if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
-          alert('El acceso al micrófono fue denegado por el navegador o sistema. Por favor verifica los permisos de micrófono en la barra del navegador o en la configuración de tu equipo.');
+          inputEl.placeholder = getLang() === 'es' ? 'Micrófono denegado en sistema/navegador 🔒' : 'Microphone blocked by system/browser 🔒';
         } else if (event.error === 'network') {
-          alert('Error de red al procesar el reconocimiento de voz. Verifica tu conexión a internet.');
-        } else if (event.error !== 'no-speech') {
-          alert(`Ocurrió un inconveniente con la voz (${event.error}). Intenta presionar el micrófono nuevamente.`);
+          inputEl.placeholder = getLang() === 'es' ? 'Error de red en reconocimiento de voz 🌐' : 'Network error in speech recognition 🌐';
         }
       };
 
@@ -440,9 +438,8 @@ function setupSpeechRecognition(inputEl, micBtn) {
 
       activeRecognition.start();
     } catch (e) {
-      console.error('Error al iniciar el reconocimiento de voz:', e);
+      console.warn('Error al iniciar el reconocimiento de voz:', e);
       stopMic();
-      alert('No se pudo activar el micrófono. Por favor intenta hacer clic nuevamente.');
     }
   });
 }
