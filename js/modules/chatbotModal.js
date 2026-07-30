@@ -111,6 +111,7 @@ export function renderChatbotWidget() {
         </a>
       </div>
     </div>
+  `;
 
   document.body.appendChild(widgetContainer);
 
