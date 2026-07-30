@@ -383,17 +383,35 @@ body.filter-invert video {
   filter: invert(100%) hue-rotate(180deg) !important;
 }
 
-/* Escala de Tamaño de Fuente */
-html.font-scale-sm {
-  font-size: 88% !important;
+/* Escala de Tamaño de Fuente (A-, A, A+) */
+html.font-scale-sm,
+html.font-scale-sm body,
+html.font-scale-sm p,
+html.font-scale-sm span,
+html.font-scale-sm a,
+html.font-scale-sm li,
+html.font-scale-sm button {
+  font-size: 90% !important;
 }
 
-html.font-scale-lg {
-  font-size: 112% !important;
+html.font-scale-lg,
+html.font-scale-lg body,
+html.font-scale-lg p,
+html.font-scale-lg span,
+html.font-scale-lg a,
+html.font-scale-lg li,
+html.font-scale-lg button {
+  font-size: 115% !important;
 }
 
-html.font-scale-xl {
-  font-size: 125% !important;
+html.font-scale-xl,
+html.font-scale-xl body,
+html.font-scale-xl p,
+html.font-scale-xl span,
+html.font-scale-xl a,
+html.font-scale-xl li,
+html.font-scale-xl button {
+  font-size: 130% !important;
 }
 
 /* Espaciado para Dislexia y Legibilidad */

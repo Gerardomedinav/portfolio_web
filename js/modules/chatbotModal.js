@@ -255,54 +255,73 @@ function handleSmartNavigationAndFill(userText, botReply) {
   // --- 0. COMANDOS DIRECTOS DE ACCESIBILIDAD EJECUTADOS POR GERASSIST ---
 
   // A. Control de Tamaño de Fuente / Letra
-  if (userLower.includes('agrandar') || userLower.includes('aumentar letra') || userLower.includes('letra mas grande') || userLower.includes('ampliar letra') || userLower.includes('letra grande')) {
+  if (userLower.includes('agrandar') || userLower.includes('aumentar') || userLower.includes('ampliar') || userLower.includes('letra grande') || userLower.includes('texto grande') || userLower.includes('fuente grande') || userLower.includes('mas grande') || userLower.includes('más grande')) {
     setFontScaleAction('increase');
-  } else if (userLower.includes('reducir letra') || userLower.includes('achicar letra') || userLower.includes('letra mas pequeña') || userLower.includes('letra chica')) {
+    return;
+  }
+  if (userLower.includes('reducir') || userLower.includes('achicar') || userLower.includes('letra chica') || userLower.includes('letra pequeña') || userLower.includes('texto pequeño') || userLower.includes('mas pequeña') || userLower.includes('más pequeña') || userLower.includes('mas chica') || userLower.includes('más chica')) {
     setFontScaleAction('decrease');
-  } else if (userLower.includes('restablecer letra') || userLower.includes('letra normal')) {
+    return;
+  }
+  if (userLower.includes('restablecer letra') || userLower.includes('letra normal') || userLower.includes('fuente normal')) {
     setFontScaleAction('reset');
+    return;
   }
 
   // B. Lector por Voz (TTS)
-  if (userLower.includes('detener voz') || userLower.includes('pausar voz') || userLower.includes('parar voz') || userLower.includes('callar voz') || userLower.includes('detener lectura')) {
+  if (userLower.includes('detener voz') || userLower.includes('pausar voz') || userLower.includes('parar voz') || userLower.includes('callar voz') || userLower.includes('detener lectura') || userLower.includes('parar lectura')) {
     triggerTTSAction('stop');
-  } else if (userLower.includes('leer web') || userLower.includes('leer pagina') || userLower.includes('leer la web') || userLower.includes('escuchar web') || userLower.includes('lector de voz') || userLower.includes('leer por voz') || userLower.includes('activar voz') || userLower.includes('reproducir voz')) {
+    return;
+  }
+  if (userLower.includes('leer') || userLower.includes('escuchar') || userLower.includes('voz') || userLower.includes('lector') || userLower.includes('hablar') || userLower.includes('leeme') || userLower.includes('léeme')) {
     triggerTTSAction('play');
+    return;
   }
 
   // C. Filtros de Color y Daltonismo
-  if (userLower.includes('monocromatico') || userLower.includes('monocromático') || userLower.includes('daltonismo') || userLower.includes('daltonico') || userLower.includes('daltónico') || userLower.includes('blanco y negro') || userLower.includes('escala de grises')) {
+  if (userLower.includes('monocrom') || userLower.includes('daltonis') || userLower.includes('daltónic') || userLower.includes('daltonic') || userLower.includes('grises') || userLower.includes('blanco y negro')) {
     setFilterAction('monochrome');
-  } else if (userLower.includes('alto contraste') || userLower.includes('contraste alto')) {
+    return;
+  }
+  if (userLower.includes('alto contraste') || userLower.includes('contraste alto')) {
     setFilterAction('contrast');
-  } else if (userLower.includes('invertir colores') || userLower.includes('inversion de color') || userLower.includes('invertir color')) {
+    return;
+  }
+  if (userLower.includes('invertir') || userLower.includes('inversion') || userLower.includes('inversión')) {
     setFilterAction('invert');
-  } else if (userLower.includes('colores normales') || userLower.includes('filtro normal') || userLower.includes('sin filtro')) {
+    return;
+  }
+  if (userLower.includes('sin filtro') || userLower.includes('filtro normal') || userLower.includes('colores normales') || userLower.includes('quitar filtro')) {
     setFilterAction('normal');
+    return;
   }
 
   // D. Espaciado para Dislexia
-  if (userLower.includes('dislexia') || userLower.includes('espaciado lectura') || userLower.includes('espaciado de lectura') || userLower.includes('modo dislexia')) {
+  if (userLower.includes('dislex') || userLower.includes('espaciado')) {
     toggleReadingSpacingAction(true);
+    return;
   }
 
   // E. Resaltar Enlaces
-  if (userLower.includes('resaltar enlaces') || userLower.includes('destacar enlaces') || userLower.includes('resaltar links') || userLower.includes('destacar links')) {
+  if (userLower.includes('resaltar') || userLower.includes('destacar link') || userLower.includes('destacar enlace')) {
     toggleLinkHighlightAction(true);
+    return;
   }
 
   // F. Pausar Animaciones (TDAH)
-  if (userLower.includes('pausar animaciones') || userLower.includes('desactivar animaciones') || userLower.includes('tdah') || userLower.includes('quitar animaciones')) {
+  if (userLower.includes('animacion') || userLower.includes('animación') || userLower.includes('tdah') || userLower.includes('detener movimiento')) {
     toggleAnimationsAction(true);
+    return;
   }
 
   // G. Restablecer Accesibilidad Completa
-  if (userLower.includes('restablecer accesibilidad') || userLower.includes('restablecer todo accesibilidad') || userLower.includes('limpiar accesibilidad') || userLower.includes('reiniciar accesibilidad')) {
+  if (userLower.includes('restablecer accesib') || userLower.includes('limpiar accesib') || userLower.includes('reiniciar accesib') || userLower.includes('restablecer todo')) {
     resetAllAccessibilityAction();
+    return;
   }
 
   // 1. Detección de Intención de Accesibilidad General -> Abrir panel de accesibilidad y cerrar modales
-  const accessKeywords = ['accesibil', 'wcag', 'lector', 'voz', 'daltonis', 'dislex', 'panel de accesib', 'widget'];
+  const accessKeywords = ['accesibil', 'wcag', 'panel de accesib', 'widget'];
   if (accessKeywords.some(kw => userLower.includes(kw))) {
     closeAllProjectModals();
     openAccessibilityPanel();
