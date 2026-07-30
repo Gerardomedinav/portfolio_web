@@ -2,7 +2,9 @@
  * Módulo de Servicio e Inteligencia para GerAssist (Búsqueda Local FAQ + Serverless AI API)
  */
 const STORAGE_BOT_SESSION_KEY = 'gerassist_session_count';
-const MAX_SESSION_MESSAGES = 10;
+const STORAGE_BOT_LIMIT_TIME_KEY = 'gerassist_session_limit_time';
+const MAX_SESSION_MESSAGES = 20;
+const COOLDOWN_MINUTES = 30;
 
 let botKnowledgeData = null;
 
@@ -45,8 +47,50 @@ export function incrementSessionMessageCount() {
   }
 }
 
+/**
+ * Calcula los minutos restantes para poder volver a chatear con GerAssist
+ */
+export function getRemainingCooldownMinutes() {
+  try {
+    const limitTime = localStorage.getItem(STORAGE_BOT_LIMIT_TIME_KEY);
+    if (!limitTime) return COOLDOWN_MINUTES;
+
+    const elapsedMs = Date.now() - parseInt(limitTime, 10);
+    const elapsedMinutes = elapsedMs / (1000 * 60);
+
+    if (elapsedMinutes >= COOLDOWN_MINUTES) {
+      resetSessionLimit();
+      return 0;
+    }
+
+    return Math.ceil(COOLDOWN_MINUTES - elapsedMinutes);
+  } catch (e) {
+    return COOLDOWN_MINUTES;
+  }
+}
+
+/**
+ * Reinicia los contadores de límite de sesión
+ */
+export function resetSessionLimit() {
+  try {
+    sessionStorage.removeItem(STORAGE_BOT_SESSION_KEY);
+    localStorage.removeItem(STORAGE_BOT_LIMIT_TIME_KEY);
+  } catch (e) {}
+}
+
 export function isSessionLimitReached() {
-  return getSessionMessageCount() >= MAX_SESSION_MESSAGES;
+  const count = getSessionMessageCount();
+  if (count < MAX_SESSION_MESSAGES) {
+    return false;
+  }
+
+  const remaining = getRemainingCooldownMinutes();
+  if (remaining <= 0) {
+    return false;
+  }
+
+  return true;
 }
 
 /**
@@ -77,10 +121,21 @@ export async function sendMessageToGerAssist(message, conversationHistory = []) 
     return { reply: localMatch, fromFaq: true };
   }
 
-  // 2. Verificar límite de mensajes por sesión
+  // 2. Verificar límite de mensajes por sesión (20 consultas)
   if (isSessionLimitReached()) {
+    if (!localStorage.getItem(STORAGE_BOT_LIMIT_TIME_KEY)) {
+      try {
+        localStorage.setItem(STORAGE_BOT_LIMIT_TIME_KEY, Date.now().toString());
+      } catch (e) {}
+    }
+
+    const remainingMinutes = getRemainingCooldownMinutes();
+    const timeMsg = remainingMinutes > 0
+      ? `en aproximadamente **${remainingMinutes} minuto${remainingMinutes === 1 ? '' : 's'}** (o al actualizar tu navegador)`
+      : `en breve`;
+
     return {
-      reply: `Ha alcanzado el límite de 10 preguntas por sesión para proteger los recursos. Por favor, póngase en contacto directamente con Gerardo Medina a través del **Formulario de Contacto**, [LinkedIn](https://www.linkedin.com/in/gerardomedinav/) o enviando un correo a **gerardomedinavv@gmail.com**. ¡Estará encantado de responderte!`,
+      reply: `Ha alcanzado el límite de **20 consultas** por sesión para optimizar el servicio y proteger los recursos. Podrás volver a interactuar con **GerAssist** ${timeMsg}.<br /><br />Mientras tanto, podés contactar a Gerardo Medina de forma inmediata a través del **Formulario de Contacto**, su perfil de **[LinkedIn](https://www.linkedin.com/in/gerardomedinav/)** o enviando un correo a **gerardomedinavv@gmail.com**. ¡Estará encantado de responderte!`,
       limitReached: true
     };
   }

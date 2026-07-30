@@ -20,7 +20,7 @@ El portafolio incluye a **`GerAssist`**, un chatbot con Inteligencia Artificial 
 * **Orquestación Multi-Proveedor de IA:** Capa de servicio abstracta capaz de intercalar en tiempo real entre modelos como **Anthropic Claude API**, **Groq (Llama 3)**, **OpenRouter** y **Google Gemini API**.
 * **Arquitectura Híbrida RAG-Lite & Optimización de Tokens:**
   - *Nivel 1 (0 Costo de Tokens):* Búsqueda en tiempo real sobre una base de conocimiento en JSON (`assets/json/bot_knowledge.json`) para responder FAQs de forma instantánea sin consumir créditos de API.
-  - *Nivel 2 (Rate Limiting y Anti-Abuso):* Control de sesión en `sessionStorage` que limita las consultas abiertas a un máximo de 10 por usuario, acotando el contexto inyectado al modelo.
+  - *Nivel 2 (Rate Limiting y Anti-Abuso):* Control de sesión en `sessionStorage` que limita las consultas abiertas a un máximo de 20 por usuario (con temporizador de reactivación de 30 min), acotando el contexto inyectado al modelo.
   - *Nivel 3 (Fallback Directo a Contacto):* Redirección amigable con botones de acción directa hacia el **Formulario de Contacto**, **LinkedIn** y **Gmail**.
 * **Protección de Credenciales (Serverless Edge in `/api/chat.js`):** La API Key se ejecuta únicamente del lado del servidor en Vercel, garantizando cero exposición de llaves en el navegador o repositorio.
 
