@@ -48,6 +48,38 @@
     {
       "keywords": ["cv", "curriculum", "resume", "descargar cv", "ver cv", "pdf", "hoja de vida"],
       "answer": "¡Excelente! Podés previsualizar o descargar el **Currículum Vitae (CV)** oficial de Gerardo Medina utilizando directamente el **botón de descarga ('Currículum' / 'Resume')** ubicado en la sección de Inicio (Banner principal) de este portafolio web, o accediendo a los siguientes enlaces en PDF:\n\n* 📄 **[Descargar CV en Español (PDF)](./assets/CV_Gerardo_Medina_Villalba_español.pdf)**\n* 📄 **[Download English Resume (PDF)](./assets/CV_Gerardo_Medina_Villalba_EN.pdf)**\n\n¿Te gustaría coordinar una reunión o que te ayude a enviarle una consulta por el formulario de contacto?"
+    },
+    {
+      "keywords": ["agrandar letra", "aumentar letra", "letra mas grande", "agrandar fuente", "agrandar texto", "aumentar texto"],
+      "answer": "🔍 **¡Listo! He agrandado el tamaño de la letra** en todo el portafolio para facilitar tu lectura. Si querés que aplique otro ajuste (como leer la web por voz o activar un filtro de daltonismo), solo decídmelo."
+    },
+    {
+      "keywords": ["reducir letra", "achicar letra", "letra mas pequeña", "reducir fuente", "reducir texto", "letra chica"],
+      "answer": "🔍 **¡Hecho! He reducido el tamaño de la letra** en el sitio. ¿Deseás realizar algún otro ajuste de accesibilidad?"
+    },
+    {
+      "keywords": ["leer web", "leer pagina", "leer la web", "escuchar web", "lector de voz", "leer por voz", "activar voz", "reproducir voz"],
+      "answer": "🔊 **¡Lector por Voz activado!** Inicié la lectura en voz alta del contenido de la página para vos. Podés pausarlo o detenerlo en cualquier momento diciéndome 'detener voz' o mediante el widget de accesibilidad."
+    },
+    {
+      "keywords": ["detener voz", "pausar voz", "parar voz", "callar voz", "detener lectura"],
+      "answer": "🛑 **Lectura por voz detenida.** Pausé la reproducción del texto. ¿En qué más te puedo ayudar?"
+    },
+    {
+      "keywords": ["monocromatico", "monocromático", "daltonismo", "daltonico", "daltónico", "blanco y negro", "escala de grises"],
+      "answer": "👁️ **Filtro Monocromático (Daltonismo) activado.** He aplicado la escala de grises para optimizar la distinción visual. Podés cambiar a Alto Contraste, Invertir o Volver a Normal cuando quieras."
+    },
+    {
+      "keywords": ["alto contraste", "contraste alto"],
+      "answer": "⚡ **Modo Alto Contraste activado.** Aumenté la nitidez y contraste visual de todos los elementos."
+    },
+    {
+      "keywords": ["invertir colores", "inversion de color", "invertir color"],
+      "answer": "🔄 **Modo Inversión de Colores activado.** He invertido la paleta cromática de la interfaz."
+    },
+    {
+      "keywords": ["restablecer accesibilidad", "restablecer todo accesibilidad", "limpiar accesibilidad", "reiniciar accesibilidad"],
+      "answer": "🔄 **Ajustes de accesibilidad restablecidos.** Restauré el tamaño de letra, colores y filtros a su estado original."
     }
   ],
   "projects": [

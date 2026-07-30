@@ -5,6 +5,15 @@ import { sendMessageToGerAssist } from './botService.js';
 import { getLang } from './i18n.js';
 import { openProjectModalByName, closeAllProjectModals } from './projects.js';
 import { openAccessibilityPanel, closeAccessibilityPanel } from './navigation.js';
+import { 
+  triggerTTSAction, 
+  setFilterAction, 
+  setFontScaleAction, 
+  toggleReadingSpacingAction, 
+  toggleLinkHighlightAction, 
+  toggleAnimationsAction, 
+  resetAllAccessibilityAction 
+} from './accessibility.js';
 
 let widgetContainer = null;
 let conversationHistory = [];
@@ -53,19 +62,56 @@ export function renderChatbotWidget() {
           <div class="bot-msg-avatar"><i class="bx bx-bot"></i></div>
           <div class="bot-msg-bubble">
             ${lang === 'es' 
-              ? '¡Hola! 👋 Qué gusto saludarte. Soy <strong>GerAssist</strong>, el asistente personal de <strong>Gerardo Medina</strong>.<br /><br />Estoy aquí para contarte sobre su perfil como <strong>Desarrollador Full Stack & Analista de Datos</strong>, sus estudios en la <strong>UTN</strong> y el <strong>impacto real</strong> de sus proyectos. ¿Sobre qué te gustaría saber más?' 
-              : "Hi! 👋 Great to meet you. I am <strong>GerAssist</strong>, Gerardo Medina's AI assistant.<br /><br />I am here to tell you about his <strong>Full Stack & Data Analyst</strong> background, his <strong>UTN</strong> studies, and the <strong>real impact</strong> of his projects. What would you like to know more about?"}
+              ? '¡Hola! 👋 Qué gusto saludarte. Soy <strong>GerAssist</strong>, el asistente personal de <strong>Gerardo Medina</strong>.<br /><br />Estoy aquí para contarte sobre su perfil como <strong>Desarrollador Full Stack & Analista de Datos</strong>, sus estudios en la <strong>UTN</strong> y el <strong>impacto real</strong> de sus proyectos.<br /><br />💡 <em>¡También puedo ajustar la accesibilidad de la web por vos! Decime "agrandar letra", "leer la web", "daltonismo", "alto contraste" o "restablecer accesibilidad".</em>' 
+              : "Hi! 👋 Great to meet you. I am <strong>GerAssist</strong>, Gerardo Medina's AI assistant.<br /><br />I am here to tell you about his <strong>Full Stack & Data Analyst</strong> background, his <strong>UTN</strong> studies, and the <strong>real impact</strong> of his projects.<br /><br />💡 <em>I can also adjust the accessibility of the site for you! Ask me to 'increase font size', 'read out loud', 'monochrome filter', 'high contrast', or 'reset accessibility'.</em>"}
           </div>
         </div>
 
         <!-- Botones de sugerencias rápidas -->
         <div class="bot-quick-pills">
           <button class="bot-pill" data-query="¿Quién es Gerardo y cuál es su perfil?">👤 Perfil & UTN</button>
-          <button class="bot-pill" data-query="¿Qué enfoque tiene en Análisis de Datos y Accesibilidad?">📊 Datos & Accesibilidad</button>
-          <button class="bot-pill" data-query="¿Cuáles son los proyectos de Gerardo?">💻 Proyectos & Impacto</button>
-          <button class="bot-pill" data-query="¿Cómo puedo contactar a Gerardo?">📩 Contactar a Gerardo</button>
+          <button class="bot-pill" data-query="Agrandar letra de la web">🔍 Agrandar Letra</button>
+          <button class="bot-pill" data-query="Leer la web por voz">🔊 Leer por Voz</button>
+          <button class="bot-pill" data-query="Activar filtro monocromático (Daltonismo)">👁️ Daltonismo</button>
         </div>
       </div>
+
+      <!-- Indicador de Escritura -->
+      <div id="gerassist-typing" class="bot-typing-indicator" style="display:none;">
+        <div class="bot-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <span class="bot-typing-text">GerAssist está pensando...</span>
+      </div>
+
+      <!-- Formulario de Entrada -->
+      <form id="gerassist-form" class="bot-input-form">
+        <input 
+          type="text" 
+          id="gerassist-input" 
+          placeholder="${lang === 'es' ? 'Escribe tu mensaje o comando de accesibilidad...' : 'Type your message or accessibility command...'}" 
+          autocomplete="off" 
+          required 
+        />
+        <button type="submit" class="bot-send-btn" aria-label="Enviar mensaje">
+          <i class="bx bx-paper-plane"></i>
+        </button>
+      </form>
+
+      <!-- Footer CTA Directo -->
+      <div class="bot-cta-footer">
+        <button type="button" class="bot-cta-link" id="bot-cta-contact-form">
+          <i class="bx bx-envelope"></i> Formulario
+        </button>
+        <a href="https://www.linkedin.com/in/gerardomedinav/" target="_blank" rel="noopener noreferrer" class="bot-cta-link">
+          <i class="bx bxl-linkedin"></i> LinkedIn
+        </a>
+        <a href="mailto:gerardomedinavv@gmail.com" target="_blank" rel="noopener noreferrer" class="bot-cta-link">
+          <i class="bx bxl-gmail"></i> Gmail
+        </a>
+      </div>
+    </div>
+  `;
 
       <!-- Indicador de Escritura -->
       <div id="gerassist-typing" class="bot-typing-indicator" style="display:none;">
@@ -243,7 +289,56 @@ function handleSmartNavigationAndFill(userText, botReply) {
   const userLower = (userText || '').toLowerCase().trim();
   const botLower = (botReply || '').toLowerCase().trim();
 
-  // 1. Detección de Intención de Accesibilidad -> Abrir panel de accesibilidad y cerrar modales de proyectos
+  // --- 0. COMANDOS DIRECTOS DE ACCESIBILIDAD EJECUTADOS POR GERASSIST ---
+
+  // A. Control de Tamaño de Fuente / Letra
+  if (userLower.includes('agrandar') || userLower.includes('aumentar letra') || userLower.includes('letra mas grande') || userLower.includes('ampliar letra') || userLower.includes('letra grande')) {
+    setFontScaleAction('increase');
+  } else if (userLower.includes('reducir letra') || userLower.includes('achicar letra') || userLower.includes('letra mas pequeña') || userLower.includes('letra chica')) {
+    setFontScaleAction('decrease');
+  } else if (userLower.includes('restablecer letra') || userLower.includes('letra normal')) {
+    setFontScaleAction('reset');
+  }
+
+  // B. Lector por Voz (TTS)
+  if (userLower.includes('detener voz') || userLower.includes('pausar voz') || userLower.includes('parar voz') || userLower.includes('callar voz') || userLower.includes('detener lectura')) {
+    triggerTTSAction('stop');
+  } else if (userLower.includes('leer web') || userLower.includes('leer pagina') || userLower.includes('leer la web') || userLower.includes('escuchar web') || userLower.includes('lector de voz') || userLower.includes('leer por voz') || userLower.includes('activar voz') || userLower.includes('reproducir voz')) {
+    triggerTTSAction('play');
+  }
+
+  // C. Filtros de Color y Daltonismo
+  if (userLower.includes('monocromatico') || userLower.includes('monocromático') || userLower.includes('daltonismo') || userLower.includes('daltonico') || userLower.includes('daltónico') || userLower.includes('blanco y negro') || userLower.includes('escala de grises')) {
+    setFilterAction('monochrome');
+  } else if (userLower.includes('alto contraste') || userLower.includes('contraste alto')) {
+    setFilterAction('contrast');
+  } else if (userLower.includes('invertir colores') || userLower.includes('inversion de color') || userLower.includes('invertir color')) {
+    setFilterAction('invert');
+  } else if (userLower.includes('colores normales') || userLower.includes('filtro normal') || userLower.includes('sin filtro')) {
+    setFilterAction('normal');
+  }
+
+  // D. Espaciado para Dislexia
+  if (userLower.includes('dislexia') || userLower.includes('espaciado lectura') || userLower.includes('espaciado de lectura') || userLower.includes('modo dislexia')) {
+    toggleReadingSpacingAction(true);
+  }
+
+  // E. Resaltar Enlaces
+  if (userLower.includes('resaltar enlaces') || userLower.includes('destacar enlaces') || userLower.includes('resaltar links') || userLower.includes('destacar links')) {
+    toggleLinkHighlightAction(true);
+  }
+
+  // F. Pausar Animaciones (TDAH)
+  if (userLower.includes('pausar animaciones') || userLower.includes('desactivar animaciones') || userLower.includes('tdah') || userLower.includes('quitar animaciones')) {
+    toggleAnimationsAction(true);
+  }
+
+  // G. Restablecer Accesibilidad Completa
+  if (userLower.includes('restablecer accesibilidad') || userLower.includes('restablecer todo accesibilidad') || userLower.includes('limpiar accesibilidad') || userLower.includes('reiniciar accesibilidad')) {
+    resetAllAccessibilityAction();
+  }
+
+  // 1. Detección de Intención de Accesibilidad General -> Abrir panel de accesibilidad y cerrar modales
   const accessKeywords = ['accesibil', 'wcag', 'lector', 'voz', 'daltonis', 'dislex', 'panel de accesib', 'widget'];
   if (accessKeywords.some(kw => userLower.includes(kw))) {
     closeAllProjectModals();
