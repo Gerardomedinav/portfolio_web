@@ -53,7 +53,8 @@ export function renderChatbotWidget() {
         </div>
         <div class="bot-header-actions">
           <button id="gerassist-auto-tts-toggle" class="bot-header-action-btn" aria-label="Lectura por voz de respuestas" title="Activar/desactivar voz automática de GerAssist">
-            <i class="bx bx-volume-full"></i>
+            <i class="bx bx-volume-mute"></i>
+            <span class="bot-tts-status-text">${lang === 'es' ? 'Voz Off' : 'Voice Off'}</span>
           </button>
           <button id="gerassist-close-btn" class="bot-close-btn" aria-label="Cerrar ventana de chat">
             <i class="bx bx-x"></i>
@@ -147,9 +148,11 @@ export function renderChatbotWidget() {
       isAutoSpeechActive = !isAutoSpeechActive;
       autoTtsToggleBtn.classList.toggle('active', isAutoSpeechActive);
       const icon = autoTtsToggleBtn.querySelector('i');
+      const textSpan = autoTtsToggleBtn.querySelector('.bot-tts-status-text');
 
       if (isAutoSpeechActive) {
         if (icon) icon.className = 'bx bx-volume-full';
+        if (textSpan) textSpan.textContent = lang === 'es' ? 'Voz On' : 'Voice On';
         autoTtsToggleBtn.setAttribute('title', lang === 'es' ? 'Voz de GerAssist activada (Haz clic para silenciar)' : 'GerAssist voice enabled (Click to mute)');
         
         // Reproducir el último mensaje de GerAssist si existe
@@ -163,6 +166,7 @@ export function renderChatbotWidget() {
         }
       } else {
         if (icon) icon.className = 'bx bx-volume-mute';
+        if (textSpan) textSpan.textContent = lang === 'es' ? 'Voz Off' : 'Voice Off';
         autoTtsToggleBtn.setAttribute('title', lang === 'es' ? 'Voz de GerAssist desactivada (Haz clic para activar)' : 'GerAssist voice disabled (Click to enable)');
         stopBotMessage();
       }
@@ -272,8 +276,6 @@ export function renderChatbotWidget() {
     } else {
       appendMessage(messagesContainer, 'bot', 'Disculpa, no pude procesar esa consulta. Puedes escribir a Gerardo directamente desde la sección Contacto.');
     }
-
-    scrollToBottom(messagesContainer);
   });
 }
 
@@ -303,6 +305,17 @@ function appendMessage(container, sender, text) {
   }
 
   container.appendChild(wrapper);
+
+  // Si el mensaje es del bot, desplazarse suavemente al INICIO (parte superior) del mensaje
+  if (sender === 'bot') {
+    setTimeout(() => {
+      wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 60);
+  } else {
+    scrollToBottom(container);
+  }
+
+  return wrapper;
 }
 
 export function stopBotMessage() {
