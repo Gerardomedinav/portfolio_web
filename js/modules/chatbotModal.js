@@ -290,18 +290,16 @@ function appendMessage(container, sender, text) {
 }
 
 export function speakBotMessage(rawText, speakBtn = null) {
-  if (typeof window === 'undefined' || !window.speechSynthesis) {
-    alert('Tu navegador no soporta la reproducción de voz en voz alta.');
-    return;
-  }
+  if (typeof window === 'undefined' || !window.speechSynthesis) return;
 
   const synth = window.speechSynthesis;
-  try {
-    synth.cancel();
-    if (synth.paused) synth.resume();
-  } catch (e) {
-    console.warn('Error en cancel/resume de synth:', e);
+
+  // Reactivar síntesis de voz si el navegador la tiene en pausa
+  if (synth.paused) {
+    try { synth.resume(); } catch (e) {}
   }
+
+  synth.cancel();
 
   const cleanText = String(rawText || '')
     .replace(/<[^>]*>/g, '')
@@ -312,51 +310,46 @@ export function speakBotMessage(rawText, speakBtn = null) {
 
   if (!cleanText) return;
 
-  setTimeout(() => {
-    try {
-      const utterance = new SpeechSynthesisUtterance(cleanText);
-      const lang = getLang();
-      utterance.lang = lang === 'es' ? 'es-ES' : 'en-US';
-      utterance.rate = 1.0;
-      utterance.pitch = 1.0;
-      utterance.volume = 1.0;
+  const utterance = new SpeechSynthesisUtterance(cleanText);
+  const lang = getLang();
+  utterance.lang = lang === 'es' ? 'es-ES' : 'en-US';
+  utterance.rate = 1.0;
+  utterance.pitch = 1.0;
+  utterance.volume = 1.0;
 
-      const voices = synth.getVoices();
-      if (voices && voices.length > 0) {
-        const targetLang = lang === 'es' ? 'es' : 'en';
-        const matchedVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith(targetLang));
-        if (matchedVoice) {
-          utterance.voice = matchedVoice;
-        }
-      }
+  const voices = synth.getVoices();
+  if (voices && voices.length > 0) {
+    const targetLang = lang === 'es' ? 'es' : 'en';
+    const matched = voices.find(v => v.lang && v.lang.toLowerCase().startsWith(targetLang));
+    if (matched) utterance.voice = matched;
+  }
 
-      document.querySelectorAll('.bot-speak-btn').forEach(b => b.classList.remove('speaking'));
+  document.querySelectorAll('.bot-speak-btn').forEach(b => b.classList.remove('speaking'));
 
-      if (speakBtn) {
-        speakBtn.classList.add('speaking');
-        const iconEl = speakBtn.querySelector('i');
-        const textSpan = speakBtn.querySelector('span');
-        if (iconEl) iconEl.className = 'bx bx-volume-full bx-tada';
-        if (textSpan) textSpan.textContent = lang === 'es' ? 'Hablando...' : 'Speaking...';
+  if (speakBtn) {
+    speakBtn.classList.add('speaking');
+    const iconEl = speakBtn.querySelector('i');
+    const textSpan = speakBtn.querySelector('span');
+    if (iconEl) iconEl.className = 'bx bx-volume-full bx-tada';
+    if (textSpan) textSpan.textContent = lang === 'es' ? 'Hablando...' : 'Speaking...';
 
-        utterance.onend = () => {
-          speakBtn.classList.remove('speaking');
-          if (iconEl) iconEl.className = 'bx bx-volume-full';
-          if (textSpan) textSpan.textContent = lang === 'es' ? 'Escuchar' : 'Listen';
-        };
-        utterance.onerror = (err) => {
-          console.warn('Error en emisión de voz:', err);
-          speakBtn.classList.remove('speaking');
-          if (iconEl) iconEl.className = 'bx bx-volume-full';
-          if (textSpan) textSpan.textContent = lang === 'es' ? 'Escuchar' : 'Listen';
-        };
-      }
+    utterance.onstart = () => {
+      speakBtn.classList.add('speaking');
+    };
+    utterance.onend = () => {
+      speakBtn.classList.remove('speaking');
+      if (iconEl) iconEl.className = 'bx bx-volume-full';
+      if (textSpan) textSpan.textContent = lang === 'es' ? 'Escuchar' : 'Listen';
+    };
+    utterance.onerror = (err) => {
+      console.warn('Error en emisión de voz:', err);
+      speakBtn.classList.remove('speaking');
+      if (iconEl) iconEl.className = 'bx bx-volume-full';
+      if (textSpan) textSpan.textContent = lang === 'es' ? 'Escuchar' : 'Listen';
+    };
+  }
 
-      synth.speak(utterance);
-    } catch (err) {
-      console.error('Error al reproducir audio:', err);
-    }
-  }, 60);
+  synth.speak(utterance);
 }
 
 function setupSpeechRecognition(inputEl, micBtn) {
@@ -384,18 +377,28 @@ function setupSpeechRecognition(inputEl, micBtn) {
     inputEl.placeholder = lang === 'es' ? 'Escribe o dicta tu mensaje...' : 'Type or dictate your message...';
   }
 
-  micBtn.addEventListener('click', (e) => {
+  micBtn.addEventListener('click', async (e) => {
     e.preventDefault();
     e.stopPropagation();
 
     if (isListening && activeRecognition) {
       try {
         activeRecognition.stop();
-      } catch (err) {
-        console.warn('Error al detener dictado:', err);
-      }
+      } catch (err) {}
       stopMic();
       return;
+    }
+
+    let audioStream = null;
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      try {
+        audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      } catch (err) {
+        console.warn('Error accediendo al micrófono:', err);
+        inputEl.placeholder = getLang() === 'es' ? 'Permiso de micrófono requerido 🔒' : 'Microphone permission required 🔒';
+        stopMic();
+        return;
+      }
     }
 
     try {
@@ -422,6 +425,9 @@ function setupSpeechRecognition(inputEl, micBtn) {
       activeRecognition.onerror = (event) => {
         console.warn('Error en SpeechRecognition:', event.error);
         stopMic();
+        if (audioStream) {
+          audioStream.getTracks().forEach(track => track.stop());
+        }
         if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
           inputEl.placeholder = getLang() === 'es' ? 'Micrófono denegado en sistema/navegador 🔒' : 'Microphone blocked by system/browser 🔒';
         } else if (event.error === 'network') {
@@ -431,6 +437,9 @@ function setupSpeechRecognition(inputEl, micBtn) {
 
       activeRecognition.onend = () => {
         stopMic();
+        if (audioStream) {
+          audioStream.getTracks().forEach(track => track.stop());
+        }
         if (inputEl.value.trim()) {
           inputEl.focus();
         }
@@ -439,6 +448,9 @@ function setupSpeechRecognition(inputEl, micBtn) {
       activeRecognition.start();
     } catch (e) {
       console.warn('Error al iniciar el reconocimiento de voz:', e);
+      if (audioStream) {
+        audioStream.getTracks().forEach(track => track.stop());
+      }
       stopMic();
     }
   });
