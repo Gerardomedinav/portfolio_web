@@ -1494,10 +1494,134 @@ body.dark .bot-input-form input {
   font-size: 1.1rem;
   cursor: pointer;
   transition: transform 0.2s ease;
+  flex-shrink: 0;
 }
 
 .bot-send-btn:hover {
   transform: scale(1.08);
+}
+
+/* Acciones de Voz en Header de GerAssist */
+.bot-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.bot-header-action-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.bot-header-action-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.bot-header-action-btn.active {
+  color: #38bdf8 !important;
+  background: rgba(56, 189, 248, 0.2);
+}
+
+/* Botón de Micrófono (Entrada de Voz) */
+.bot-mic-btn {
+  background: transparent;
+  color: var(--first-color);
+  border: 1px solid #cbd5e1;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  margin-right: 4px;
+}
+
+body.dark .bot-mic-btn {
+  border-color: #334155;
+  color: #38bdf8;
+}
+
+.bot-mic-btn:hover {
+  background: rgba(56, 189, 248, 0.15);
+  transform: scale(1.08);
+}
+
+.bot-mic-btn.listening {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+  border-color: #ef4444 !important;
+  animation: micPulse 1.2s infinite ease-in-out;
+}
+
+@keyframes micPulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+  50% { transform: scale(1.15); box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+/* Botón de Escuchar Respuesta (Salida de Voz) */
+.bot-msg-actions {
+  display: flex;
+  align-items: center;
+  margin-top: 0.4rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+body.dark .bot-msg-actions {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+.bot-speak-btn {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  font-size: 0.78rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+body.dark .bot-speak-btn {
+  color: #94a3b8;
+}
+
+.bot-speak-btn:hover {
+  color: var(--first-color);
+  background: rgba(56, 189, 248, 0.12);
+}
+
+.bot-speak-btn.speaking {
+  color: #ef4444 !important;
+  font-weight: 600;
+}
+
+.bot-speak-btn.speaking i {
+  animation: speakIconPulse 0.8s infinite alternate;
+}
+
+@keyframes speakIconPulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.25); }
 }
 
 /* Footer CTA Directo */

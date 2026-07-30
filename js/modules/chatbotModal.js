@@ -51,9 +51,14 @@ export function renderChatbotWidget() {
             <p class="bot-subtitle">${lang === 'es' ? 'Asistente de Gerardo Medina' : "Gerardo Medina's AI Assistant"}</p>
           </div>
         </div>
-        <button id="gerassist-close-btn" class="bot-close-btn" aria-label="Cerrar ventana de chat">
-          <i class="bx bx-x"></i>
-        </button>
+        <div class="bot-header-actions">
+          <button id="gerassist-auto-tts-toggle" class="bot-header-action-btn" aria-label="Lectura por voz de respuestas" title="Activar/desactivar voz automática de GerAssist">
+            <i class="bx bx-volume-full"></i>
+          </button>
+          <button id="gerassist-close-btn" class="bot-close-btn" aria-label="Cerrar ventana de chat">
+            <i class="bx bx-x"></i>
+          </button>
+        </div>
       </div>
 
       <!-- Área de Mensajes -->
@@ -63,8 +68,13 @@ export function renderChatbotWidget() {
           <div class="bot-msg-avatar"><i class="bx bx-bot"></i></div>
           <div class="bot-msg-bubble">
             ${lang === 'es' 
-              ? '¡Hola! 👋 Qué gusto saludarte. Soy <strong>GerAssist</strong>, el asistente personal de <strong>Gerardo Medina</strong>.<br /><br />Estoy aquí para contarte sobre su perfil como <strong>Desarrollador Full Stack & Analista de Datos</strong>, sus estudios en la <strong>UTN</strong> y el <strong>impacto real</strong> de sus proyectos.<br /><br />💡 <em>¡También puedo ajustar la accesibilidad de la web por vos! Decime "agrandar letra", "leer la web", "daltonismo", "alto contraste" o "restablecer accesibilidad".</em>' 
-              : "Hi! 👋 Great to meet you. I am <strong>GerAssist</strong>, Gerardo Medina's AI assistant.<br /><br />I am here to tell you about his <strong>Full Stack & Data Analyst</strong> background, his <strong>UTN</strong> studies, and the <strong>real impact</strong> of his projects.<br /><br />💡 <em>I can also adjust the accessibility of the site for you! Ask me to 'increase font size', 'read out loud', 'monochrome filter', 'high contrast', or 'reset accessibility'.</em>"}
+              ? '¡Hola! 👋 Qué gusto saludarte. Soy <strong>GerAssist</strong>, el asistente personal de <strong>Gerardo Medina</strong>.<br /><br />Estoy aquí para contarte sobre su perfil como <strong>Desarrollador Full Stack & Analista de Datos</strong>, sus estudios en la <strong>UTN</strong> y el <strong>impacto real</strong> de sus proyectos.<br /><br />💡 <em>¡Podés dictarme tus consultas por voz presionando el micrófono 🎙️ o pedirme que ajuste la accesibilidad de la web!</em>' 
+              : "Hi! 👋 Great to meet you. I am <strong>GerAssist</strong>, Gerardo Medina's AI assistant.<br /><br />I am here to tell you about his <strong>Full Stack & Data Analyst</strong> background, his <strong>UTN</strong> studies, and the <strong>real impact</strong> of his projects.<br /><br />💡 <em>You can dictate your questions using the microphone 🎙️ or ask me to adjust site accessibility!</em>"}
+            <div class="bot-msg-actions">
+              <button type="button" class="bot-speak-btn" aria-label="Escuchar mensaje en voz alta" title="Escuchar respuesta">
+                <i class="bx bx-volume-full"></i> <span>${lang === 'es' ? 'Escuchar' : 'Listen'}</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -90,10 +100,13 @@ export function renderChatbotWidget() {
         <input 
           type="text" 
           id="gerassist-input" 
-          placeholder="${lang === 'es' ? 'Escribe tu mensaje o comando de accesibilidad...' : 'Type your message or accessibility command...'}" 
+          placeholder="${lang === 'es' ? 'Escribe o dicta tu mensaje aquí...' : 'Type or dictate your message here...'}" 
           autocomplete="off" 
           required 
         />
+        <button type="button" id="gerassist-mic-btn" class="bot-mic-btn" aria-label="Dictar mensaje por voz (Micrófono)" title="Dictar por voz (Micrófono)">
+          <i class="bx bx-microphone"></i>
+        </button>
         <button type="submit" class="bot-send-btn" aria-label="Enviar mensaje">
           <i class="bx bx-paper-plane"></i>
         </button>
@@ -119,11 +132,31 @@ export function renderChatbotWidget() {
   const toggleBtn = widgetContainer.querySelector('#gerassist-toggle-btn');
   const windowEl = widgetContainer.querySelector('#gerassist-window');
   const closeBtn = widgetContainer.querySelector('#gerassist-close-btn');
+  const autoTtsToggleBtn = widgetContainer.querySelector('#gerassist-auto-tts-toggle');
   const chatForm = widgetContainer.querySelector('#gerassist-form');
   const inputEl = widgetContainer.querySelector('#gerassist-input');
+  const micBtn = widgetContainer.querySelector('#gerassist-mic-btn');
   const messagesContainer = widgetContainer.querySelector('#gerassist-messages');
   const typingEl = widgetContainer.querySelector('#gerassist-typing');
   const ctaContactForm = widgetContainer.querySelector('#bot-cta-contact-form');
+
+  let isAutoSpeechActive = false;
+
+  if (autoTtsToggleBtn) {
+    autoTtsToggleBtn.addEventListener('click', () => {
+      isAutoSpeechActive = !isAutoSpeechActive;
+      autoTtsToggleBtn.classList.toggle('active', isAutoSpeechActive);
+      const icon = autoTtsToggleBtn.querySelector('i');
+      if (icon) {
+        icon.className = isAutoSpeechActive ? 'bx bx-volume-full' : 'bx bx-volume-mute';
+      }
+    });
+  }
+
+  // Inicializar micrófono y dictado por voz
+  if (inputEl && micBtn) {
+    setupSpeechRecognition(inputEl, micBtn);
+  }
 
   if (ctaContactForm) {
     ctaContactForm.addEventListener('click', (e) => {
@@ -145,8 +178,20 @@ export function renderChatbotWidget() {
     windowEl.hidden = true;
   });
 
-  // Escuchador de clics en enlaces dentro de la conversación
+  // Escuchador de clics en enlaces y reproductor de voz dentro de la conversación
   messagesContainer.addEventListener('click', (e) => {
+    const speakBtn = e.target.closest('.bot-speak-btn');
+    if (speakBtn) {
+      const bubble = speakBtn.closest('.bot-msg-bubble');
+      if (bubble) {
+        const clone = bubble.cloneNode(true);
+        const actionsInClone = clone.querySelector('.bot-msg-actions');
+        if (actionsInClone) actionsInClone.remove();
+        speakBotMessage(clone.innerText, speakBtn);
+      }
+      return;
+    }
+
     const targetLink = e.target.closest('a');
     if (targetLink) {
       const href = targetLink.getAttribute('href') || '';
@@ -201,6 +246,11 @@ export function renderChatbotWidget() {
       appendMessage(messagesContainer, 'bot', result.reply);
       conversationHistory.push({ role: 'assistant', content: result.reply });
 
+      // Reproducción automática de voz si está activada
+      if (isAutoSpeechActive) {
+        speakBotMessage(result.reply);
+      }
+
       // 3. Ejecutar Navegación Inteligente, Accesibilidad y Pre-rellenado si aplica
       handleSmartNavigationAndFill(userText, result.reply);
     } else {
@@ -216,11 +266,19 @@ function appendMessage(container, sender, text) {
   wrapper.className = `bot-message-wrapper bot-message--${sender}`;
 
   const formattedText = formatMarkdownText(text);
+  const lang = getLang();
 
   if (sender === 'bot') {
     wrapper.innerHTML = `
       <div class="bot-msg-avatar"><i class="bx bx-bot"></i></div>
-      <div class="bot-msg-bubble">${formattedText}</div>
+      <div class="bot-msg-bubble">
+        ${formattedText}
+        <div class="bot-msg-actions">
+          <button type="button" class="bot-speak-btn" aria-label="Escuchar respuesta en voz alta" title="Escuchar respuesta">
+            <i class="bx bx-volume-full"></i> <span>${lang === 'es' ? 'Escuchar' : 'Listen'}</span>
+          </button>
+        </div>
+      </div>
     `;
   } else {
     wrapper.innerHTML = `
@@ -229,6 +287,106 @@ function appendMessage(container, sender, text) {
   }
 
   container.appendChild(wrapper);
+}
+
+let botSynth = window.speechSynthesis;
+
+export function speakBotMessage(rawText, speakBtn = null) {
+  if (!botSynth) return;
+
+  if (botSynth.speaking) {
+    botSynth.cancel();
+    if (speakBtn && speakBtn.classList.contains('speaking')) {
+      speakBtn.classList.remove('speaking');
+      return;
+    }
+  }
+
+  const cleanText = String(rawText || '')
+    .replace(/<[^>]*>/g, '')
+    .replace(/\*\*/g, '')
+    .replace(/\*/g, '')
+    .replace(/\[(.*?)\]\(.*?\)/g, '$1')
+    .trim();
+
+  if (!cleanText) return;
+
+  const utterance = new SpeechSynthesisUtterance(cleanText);
+  const lang = getLang();
+  utterance.lang = lang === 'es' ? 'es-ES' : 'en-US';
+  utterance.rate = 0.95;
+
+  document.querySelectorAll('.bot-speak-btn').forEach(b => b.classList.remove('speaking'));
+
+  if (speakBtn) {
+    speakBtn.classList.add('speaking');
+    utterance.onend = () => speakBtn.classList.remove('speaking');
+    utterance.onerror = () => speakBtn.classList.remove('speaking');
+  }
+
+  botSynth.speak(utterance);
+}
+
+function setupSpeechRecognition(inputEl, micBtn) {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if (!SpeechRecognition) {
+    micBtn.style.display = 'none';
+    return;
+  }
+
+  const recognition = new SpeechRecognition();
+  recognition.continuous = false;
+  recognition.interimResults = true;
+  let isListening = false;
+
+  recognition.onstart = () => {
+    isListening = true;
+    micBtn.classList.add('listening');
+    micBtn.setAttribute('title', 'Escuchando... Haz clic para detener');
+    inputEl.placeholder = getLang() === 'es' ? 'Escuchando... Hablá ahora 🎙️' : 'Listening... Speak now 🎙️';
+  };
+
+  recognition.onresult = (event) => {
+    let transcript = '';
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      transcript += event.results[i][0].transcript;
+    }
+    inputEl.value = transcript;
+  };
+
+  recognition.onerror = (event) => {
+    console.warn('Error en micrófono:', event.error);
+    stopMic();
+  };
+
+  recognition.onend = () => {
+    stopMic();
+    if (inputEl.value.trim()) {
+      inputEl.focus();
+    }
+  };
+
+  function stopMic() {
+    isListening = false;
+    micBtn.classList.remove('listening');
+    micBtn.setAttribute('title', 'Dictar por voz (Micrófono)');
+    const lang = getLang();
+    inputEl.placeholder = lang === 'es' ? 'Escribe o dicta tu mensaje...' : 'Type or dictate your message...';
+  }
+
+  micBtn.addEventListener('click', () => {
+    if (isListening) {
+      recognition.stop();
+    } else {
+      recognition.lang = getLang() === 'es' ? 'es-ES' : 'en-US';
+      try {
+        recognition.start();
+      } catch (e) {
+        console.warn('Error al activar dictado por voz:', e);
+      }
+    }
+  });
 }
 
 function formatMarkdownText(str) {
