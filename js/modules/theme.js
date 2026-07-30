@@ -7,8 +7,7 @@ export function initTheme() {
   const themeIcon = document.getElementById('theme-icon');
   const widgetIcon = document.getElementById('widget-theme-icon');
 
-  const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const savedTheme = localStorage.getItem('theme') || (userPrefersDark ? 'dark' : 'light');
+  const savedTheme = localStorage.getItem('theme') || 'dark';
 
   // Aplicar estado inicial
   if (savedTheme === 'dark') {
