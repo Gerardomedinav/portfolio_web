@@ -91,9 +91,27 @@
       "name": "Livewire",
       "image": "./assets/icon/livewire.png",
       "link": "https://livewire.laravel.com/docs"
+    },
+    {
+      "id": "django",
+      "name": "Django",
+      "image": "./assets/icon/django.svg",
+      "link": "https://docs.djangoproject.com/"
     }
   ],
   "tools": [
+    {
+      "id": "swagger",
+      "name": "Swagger (OpenAPI)",
+      "image": "./assets/icon/swagger.svg",
+      "link": "https://swagger.io/docs/"
+    },
+    {
+      "id": "ai-engineering",
+      "name": "IA Model & Prompt Eng.",
+      "image": "./assets/icon/ai-engineering.svg",
+      "link": "https://platform.openai.com/docs/guides/prompt-engineering"
+    },
     {
       "id": "azure",
       "name": "Azure",
