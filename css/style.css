@@ -347,16 +347,37 @@ body.dark .widget-item select:hover {
    CLASES AUXILIARES DE ACCESIBILIDAD (WCAG)
    ========================================== */
 
-/* Filtros de Daltonismo / Contraste */
-body.filter-monochrome {
+/* Filtros de Daltonismo / Contraste (aplicados a contenedores principales para preservar position: fixed en los widgets flotantes) */
+body.filter-monochrome > header,
+body.filter-monochrome > main,
+body.filter-monochrome > footer,
+body.filter-monochrome .bot-widget-root,
+body.filter-monochrome .widget-floating-root,
+body.filter-monochrome .accessibility-modal,
+body.filter-monochrome .modal-overlay,
+body.filter-monochrome .admin-modal-overlay {
   filter: grayscale(100%) !important;
 }
 
-body.filter-contrast {
+body.filter-contrast > header,
+body.filter-contrast > main,
+body.filter-contrast > footer,
+body.filter-contrast .bot-widget-root,
+body.filter-contrast .widget-floating-root,
+body.filter-contrast .accessibility-modal,
+body.filter-contrast .modal-overlay,
+body.filter-contrast .admin-modal-overlay {
   filter: contrast(160%) brightness(105%) !important;
 }
 
-body.filter-invert {
+body.filter-invert > header,
+body.filter-invert > main,
+body.filter-invert > footer,
+body.filter-invert .bot-widget-root,
+body.filter-invert .widget-floating-root,
+body.filter-invert .accessibility-modal,
+body.filter-invert .modal-overlay,
+body.filter-invert .admin-modal-overlay {
   filter: invert(100%) hue-rotate(180deg) !important;
 }
 
