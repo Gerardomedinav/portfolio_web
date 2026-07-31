@@ -82,7 +82,15 @@ export const translations = {
     widgetSpacing: "Reading Spacing",
     widgetLinks: "Highlight Links",
     widgetAnimations: "Pause Animations",
-    widgetReset: "Reset All"
+    widgetReset: "Reset All",
+    footerGuideTitle: "🤖 Interactive Quick Guide & GerAssist",
+    footerGuideSubtitle: "Click any chip to navigate, test tools, or chat with the AI assistant:",
+    footerNavTitle: "Quick Navigation",
+    footerBadgesTitle: "Quality & Security",
+    footerBadgeSecurity: "Security Grade A",
+    footerBadgeWcag: "WCAG 2.1 AA Compliant",
+    footerBadgeGa: "GA4 Analytics Active",
+    footerStatusText: "System 100% Operational | Vercel Edge Active"
   },
   es: {
     homeTitle: "Hola, <br /> Soy <span class='home__title-color'>Gerardo Medina</span> <br /> Desarrollador Full Stack Jr.",
@@ -133,7 +141,15 @@ export const translations = {
     widgetSpacing: "Espaciado Lectura",
     widgetLinks: "Resaltar Enlaces",
     widgetAnimations: "Pausar Animaciones",
-    widgetReset: "Restablecer Todo"
+    widgetReset: "Restablecer Todo",
+    footerGuideTitle: "🤖 Guía Rápida Interactiva & GerAssist",
+    footerGuideSubtitle: "Hacé clic en cualquier etiqueta para navegar, activar herramientas o hablar con el asistente de IA:",
+    footerNavTitle: "Navegación Rápida",
+    footerBadgesTitle: "Calidad & Seguridad",
+    footerBadgeSecurity: "Seguridad Grado A",
+    footerBadgeWcag: "Conformidad WCAG 2.1 AA",
+    footerBadgeGa: "Analítica GA4 Activa",
+    footerStatusText: "Sistema 100% Operativo | Vercel Edge Active"
   }
 };
 

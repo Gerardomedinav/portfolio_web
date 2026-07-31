@@ -412,67 +412,96 @@
       </section>
     </main>
 
+    <!-- Pie de Página Interactivo & Dinámico -->
     <footer class="footer" role="contentinfo">
-      <div
-        class="accessibility-badge-container"
-        style="text-align: center; color: #fdfafa !important; font-family: 'Poppins', sans-serif"
-      >
-        <p data-i18n="accessibilityText" style="font-size: 0.9rem; margin-bottom: 10px">
-          Este sitio web cumple con las normas WCAG 2.1 AA y cuenta con un widget de accesibilidad para mejorar la
-          experiencia de navegación.
-        </p>
-        <!-- Badge de accesibilidad -->
-        <div class="wcag-badge">
-          <a
-            href="https://www.w3.org/WAI/WCAG2AA-Conformance"
-            title="Explanation of WCAG 2 Level AA conformance"
-            target="_blank"
-          >
-            <img
-              height="32"
-              width="88"
-              src="https://www.w3.org/WAI/WCAG21/wcag2.1AA-v"
-              data-i18n-alt="wcagBadgeAlt"
-              alt="Insignia de conformidad Nivel AA de las Guías de Accesibilidad W3C WAI WCAG 2.1"
-            />
-          </a>
+      <div class="footer__container">
+        
+        <!-- Tarjeta Guía Rápida Interactiva GerAssist -->
+        <div class="footer__guide-card">
+          <div class="footer__guide-header">
+            <div class="footer__guide-title-box">
+              <i class="bx bx-bot footer__guide-icon"></i>
+              <div>
+                <h3 class="footer__guide-title" data-i18n="footerGuideTitle">🤖 Guía Rápida Interactiva & GerAssist</h3>
+                <p class="footer__guide-desc" data-i18n="footerGuideSubtitle">Hacé clic en cualquier etiqueta para navegar, activar herramientas o hablar con el asistente de IA:</p>
+              </div>
+            </div>
+          </div>
+          <div class="footer__chips-container">
+            <button type="button" class="footer-chip" data-footer-action="projects">
+              <i class="bx bx-folder-open"></i> <span>Ver Proyectos</span>
+            </button>
+            <button type="button" class="footer-chip" data-footer-action="about">
+              <i class="bx bx-user"></i> <span>Perfil & UTN</span>
+            </button>
+            <button type="button" class="footer-chip" data-footer-action="skills">
+              <i class="bx bx-code-alt"></i> <span>Habilidades</span>
+            </button>
+            <button type="button" class="footer-chip footer-chip--bot" data-footer-action="bot">
+              <i class="bx bx-bot"></i> <span>Hablar con GerAssist (IA)</span>
+            </button>
+            <button type="button" class="footer-chip footer-chip--accessibility" data-footer-action="accessibility">
+              <i class="bx bxs-universal-access"></i> <span>Abrir Accesibilidad</span>
+            </button>
+            <button type="button" class="footer-chip" data-footer-action="contact">
+              <i class="bx bx-calendar-event"></i> <span>Agendar Cita</span>
+            </button>
+          </div>
         </div>
 
-        <!-- Mensaje de compromiso con la accesibilidad -->
-        <p
-          data-i18n="accessibilitySlogan"
-          style="font-size: 0.9rem; color: #fdfafa; font-family: 'Poppins', sans-serif; margin-top: 10px"
-        >
-          <strong>Por una web más inclusiva, usable, humana y más accesible para todos.</strong>
-        </p>
-      </div>
-      <div class="footer__text">
-        <p data-i18n="footerThanks">
-          Thank you for watching
-          <img
-            src="./assets/icon/icons8-grinning-face-with-smiling-eyes-30.png"
-            data-i18n-alt="footerEmojiAlt"
-            alt="Emoji smiling face with smiling eyes"
-            width="30"
-            height="30"
-          />
-        </p>
-      </div>
-      <div class="footer__copyright">
-        <p data-i18n="footerCopyright">
-          Created by
-          <a
-            class="link-github"
-            href="https://github.com/gerardomedinav"
-            target="_blank"
-            rel="noreferrer noopener"
-            data-i18n-aria="footerGithubLabel"
-            aria-label="Visit Gerardo Medina's GitHub profile"
-          >
-            gerardomedinav
-          </a>
-          | 2022 Copyright &copy; All Rights Reserved
-        </p>
+        <!-- Secciones Principales del Footer (Grid Columnas) -->
+        <div class="footer__grid">
+          <!-- Columna 1: Marca y Accesibilidad -->
+          <div class="footer__col footer__col--brand">
+            <div class="footer__brand-title">GERARDO MEDINA</div>
+            <p class="footer__brand-subtitle">Full Stack Developer Jr. & Data Analyst</p>
+            <p class="footer__slogan" data-i18n="accessibilitySlogan">
+              <strong>Por una web más inclusiva, usable, humana y más accesible para todos.</strong>
+            </p>
+            <div class="wcag-badge">
+              <a href="https://www.w3.org/WAI/WCAG2AA-Conformance" title="Explanation of WCAG 2 Level AA conformance" target="_blank" rel="noreferrer noopener">
+                <img height="32" width="88" src="https://www.w3.org/WAI/WCAG21/wcag2.1AA-v" data-i18n-alt="wcagBadgeAlt" alt="Insignia WCAG 2.1 AA" />
+              </a>
+            </div>
+          </div>
+
+          <!-- Columna 2: Navegación Rápida -->
+          <div class="footer__col">
+            <h4 class="footer__col-title" data-i18n="footerNavTitle">Navegación Rápida</h4>
+            <ul class="footer__links">
+              <li><a href="#home" class="footer__link"><i class="bx bx-chevron-right"></i> <span data-i18n="homeTitleNav">Inicio</span></a></li>
+              <li><a href="#about" class="footer__link"><i class="bx bx-chevron-right"></i> <span data-i18n="aboutTitle">Sobre mí</span></a></li>
+              <li><a href="#projects" class="footer__link"><i class="bx bx-chevron-right"></i> <span data-i18n="projectsTitle">Proyectos</span></a></li>
+              <li><a href="#skills" class="footer__link"><i class="bx bx-chevron-right"></i> <span data-i18n="skills">Habilidades</span></a></li>
+              <li><a href="#contact" class="footer__link"><i class="bx bx-chevron-right"></i> <span data-i18n="contact">Contacto</span></a></li>
+            </ul>
+          </div>
+
+          <!-- Columna 3: Garantías de Calidad & Seguridad -->
+          <div class="footer__col">
+            <h4 class="footer__col-title" data-i18n="footerBadgesTitle">Calidad & Seguridad</h4>
+            <div class="footer__badges">
+              <span class="footer__badge"><i class="bx bx-shield-quarter"></i> <span data-i18n="footerBadgeSecurity">Seguridad Grado A</span></span>
+              <span class="footer__badge"><i class="bx bx-check-double"></i> <span data-i18n="footerBadgeWcag">Conformidad WCAG 2.1 AA</span></span>
+              <span class="footer__badge"><i class="bx bx-line-chart"></i> <span data-i18n="footerBadgeGa">Analítica GA4 Activa</span></span>
+              <span class="footer__badge"><i class="bx bx-cloud"></i> <span>Vercel Edge Serverless</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Línea Inferior Copyright y Estado -->
+        <div class="footer__bottom">
+          <div class="footer__status">
+            <span class="footer__status-dot"></span>
+            <span data-i18n="footerStatusText">Sistema 100% Operativo | Vercel Edge Active</span>
+          </div>
+          <div class="footer__copyright">
+            <p data-i18n="footerCopyright">
+              Created by <a class="link-github" href="https://github.com/gerardomedinav" target="_blank" rel="noreferrer noopener" data-i18n-aria="footerGithubLabel">gerardomedinav</a> | 2022 Copyright &copy; All Rights Reserved
+            </p>
+          </div>
+        </div>
+
       </div>
     </footer>
 
