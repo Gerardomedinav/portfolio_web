@@ -1327,10 +1327,30 @@ body.dark .bot-window {
   flex-grow: 1;
   padding: 1rem;
   overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
   background: #f8fafc;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 150, 255, 0.4) transparent;
+}
+
+.bot-messages-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.bot-messages-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.bot-messages-container::-webkit-scrollbar-thumb {
+  background: rgba(0, 150, 255, 0.35);
+  border-radius: 4px;
+}
+
+.bot-messages-container::-webkit-scrollbar-thumb:hover {
+  background: var(--first-color);
 }
 
 body.dark .bot-messages-container {
@@ -1340,7 +1360,9 @@ body.dark .bot-messages-container {
 .bot-message-wrapper {
   display: flex;
   gap: 0.6rem;
-  max-width: 88%;
+  max-width: 95%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .bot-message--user {
@@ -1371,6 +1393,10 @@ body.dark .bot-messages-container {
   font-size: 0.85rem;
   line-height: 1.45;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .bot-message--user .bot-msg-bubble {
@@ -1396,6 +1422,8 @@ body.dark .bot-message--bot .bot-msg-bubble {
   color: var(--first-color);
   font-weight: 600;
   text-decoration: underline;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .bot-message--user .bot-msg-bubble a {
@@ -1655,33 +1683,49 @@ body.dark .bot-speak-btn {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding: 0.5rem;
+  padding: 0.5rem 0.65rem;
   background: #f1f5f9;
-  border-top: 1px dashed #cbd5e1;
+  border-top: 1px solid #cbd5e1;
+  gap: 0.35rem;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 body.dark .bot-cta-footer {
-  background: #1e293b;
+  background: #0f172a;
   border-top-color: #334155;
 }
 
 .bot-cta-link {
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 600;
-  color: #64748b;
-  display: flex;
+  color: #334155;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.3rem;
   text-decoration: none;
-  transition: color 0.2s ease;
+  padding: 0.35rem 0.55rem;
+  border-radius: 6px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  flex: 1;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 body.dark .bot-cta-link {
-  color: #94a3b8;
+  background: #1e293b;
+  border-color: #334155;
+  color: #f1f5f9;
 }
 
 .bot-cta-link:hover {
-  color: var(--first-color);
+  color: #ffffff;
+  background: var(--first-color);
+  border-color: var(--first-color);
 }
 
 /* ==========================================================================

@@ -306,10 +306,13 @@ function appendMessage(container, sender, text) {
 
   container.appendChild(wrapper);
 
-  // Si el mensaje es del bot, desplazarse suavemente al INICIO (parte superior) del mensaje
+  // Si el mensaje es del bot, desplazarse suavemente al inicio del mensaje DENTRO del contenedor del chat
   if (sender === 'bot') {
     setTimeout(() => {
-      wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      container.scrollTo({
+        top: wrapper.offsetTop - container.offsetTop - 10,
+        behavior: 'smooth'
+      });
     }, 60);
   } else {
     scrollToBottom(container);
