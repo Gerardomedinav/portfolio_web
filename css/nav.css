@@ -6,11 +6,11 @@
   font-weight: 600;
 }
 
-/* Overlay de Fondo Transparente */
+/* Overlay de Fondo Transparente Suave */
 .nav__overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.7);
+  background: rgba(15, 23, 42, 0.45);
   z-index: 9998;
   opacity: 0;
   visibility: hidden;
@@ -20,6 +20,16 @@
 .nav__overlay.show-overlay {
   opacity: 1;
   visibility: visible;
+}
+
+/* Ocultar widgets flotantes de fondo mientras el menú móvil está activo */
+body.menu-open .bot-widget-root,
+body.menu-open #widget-toggle,
+body.menu-open #widget-panel {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: scale(0.95);
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 /* Botón Hamburguesa Toggle */
@@ -97,29 +107,29 @@ body.dark .nav__close {
 @media screen and (max-width: 768px) {
   .nav__menu {
     position: fixed;
-    top: 0;
+    top: 3.5rem;
     right: -100%;
     width: 85%;
-    max-width: 340px;
-    height: 100vh;
-    padding: 5rem 2rem 3rem 2rem;
+    max-width: 290px;
+    height: calc(100vh - 3.5rem);
+    padding: 3rem 1.5rem 2.5rem 1.5rem;
     background-color: #ffffff !important;
-    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.45);
+    box-shadow: -10px 10px 40px rgba(0, 0, 0, 0.35);
     transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     overflow-y: auto;
     box-sizing: border-box;
-    z-index: 9999;
+    z-index: 10000;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     text-align: center;
   }
 
   body.dark .nav__menu {
     background-color: #0b1329 !important;
-    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.9);
-    border-left: 2px solid rgba(56, 189, 248, 0.3);
+    box-shadow: -10px 10px 40px rgba(0, 0, 0, 0.85);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
   }
 
   .nav__menu.show {

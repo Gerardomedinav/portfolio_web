@@ -39,6 +39,7 @@ export function initNavigation() {
   const closeMenu = () => {
     if (navMenu) navMenu.classList.remove('show');
     if (navOverlay) navOverlay.classList.remove('show-overlay');
+    document.body.classList.remove('menu-open');
     if (navToggle) {
       navToggle.setAttribute('aria-expanded', 'false');
       const icon = navToggle.querySelector('i');
@@ -49,6 +50,7 @@ export function initNavigation() {
   const openMenu = () => {
     if (navMenu) navMenu.classList.add('show');
     if (navOverlay) navOverlay.classList.add('show-overlay');
+    document.body.classList.add('menu-open');
     if (navToggle) {
       navToggle.setAttribute('aria-expanded', 'true');
       const icon = navToggle.querySelector('i');
