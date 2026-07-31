@@ -27,18 +27,64 @@ export function initNavigation() {
   const navClose = document.getElementById('nav-close');
   const navLinks = document.querySelectorAll('.nav__link');
 
-  // Abrir / Cerrar Menú Móvil
-  if (navToggle && navMenu) {
-    navToggle.addEventListener('click', () => {
-      navMenu.classList.add('show');
+  // Crear o referencia a overlay de fondo para menú móvil
+  let navOverlay = document.getElementById('nav-overlay');
+  if (!navOverlay) {
+    navOverlay = document.createElement('div');
+    navOverlay.id = 'nav-overlay';
+    navOverlay.className = 'nav__overlay';
+    document.body.appendChild(navOverlay);
+  }
+
+  const closeMenu = () => {
+    if (navMenu) navMenu.classList.remove('show');
+    if (navOverlay) navOverlay.classList.remove('show-overlay');
+    if (navToggle) {
+      navToggle.setAttribute('aria-expanded', 'false');
+      const icon = navToggle.querySelector('i');
+      if (icon) icon.className = 'bx bx-menu';
+    }
+  };
+
+  const openMenu = () => {
+    if (navMenu) navMenu.classList.add('show');
+    if (navOverlay) navOverlay.classList.add('show-overlay');
+    if (navToggle) {
       navToggle.setAttribute('aria-expanded', 'true');
+      const icon = navToggle.querySelector('i');
+      if (icon) icon.className = 'bx bx-x';
+    }
+  };
+
+  const toggleMenu = () => {
+    const isShow = navMenu && navMenu.classList.contains('show');
+    if (isShow) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  };
+
+  // Abrir / Cerrar Menú Móvil al presionar el botón hamburguesa
+  if (navToggle && navMenu) {
+    navToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleMenu();
     });
   }
 
-  if (navClose && navMenu) {
-    navClose.addEventListener('click', () => {
-      navMenu.classList.remove('show');
-      if (navToggle) navToggle.setAttribute('aria-expanded', 'false');
+  // Cerrar con botón X dentro del menú
+  if (navClose) {
+    navClose.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeMenu();
+    });
+  }
+
+  // Cerrar al hacer clic en el telón de fondo
+  if (navOverlay) {
+    navOverlay.addEventListener('click', () => {
+      closeMenu();
     });
   }
 
@@ -47,8 +93,7 @@ export function initNavigation() {
     link.addEventListener('click', function () {
       navLinks.forEach(n => n.classList.remove('active'));
       this.classList.add('active');
-      if (navMenu) navMenu.classList.remove('show');
-      if (navToggle) navToggle.setAttribute('aria-expanded', 'false');
+      closeMenu();
     });
   });
 
