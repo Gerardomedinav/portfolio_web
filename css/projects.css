@@ -286,7 +286,7 @@ body.dark .project__item--demo:hover {
   overflow: hidden;
   position: fixed;
   top: 50%;
-  left: 43%;
+  left: 50%;
   transform: translate(-50%, -50%);
   flex-direction: column;
   z-index: 10005 !important;

@@ -19,12 +19,18 @@
 }
 html {
   scroll-behavior: smooth;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 body {
   margin: 3rem 0 0 0;
   font-family: var(--poppins);
   font-size: 0.938rem;
   color: var(--second-color);
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 h1,
 h2,
@@ -521,8 +527,10 @@ body.dark.disable-animations .skills__name img {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
   background: rgba(15, 23, 42, 0.75);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -1683,8 +1691,10 @@ body.dark .bot-cta-link {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
   background: radial-gradient(circle at center, #0f172a 0%, #0b1329 100%);
   color: #ffffff;
   z-index: 999999;

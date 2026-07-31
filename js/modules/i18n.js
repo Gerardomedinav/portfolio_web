@@ -205,7 +205,7 @@ export function updateResumeLink(lang) {
 
   if (resumeLink) {
     if (lang === 'es') {
-      resumeLink.href = './assets/CV_Gerardo_Medina_Villalba_español.pdf';
+      resumeLink.href = './assets/CV_Gerardo_Medina_Villalba_espanol.pdf';
       resumeLink.setAttribute('aria-label', 'Previsualizar Currículum Vitae de Gerardo Medina (PDF en nueva pestaña)');
     } else {
       resumeLink.href = './assets/CV_Gerardo_Medina_Villalba_EN.pdf';
@@ -219,7 +219,7 @@ export function updateResumeLink(lang) {
 
   if (botCvLink) {
     if (lang === 'es') {
-      botCvLink.href = './assets/CV_Gerardo_Medina_Villalba_español.pdf';
+      botCvLink.href = './assets/CV_Gerardo_Medina_Villalba_espanol.pdf';
     } else {
       botCvLink.href = './assets/CV_Gerardo_Medina_Villalba_EN.pdf';
     }

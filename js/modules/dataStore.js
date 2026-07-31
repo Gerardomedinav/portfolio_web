@@ -28,7 +28,7 @@ export const defaultBannerData = {
     en: "Photograph of Gerardo Medina, Full Stack Developer"
   },
   cv: {
-    es: "./assets/CV_Gerardo_Medina_Villalba_español.pdf",
+    es: "./assets/CV_Gerardo_Medina_Villalba_espanol.pdf",
     en: "./assets/CV_Gerardo_Medina_Villalba_EN.pdf"
   },
   social: {
@@ -45,8 +45,8 @@ export const defaultAboutData = {
     en: "Full Stack Developer focused on quality, accessibility & user experience"
   },
   text: {
-    es: `Técnico Universitario en Programación y en Análisis y Diseño de Software, con perfil Full Stack Junior orientado al desarrollo web. Además, tengo más de 15 años de experiencia en el negocio familiar de ventas al por menor, desempeñándome en atención al cliente, administración y gestión. Esta trayectoria me ayudó a desarrollar habilidades interpersonales, capacidad de resolución de problemas y una fuerte orientación a la experiencia del usuario, cualidades que aplico en cada proyecto de software que desarrollo. Me apasiona la programación, la música y el café. La disciplina, la dedicación y el compromiso son valores que me definen. Siempre doy lo mejor de mí en cada tarea, sin importar si es simple o compleja. A continuación, encontrarás algunos de los proyectos que desarrollé hasta ahora. ¡Espero que los disfrutes!`,
-    en: `I am a University Technician in Programming and in Software Analysis and Design, with a Junior Full Stack profile focused on web development. In addition, I have over 15 years of experience in the family retail business, working in customer service, administration, and management. This background has helped me develop interpersonal skills, problem-solving abilities, and a strong user-experience focus — all of which I bring into every software project I build. I am passionate about programming, music, and coffee. Discipline, dedication, and commitment are values that define me. I always give my best in every task, no matter how simple or complex it may be. Below, you’ll find some of the projects I’ve developed so far. Hope you enjoy them!`
+    es: `Técnico Universitario en Programación (UTN) y Técnico en Análisis y Diseño de Software (UNAF), actualmente cursando la Licenciatura en Educación Tecnológica (UTN). Poseo un perfil Full Stack Junior orientado al desarrollo web accesible y al análisis de datos. Además, cuento con más de 15 años de experiencia en gestión y atención al cliente en el negocio familiar, lo que me aportó madurez profesional, empatía y orientación al usuario. Apasionado por la programación, la música y el aprendizaje continuo. ¡Te invito a conocer mis proyectos!`,
+    en: `University Technician in Programming (UTN) and Software Analysis & Design Technician (UNAF), currently pursuing a Bachelor's Degree in Educational Technology (UTN). I hold a Junior Full Stack profile focused on accessible web development and data analytics. Additionally, I bring over 15 years of customer service and management experience from our family business. Passionate about coding, music, and continuous learning. Welcome to my portfolio!`
   },
   photoImg: "./assets/img/profile/perfil2.JPG",
   photoImgAlt: {

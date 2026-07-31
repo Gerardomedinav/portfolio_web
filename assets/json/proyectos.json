@@ -9,8 +9,8 @@
     "github": "https://github.com/Gerardomedinav/siga-formosa/tree/develop",
     "demo": "https://siga-formosa-uugd.onrender.com/",
     "description": {
-      "es": "Sistema profesional de gestión académica desarrollado como tesina final para la UTN FRRe. Centraliza la información educativa eliminando la dispersión de datos. Construido con un stack robusto que incluye Laravel 12, PostgreSQL y Docker, el sistema destaca por su escalabilidad y su arquitectura preparada para integrarse con el ecosistema Sysacad.",
-      "en": "Professional academic management system developed as a final thesis for UTN FRRe. It centralizes educational information to eliminate data fragmentation. Built with a robust stack including Laravel 12, PostgreSQL, and Docker, the system stands out for its scalability and an architecture designed for future integration with the Sysacad ecosystem."
+      "es": "Sistema profesional de gestión académica desarrollado para la UTN Sede Formosa. Centraliza la información educativa eliminando la dispersión de datos. Construido con un stack robusto que incluye Laravel, PostgreSQL y Docker, el sistema destaca por su escalabilidad y su arquitectura orientada a la gestión universitaria.",
+      "en": "Professional academic management system developed for UTN Formosa Branch. It centralizes educational information to eliminate data fragmentation. Built with a robust stack including Laravel, PostgreSQL, and Docker, the system stands out for its scalability and university management architecture."
     }
   },
   {

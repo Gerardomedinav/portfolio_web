@@ -35,8 +35,7 @@ Este documento sirve como memoria y guía contextual de referencia para cualquie
   - `preloader.js`: Pantalla de carga inteligente con anillo SVG de progreso (0% a 100%), inicialización secuencial de módulos y transición de desenfoque.
 
 ### 2. Backend Serverless & IA
-- **`api/chat.js` (Vercel Serverless Function):** Proxy de servidor seguro en Node.js que procesa peticiones de IA leyendo `process.env.AI_API_KEY` de forma privada sin exponer credenciales.
-- **Prompt Engineering:** Diseño de persona empática, promocional y servicial orientada a resaltar el perfil de **Data Analyst / Data Scientist**, la **Accesibilidad Universal (WCAG 2.1 AA)**, el **Impacto Real en Proyectos** y los estudios universitarios en la **UTN**.
+- **Prompt Engineering:** Diseño de persona empática, promocional y servicial orientada a resaltar el perfil de **Data Analyst / Data Scientist**, la **Accesibilidad Universal (WCAG 2.1 AA)**, el **Impacto Real en Proyectos** y los estudios universitarios: **Técnico Universitario en Programación (UTN)**, **Técnico en Análisis y Diseño de Software (UNAF)**, **Licenciatura en Educación Tecnológica (UTN - en curso)** y el proyecto **SIGA Formosa** desarrollado para la **UTN Sede Formosa**.
 
 ---
 

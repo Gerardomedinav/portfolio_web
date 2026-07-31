@@ -97,8 +97,10 @@
   position: fixed; /* Fija el video en la ventana */
   top: 0;
   left: 0;
-  width: 100vw; /* Cubre ancho completo del viewport */
-  height: 100vh; /* Cubre alto completo del viewport */
+  right: 0;
+  bottom: 0;
+  width: 100%; /* Cubre ancho completo del viewport sin scrollbar horizontal */
+  height: 100%; /* Cubre alto completo del viewport */
   object-fit: cover; /* Ajusta el video sin distorsión */
   z-index: -999999; /* Lo envía al fondo detrás de todo */
   opacity: 0.4; /* Ajusta la opacidad del video */

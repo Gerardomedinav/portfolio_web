@@ -12,10 +12,13 @@
     top: 3rem;
     right: -100%;
     width: 100%;
-    height: 100%;
+    max-width: 100vw;
+    height: calc(100vh - 3rem);
     padding: 2rem;
     background-color: var(--second-color);
     transition: 0.5s;
+    overflow-y: auto;
+    box-sizing: border-box;
   }
 }
 .nav__item {

@@ -336,7 +336,8 @@ body.dark .contact__info-label {
 }
 
 .contact__info-value--phone {
-  white-space: nowrap;
+  white-space: normal;
+  word-break: break-word;
 }
 
 body.dark .contact__info-value {

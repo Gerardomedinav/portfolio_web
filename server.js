@@ -81,7 +81,8 @@ const server = http.createServer(async (req, res) => {
   }
 
   // 2. Servir archivos estáticos del portafolio
-  let filePath = path.join(__dirname, urlPath === '/' ? 'index.html' : urlPath);
+  let decodedPath = decodeURIComponent(urlPath);
+  let filePath = path.join(__dirname, decodedPath === '/' ? 'index.html' : decodedPath);
 
   fs.stat(filePath, (err, stats) => {
     if (err || !stats.isFile()) {

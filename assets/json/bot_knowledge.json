@@ -3,9 +3,9 @@
     "name": "Gerardo Medina",
     "title": "Full Stack Developer & Futuro Data Scientist / Data Analyst",
     "degrees": [
-      "Técnico Universitario en Programación (Base sólida de código y lógica)",
-      "Técnico Universitario en Análisis y Diseño de Software (Arquitectura y estructura)",
-      "Licenciatura en Tecnología Educativa (LTE) en la UTN - Universidad Tecnológica Nacional (En curso)"
+      "Técnico Universitario en Programación (UTN - Universidad Tecnológica Nacional)",
+      "Técnico en Análisis y Diseño de Software (UNAF - Universidad Nacional de Formosa)",
+      "Licenciatura en Educación Tecnológica (LTE) en la UTN (En curso)"
     ],
     "certifications_and_courses": [
       "Especialización continua en Análisis de Datos y Data Science",
@@ -27,11 +27,11 @@
   "faqs": [
     {
       "keywords": ["quien sos", "quien es gerardo", "presentate", "quien es", "sobre gerardo"],
-      "answer": "¡Hola! Soy **GerAssist**, el asistente personal de **Gerardo Medina**. Gerardo es Desarrollador Full Stack con sólidas bases universitarias en **Programación** y **Análisis/Diseño de Software**. Actualmente cursa la **Licenciatura en Tecnología Educativa (LTE) en la UTN** y se capacita continuamente en **Análisis de Datos, Modelos de Lenguaje (LLMs / IA) y Ciberseguridad**, apuntando a consolidarse como **Data Scientist / Data Analyst**. Es un apasionado por la **Accesibilidad Web (WCAG 2.1 AA)** y el impacto real. ¿Qué te interesaría saber sobre él?"
+      "answer": "¡Hola! Soy **GerAssist**, el asistente personal de **Gerardo Medina**. Gerardo es Desarrollador Full Stack con formación de excelencia: es **Técnico Universitario en Programación (UTN)** y **Técnico en Análisis y Diseño de Software (UNAF)**. Actualmente cursa la **Licenciatura en Educación Tecnológica (LTE) en la UTN** y se capacita continuamente en **Análisis de Datos, Modelos de Lenguaje (LLMs / IA) y Ciberseguridad**, apuntando a consolidarse como **Data Scientist / Data Analyst**. ¿Qué te interesaría conocer sobre su perfil?"
     },
     {
-      "keywords": ["estudios", "educacion", "universidad", "utn", "carrera", "titulo", "cursos"],
-      "answer": "Gerardo posee un trayecto académico y de formación continua impecable:\n\n1. 🎓 **Técnico Universitario en Programación** (Base sólida de lógica y desarrollo).\n2. 🎓 **Técnico Universitario en Análisis y Diseño de Software** (Arquitectura de datos y sistemas).\n3. 🚀 **Licenciatura en Tecnología Educativa (LTE) en la UTN** (En desarrollo activo).\n4. 💡 **Formación Continua:** Cursos avanzados en **Análisis de Datos**, **LLMs / Inteligencia Artificial** y **Ciberseguridad**."
+      "keywords": ["estudios", "educacion", "universidad", "utn", "unaf", "carrera", "titulo", "cursos"],
+      "answer": "Gerardo posee una sólida trayectoria universitaria en dos reconocidas instituciones:\n\n1. 🎓 **Técnico Universitario en Programación** (UTN - Universidad Tecnológica Nacional).\n2. 🎓 **Técnico en Análisis y Diseño de Software** (UNAF - Universidad Nacional de Formosa).\n3. 🚀 **Licenciatura en Educación Tecnológica (LTE)** (UTN - En desarrollo activo).\n4. 💡 **Formación Continua:** Cursos avanzados en **Análisis de Datos**, **LLMs / IA** y **Ciberseguridad**."
     },
     {
       "keywords": ["contacto", "contratar", "email", "telefono", "whatsapp", "linkedin", "formulario", "contactar", "como contactar"],
@@ -43,11 +43,11 @@
     },
     {
       "keywords": ["datos", "data", "analista", "cientifico", "analitico", "data science", "llm", "ai"],
-      "answer": "Gracias a su formación universitaria en programación y análisis de software, Gerardo tiene bases sólidas para procesar y estructurar información. Actualmente está canalizando su perfil profesional hacia la **Ciencia de Datos (Data Scientist / Data Analyst)** a través de capacitaciones constantes en Análisis de Datos, **Modelos de Lenguaje (LLMs / IA)** y Ciberseguridad."
+      "answer": "Gerardo combina su background Full Stack con el **Análisis de Datos y Ciencia de Datos**. Utiliza **Python (Pandas, Plotly, Seaborn)** y **SQL** para procesar información, generar Dashboards de impacto y optimizar decisiones de negocio."
     },
     {
       "keywords": ["cv", "curriculum", "resume", "descargar cv", "ver cv", "pdf", "hoja de vida"],
-      "answer": "¡Excelente! Podés previsualizar o descargar el **Currículum Vitae (CV)** oficial de Gerardo Medina utilizando directamente el **botón de descarga ('Currículum' / 'Resume')** ubicado en la sección de Inicio (Banner principal) de este portafolio web, o accediendo a los siguientes enlaces en PDF:\n\n* 📄 **[Descargar CV en Español (PDF)](./assets/CV_Gerardo_Medina_Villalba_español.pdf)**\n* 📄 **[Download English Resume (PDF)](./assets/CV_Gerardo_Medina_Villalba_EN.pdf)**\n\n¿Te gustaría coordinar una reunión o que te ayude a enviarle una consulta por el formulario de contacto?"
+      "answer": "¡Excelente! Podés previsualizar o descargar el **Currículum Vitae (CV)** oficial de Gerardo Medina utilizando directamente el **botón de descarga ('Currículum' / 'Resume')** ubicado en la sección de Inicio (Banner principal) de este portafolio web, o accediendo a los siguientes enlaces en PDF:\n\n* 📄 **[Descargar CV en Español (PDF)](./assets/CV_Gerardo_Medina_Villalba_espanol.pdf)**\n* 📄 **[Download English Resume (PDF)](./assets/CV_Gerardo_Medina_Villalba_EN.pdf)**\n\n¿Te gustaría coordinar una reunión o que te ayude a enviarle una consulta por el formulario de contacto?"
     },
     {
       "keywords": ["agrandar letra", "aumentar letra", "letra mas grande", "agrandar fuente", "agrandar texto", "aumentar texto"],
@@ -59,7 +59,7 @@
     },
     {
       "keywords": ["leer web", "leer pagina", "leer la web", "escuchar web", "lector de voz", "leer por voz", "activar voz", "reproducir voz"],
-      "answer": "🔊 **¡Lector por Voz activado!** Inicié la lectura en voz alta del contenido de la página para vos. Podés pausarlo o detenerlo en cualquier momento diciéndome 'detener voz' o mediante el widget de accesibilidad."
+      "answer": "🔊 **Lector por Voz activado.** Estoy leyendo el contenido principal de la pantalla para vos. Podés detener la lectura cuando quieras diciendo 'detener voz'."
     },
     {
       "keywords": ["detener voz", "pausar voz", "parar voz", "callar voz", "detener lectura"],
@@ -93,9 +93,9 @@
   "projects": [
     {
       "name": "SIGA Formosa",
-      "concept": "Sistema de gestión integral para la toma de decisiones y organización institucional.",
-      "tech": "PHP, MySQL, HTML5, CSS3, JavaScript",
-      "analytical_impact": "Bases de datos relacionales, optimización del flujo de datos y procesamiento de trámites institucionales.",
+      "concept": "Sistema de gestión integral para la toma de decisiones creado para la UTN Sede Formosa.",
+      "tech": "PHP, Laravel, PostgreSQL, Docker, HTML5, CSS3, JavaScript",
+      "analytical_impact": "Bases de datos relacionales, optimización del flujo de datos y procesamiento de trámites universitarios.",
       "accessibility": "Interfaz accesible y adaptativa."
     },
     {
