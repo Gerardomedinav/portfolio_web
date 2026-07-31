@@ -55,7 +55,7 @@ portfolio_web/
 │   │   ├── proyectos.json    # Datos dinámicos de proyectos
 │   │   └── skill.json        # Datos dinámicos de habilidades
 │   ├── CV_Gerardo_Medina_Villalba_EN.pdf
-│   └── CV_Gerardo_Medina_Villalba_español.pdf
+│   └── CV_Gerardo_Medina_Villalba_espanol.pdf
 ├── css/
 │   ├── main.css              # Hoja de estilos principal
 │   └── style.css             # Estilos globales, modales CRUD y widget GerAssist

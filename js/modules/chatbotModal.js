@@ -69,8 +69,8 @@ export function renderChatbotWidget() {
           <div class="bot-msg-avatar"><i class="bx bx-bot"></i></div>
           <div class="bot-msg-bubble">
             ${lang === 'es' 
-              ? '¡Hola! 👋 Qué gusto saludarte. Soy <strong>GerAssist</strong>, el asistente personal de <strong>Gerardo Medina</strong>.<br /><br />Estoy aquí para contarte sobre su perfil como <strong>Desarrollador Full Stack & Analista de Datos</strong>, sus estudios en la <strong>UTN</strong> y el <strong>impacto real</strong> de sus proyectos.<br /><br />💡 <em>¡Podés dictarme tus consultas por voz presionando el micrófono 🎙️ o pedirme que ajuste la accesibilidad de la web!</em>' 
-              : "Hi! 👋 Great to meet you. I am <strong>GerAssist</strong>, Gerardo Medina's AI assistant.<br /><br />I am here to tell you about his <strong>Full Stack & Data Analyst</strong> background, his <strong>UTN</strong> studies, and the <strong>real impact</strong> of his projects.<br /><br />💡 <em>You can dictate your questions using the microphone 🎙️ or ask me to adjust site accessibility!</em>"}
+              ? '¡Hola! 👋 Qué gusto saludarte. Soy <strong>GerAssist</strong>, el asistente personal y guía interactivo de <strong>Gerardo Medina</strong>.<br /><br />Estoy aquí para acompañarte y contarte sobre su perfil como <strong>Desarrollador Full Stack & Analista de Datos</strong>, su formación en la <strong>UTN y UNAF</strong>, sus <strong>proyectos de impacto real</strong> y cómo usar las herramientas de accesibilidad.<br /><br />💡 <em>¿Te gustaría que recorramos sus proyectos destacados, sus habilidades o preferís que agendemos una reunión o entrevista con Gerardo?</em>' 
+              : "Hi! 👋 Great to meet you. I am <strong>GerAssist</strong>, Gerardo Medina's AI guide.<br /><br />I am here to show you his <strong>Full Stack & Data Analyst</strong> background, his <strong>UTN & UNAF</strong> studies, and the <strong>real impact</strong> of his projects.<br /><br />💡 <em>Would you like to explore his featured projects, skills, or schedule a meeting with Gerardo?</em>"}
             <div class="bot-msg-actions">
               <button type="button" class="bot-speak-btn" aria-label="Escuchar mensaje en voz alta" title="Escuchar respuesta">
                 <i class="bx bx-volume-full"></i> <span>${lang === 'es' ? 'Escuchar' : 'Listen'}</span>
@@ -518,11 +518,12 @@ function scrollToBottom(el) {
 }
 
 /**
- * Función de Navegación Inteligente, Accesibilidad y Resalte de Secciones
+ * Función de Navegación Inteligente, Accesibilidad y Resalte de Secciones con Scroll Suave
  */
 function handleSmartNavigationAndFill(userText, botReply) {
   const userLower = (userText || '').toLowerCase().trim();
   const botLower = (botReply || '').toLowerCase().trim();
+  const fullText = userLower + ' ' + botLower;
 
   // --- 0. COMANDOS DIRECTOS DE ACCESIBILIDAD EJECUTADOS POR GERASSIST ---
 
@@ -614,74 +615,95 @@ function handleSmartNavigationAndFill(userText, botReply) {
     return;
   }
 
-  // 2. Detección de Intención de Proyectos -> Cerrar accesibilidad y modales anteriores, abrir el nuevo proyecto
+  // 2. Detección de Intención de Proyectos -> Cerrar accesibilidad y modales anteriores, scroll suave y abrir el proyecto indicado
   const projectKeywords = [
     'siga', 'analytics', 'python', 'nexo', 'proyecoins',
     'ahorcado', 'entrevigas', 'bytezar', 'planificador', 'codigo urbano', 'catalogo',
     'proyecto', 'proyectos'
   ];
 
-  if (projectKeywords.some(kw => userLower.includes(kw))) {
+  if (projectKeywords.some(kw => fullText.includes(kw))) {
     closeAccessibilityPanel();
     closeAllProjectModals();
 
-    const opened = openProjectModalByName(userLower);
+    const opened = openProjectModalByName(fullText);
 
-    if (!opened) {
-      const projectsSection = document.getElementById('projects');
-      if (projectsSection) {
-        projectsSection.scrollIntoView({ behavior: 'smooth' });
-      }
+    const projectsSection = document.getElementById('projects');
+    if (projectsSection) {
+      projectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     return;
   }
 
-  // 3. Detección de Intención de Contactar -> Cerrar accesibilidad y modales anteriores, desplazar a #contact y pre-rellenar
+  // 3. Detección de Intención de Contactar / Cita / Entrevista -> Desplazar a #contact y autofill
   if (
-    userLower.includes('contact') || 
-    userLower.includes('contrat') || 
-    userLower.includes('email') || 
-    userLower.includes('correo') ||
-    userLower.includes('escribir') ||
-    userLower.includes('mensaje') ||
-    botLower.includes('vías oficiales')
+    fullText.includes('contact') || 
+    fullText.includes('contrat') || 
+    fullText.includes('cita') ||
+    fullText.includes('reunion') ||
+    fullText.includes('reunión') ||
+    fullText.includes('entrevista') ||
+    fullText.includes('email') || 
+    fullText.includes('correo') ||
+    fullText.includes('escribir') ||
+    fullText.includes('mensaje') ||
+    fullText.includes('vías oficiales')
   ) {
     closeAccessibilityPanel();
     closeAllProjectModals();
-    setTimeout(() => triggerContactAutoFill(), 500);
+    setTimeout(() => triggerContactAutoFill(), 400);
     return;
   }
 
-  // 4. Detección de Intención de Sobre Mí / UTN -> Cerrar accesibilidad y modales de proyectos, desplazar a #about
-  if (userLower.includes('sobre mi') || userLower.includes('utn') || userLower.includes('perfil') || userLower.includes('estudios') || userLower.includes('trayectoria')) {
+  // 4. Detección de Intención de Sobre Mí / UTN / Estudios -> Scroll suave a #about
+  if (
+    fullText.includes('sobre mi') || 
+    fullText.includes('sobre mí') || 
+    fullText.includes('utn') || 
+    fullText.includes('unaf') || 
+    fullText.includes('perfil') || 
+    fullText.includes('estudios') || 
+    fullText.includes('trayectoria') ||
+    fullText.includes('educacion') ||
+    fullText.includes('educación')
+  ) {
     closeAccessibilityPanel();
     closeAllProjectModals();
     const aboutSection = document.getElementById('about');
     if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: 'smooth' });
+      aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     return;
   }
 
-  // 5. Detección de Intención de Habilidades -> Cerrar accesibilidad y modales de proyectos, desplazar a #skills
-  if (userLower.includes('habilidad') || userLower.includes('skills') || userLower.includes('tecnolog') || userLower.includes('framework') || userLower.includes('herramienta')) {
+  // 5. Detección de Intención de Habilidades / Skills -> Scroll suave a #skills
+  if (
+    fullText.includes('habilidad') || 
+    fullText.includes('skills') || 
+    fullText.includes('tecnolog') || 
+    fullText.includes('framework') || 
+    fullText.includes('herramienta') ||
+    fullText.includes('javascript') ||
+    fullText.includes('docker') ||
+    fullText.includes('sql')
+  ) {
     closeAccessibilityPanel();
     closeAllProjectModals();
     const skillsSection = document.getElementById('skills');
     if (skillsSection) {
-      skillsSection.scrollIntoView({ behavior: 'smooth' });
+      skillsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     return;
   }
 
-  // 6. Detección de Intención de CV / Currículum -> Cerrar accesibilidad y modales, desplazar a #home donde se encuentra el botón de descarga de CV
+  // 6. Detección de Intención de CV / Currículum -> Scroll suave a #home donde se ubica el botón de descarga
   const cvKeywords = ['cv', 'curriculum', 'currículum', 'resume', 'hoja de vida', 'descargar cv', 'ver cv'];
-  if (cvKeywords.some(kw => userLower.includes(kw))) {
+  if (cvKeywords.some(kw => fullText.includes(kw))) {
     closeAccessibilityPanel();
     closeAllProjectModals();
     const homeSection = document.getElementById('home');
     if (homeSection) {
-      homeSection.scrollIntoView({ behavior: 'smooth' });
+      homeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     return;
   }
