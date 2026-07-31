@@ -6,7 +6,7 @@ Este documento sirve como memoria y guía contextual de referencia para cualquie
 
 ## 📌 Resumen General del Proyecto
 - **Propietario:** Gerardo Medina (Full Stack Developer Jr. & Data Analyst / Data Scientist profile)
-- **Descripción:** Portafolio personal web interactivo, accesible, bilingüe (Español / Inglés), con Asistente Virtual Inteligente (`GerAssist`) basado en Prompt Engineering, IA y Control Interactivo del DOM, y Panel de Administración CRUD Criptográfico Multisección.
+- **Descripción:** Portafolio personal web interactivo, accesible, bilingüe (Español / Inglés), con Analítica Web Global (Google Analytics 4), Asistente Virtual Inteligente (`GerAssist`) basado en Prompt Engineering, IA y Control Interactivo del DOM, Endurecimiento de Seguridad (Grade A) y Panel de Administración CRUD Criptográfico Multisección.
 - **Despliegue:** Vercel (configurado con cabeceras de seguridad HTTP, Content-Security-Policy y Vercel Serverless Functions para IA).
 
 ---
@@ -14,7 +14,7 @@ Este documento sirve como memoria y guía contextual de referencia para cualquie
 ## 🛠️ Tecnologías y Arquitectura
 
 ### 1. Frontend & Lenguajes
-- **HTML5 Semántico:** Siguiendo directrices de accesibilidad **WCAG 2.1 AA** (`aria-*`, `role`, etiquetas descriptivas, soporte para lectores de pantalla).
+- **HTML5 Semántico & Analítica:** Siguiendo directrices **WCAG 2.1 AA** (`aria-*`, `role`, soporte para lectores de pantalla) e integración de **Google Analytics 4 (GA4 `gtag.js` ID `G-VZPNRD2V49`)** para monitoreo global de tráfico y audiencia en tiempo real.
 - **Vanilla CSS3 (Modular):** Hoja de estilos central `css/main.css` que consolida la arquitectura modular por componentes (`style.css`, `header.css`, `nav.css`, `home.css`, `about.css`, `projects.css`, `skills.css`, `contact.css`, `footer.css`, `mediaqueries.css`).
 - **Vanilla JavaScript (ES Modules):** Punto de entrada en `js/main.js` y arquitectura modular en `js/modules/`:
   - `navigation.js`: Menú responsive lateral (`drawer`), overlay, control de video y sincronización de paneles.
@@ -34,7 +34,9 @@ Este documento sirve como memoria y guía contextual de referencia para cualquie
   - `accessibility.js`: Suite avanzada de accesibilidad WCAG 2.1 AA (Lector de voz TTS, Daltonismo/Filtros de color, tamaño de texto A-/A/A+, espaciado de lectura para dislexia, resaltado de enlaces, pausar animaciones TDAH y restablecer todo).
   - `preloader.js`: Pantalla de carga inteligente con anillo SVG de progreso (0% a 100%), inicialización secuencial de módulos y transición de desenfoque.
 
-### 2. Backend Serverless & IA con Control Interactivo del DOM
+### 2. Backend Serverless, Analítica & Seguridad (Grade A)
+- **Analítica Web (GA4):** Rastreación de métricas globales de visitantes, distribución geográfica y comportamiento de navegación con CSP permisivo en `vercel.json` (`connect-src`).
+- **Endurecimiento de Seguridad (Security Hardening Grade A):** Cabeceras HTTP avanzadas (`X-Content-Type-Options`, `X-Frame-Options: DENY`, `Content-Security-Policy`), cifrado SHA-256 local para el panel CRUD y aislamiento de llaves de IA en Vercel Serverless Functions (`/api/chat.js`).
 - **Prompt Engineering & Guía Empático:** Persona servicial, empática y promocional que resalta el perfil de **Data Analyst / Data Scientist**, la **Accesibilidad Universal (WCAG 2.1 AA)**, el **Impacto Real en Proyectos** y los estudios universitarios: **Técnico Universitario en Programación (UTN)**, **Técnico en Análisis y Diseño de Software (UNAF)**, **Licenciatura en Educación Tecnológica (UTN - en curso)** y el proyecto **SIGA Formosa** desarrollado para la **UTN Sede Formosa**.
 - **Acciones Interactivas de GerAssist:**
   - **Scroll Suave Automático (`handleSmartNavigationAndFill`):** Posiciona la pantalla sobre `#home`, `#about`, `#projects`, `#skills`, `#contact` según la intención de la conversación.
@@ -93,7 +95,7 @@ portfolio_web/
 │       ├── accessibility.js
 │       └── preloader.js
 ├── server.js                 # Servidor estático Node.js para pruebas locales
-├── index.html                # Documento HTML principal
+├── index.html                # Documento HTML principal (Incluye GA4 gtag.js)
 ├── vercel.json               # Configuración de despliegue Vercel
 ├── .gitignore                # Protección de variables .env
 └── README.md                 # Documentación técnica del proyecto
