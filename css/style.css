@@ -204,6 +204,98 @@ body.dark .skills-title {
   outline: 2px solid white;
 }
 
+/* Nubes Flotantes Explicativas (Tooltips) para Accesibilidad y GerAssist */
+.widget-tooltip-bubble,
+.bot-tooltip-bubble {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  padding: 0.6rem 0.95rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.35;
+  border-radius: 12px;
+  background: #022c43;
+  color: #ffffff;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px) scale(0.92);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10002;
+}
+
+body.dark .widget-tooltip-bubble,
+body.dark .bot-tooltip-bubble {
+  background: #0f172a;
+  color: #38bdf8;
+  border-color: rgba(56, 189, 248, 0.3);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+}
+
+.widget-tooltip-bubble {
+  left: 0;
+  border-bottom-left-radius: 3px;
+}
+
+.bot-tooltip-bubble {
+  right: 0;
+  border-bottom-right-radius: 3px;
+}
+
+.widget-tooltip-bubble::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 18px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: #022c43 transparent transparent transparent;
+}
+
+.bot-tooltip-bubble::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 24px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: #022c43 transparent transparent transparent;
+}
+
+body.dark .widget-tooltip-bubble::after,
+body.dark .bot-tooltip-bubble::after {
+  border-color: #0f172a transparent transparent transparent;
+}
+
+.accessibility-widget:hover .widget-tooltip-bubble,
+.widget-toggle:focus-visible ~ .widget-tooltip-bubble,
+.bot-widget-root:hover .bot-tooltip-bubble,
+.bot-toggle-btn:focus-visible ~ .bot-tooltip-bubble {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.accessibility-widget #widget-panel:not([hidden]) ~ .widget-tooltip-bubble,
+.bot-window:not([hidden]) ~ .bot-tooltip-bubble,
+.bot-widget-root.window-open .bot-tooltip-bubble {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+@media (max-width: 480px) {
+  .widget-tooltip-bubble,
+  .bot-tooltip-bubble {
+    white-space: normal;
+    max-width: 180px;
+    font-size: 0.73rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
+
 .widget-panel {
   position: absolute;
   bottom: 70px;
