@@ -6,20 +6,27 @@
   font-weight: 600;
 }
 
+/* Elevación de z-index del Header al abrir el menú móvil */
+body.menu-open .header {
+  z-index: 10000 !important;
+}
+
 /* Overlay de Fondo Transparente Suave */
 .nav__overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.45);
-  z-index: 9998;
+  background: rgba(15, 23, 42, 0.5);
+  z-index: 9990;
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
   transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .nav__overlay.show-overlay {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
 }
 
 /* Ocultar widgets flotantes de fondo mientras el menú móvil está activo */
@@ -118,7 +125,7 @@ body.dark .nav__close {
     transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     overflow-y: auto;
     box-sizing: border-box;
-    z-index: 10000;
+    z-index: 10005 !important;
     display: flex;
     flex-direction: column;
     align-items: center;
