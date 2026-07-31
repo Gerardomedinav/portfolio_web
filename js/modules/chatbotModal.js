@@ -194,6 +194,7 @@ export function renderChatbotWidget() {
   toggleBtn.addEventListener('click', () => {
     const isHidden = windowEl.hidden;
     windowEl.hidden = !isHidden;
+    widgetContainer.classList.toggle('window-open', !windowEl.hidden);
     if (!windowEl.hidden && inputEl) {
       setTimeout(() => inputEl.focus(), 150);
     }
@@ -201,6 +202,7 @@ export function renderChatbotWidget() {
 
   closeBtn.addEventListener('click', () => {
     windowEl.hidden = true;
+    widgetContainer.classList.remove('window-open');
   });
 
   // Escuchador de clics en enlaces y reproductor de voz dentro de la conversación

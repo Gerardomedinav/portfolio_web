@@ -270,20 +270,24 @@ body.dark .bot-tooltip-bubble::after {
   border-color: #0f172a transparent transparent transparent;
 }
 
-.accessibility-widget:hover .widget-tooltip-bubble,
+.widget-toggle:hover ~ .widget-tooltip-bubble,
 .widget-toggle:focus-visible ~ .widget-tooltip-bubble,
-.bot-widget-root:hover .bot-tooltip-bubble,
+.bot-toggle-btn:hover ~ .bot-tooltip-bubble,
 .bot-toggle-btn:focus-visible ~ .bot-tooltip-bubble {
   opacity: 1;
   visibility: visible;
   transform: translateY(0) scale(1);
 }
 
-.accessibility-widget #widget-panel:not([hidden]) ~ .widget-tooltip-bubble,
-.bot-window:not([hidden]) ~ .bot-tooltip-bubble,
-.bot-widget-root.window-open .bot-tooltip-bubble {
+/* Ocultar y suprimir 100% las nubes explicativas cuando el chat o el panel están desplegados */
+.bot-widget-root.window-open .bot-tooltip-bubble,
+.bot-widget-root:has(.bot-window:not([hidden])) .bot-tooltip-bubble,
+.accessibility-widget.panel-open .widget-tooltip-bubble,
+.accessibility-widget:has(#widget-panel:not([hidden])) .widget-tooltip-bubble {
+  display: none !important;
   opacity: 0 !important;
   visibility: hidden !important;
+  pointer-events: none !important;
 }
 
 @media (max-width: 480px) {
