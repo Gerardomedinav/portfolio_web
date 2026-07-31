@@ -51,7 +51,9 @@ export function initFooterChips() {
         const botBtn = document.getElementById('gerassist-toggle-btn');
         if (botBtn) botBtn.click();
       } else if (action === 'accessibility') {
-        openAccessibilityPanel();
+        setTimeout(() => {
+          openAccessibilityPanel();
+        }, 60);
       }
     });
   });

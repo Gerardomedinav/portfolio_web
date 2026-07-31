@@ -1,18 +1,19 @@
 /* =======================
-   Footer - Estilos Renovados, Dinámicos & Accesibles
+   Footer - Estilos Renovados, Dinámicos, Responsivos & Accesibles
    ======================= */
 .footer {
-  background: linear-gradient(180deg, #091322 0%, #030812 100%);
-  color: #e2e8f0;
-  padding: 3.5rem 1.5rem 1.75rem 1.5rem;
+  background: linear-gradient(180deg, #0f172a 0%, #090d16 100%);
+  color: #f1f5f9;
+  padding: 3.5rem 1.25rem 1.75rem 1.25rem;
   font-family: 'Poppins', sans-serif;
   box-sizing: border-box;
   overflow-x: hidden;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 body.dark .footer {
   background: linear-gradient(180deg, #070d19 0%, #02050b 100%);
+  color: #e2e8f0;
   border-top-color: rgba(56, 189, 248, 0.15);
 }
 
@@ -26,18 +27,19 @@ body.dark .footer {
 
 /* Tarjeta Guía Rápida Interactiva GerAssist */
 .footer__guide-card {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 20px;
-  padding: 1.6rem;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+  padding: 1.5rem;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
   transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
 body.dark .footer__guide-card {
   background: rgba(15, 23, 42, 0.65);
   border-color: rgba(56, 189, 248, 0.25);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
 }
 
 .footer__guide-card:hover {
@@ -52,25 +54,20 @@ body.dark .footer__guide-card {
 .footer__guide-title-box {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.85rem;
 }
 
 .footer__guide-icon {
   font-size: 2.2rem;
-  color: var(--first-color);
-  background: rgba(0, 120, 255, 0.15);
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.15);
   padding: 0.55rem;
   border-radius: 14px;
   flex-shrink: 0;
 }
 
-body.dark .footer__guide-icon {
-  color: #38bdf8;
-  background: rgba(56, 189, 248, 0.15);
-}
-
 .footer__guide-title {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: #ffffff;
   margin: 0 0 0.25rem 0;
@@ -78,9 +75,13 @@ body.dark .footer__guide-icon {
 
 .footer__guide-desc {
   font-size: 0.85rem;
-  color: #94a3b8;
+  color: #cbd5e1;
   margin: 0;
   line-height: 1.4;
+}
+
+body.dark .footer__guide-desc {
+  color: #94a3b8;
 }
 
 /* Chips / Botones Interactivos del Footer */
@@ -95,10 +96,10 @@ body.dark .footer__guide-icon {
   align-items: center;
   gap: 0.5rem;
   padding: 0.55rem 1.05rem;
-  background: rgba(255, 255, 255, 0.07);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
-  color: #f1f5f9;
+  color: #ffffff;
   font-size: 0.83rem;
   font-weight: 600;
   cursor: pointer;
@@ -107,22 +108,16 @@ body.dark .footer__guide-icon {
 }
 
 .footer-chip:hover {
-  background: var(--first-color);
-  color: #ffffff;
-  border-color: var(--first-color);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 120, 255, 0.35);
-}
-
-body.dark .footer-chip:hover {
   background: #0284c7;
+  color: #ffffff;
   border-color: #38bdf8;
-  box-shadow: 0 6px 18px rgba(56, 189, 248, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(2, 132, 199, 0.4);
 }
 
 .footer-chip--bot {
-  background: linear-gradient(135deg, rgba(0, 120, 255, 0.2), rgba(139, 92, 246, 0.25));
-  border-color: rgba(139, 92, 246, 0.45);
+  background: linear-gradient(135deg, rgba(0, 120, 255, 0.25), rgba(139, 92, 246, 0.3));
+  border-color: rgba(139, 92, 246, 0.5);
 }
 
 .footer-chip--bot:hover {
@@ -132,8 +127,8 @@ body.dark .footer-chip:hover {
 }
 
 .footer-chip--accessibility {
-  background: rgba(16, 185, 129, 0.15);
-  border-color: rgba(16, 185, 129, 0.35);
+  background: rgba(16, 185, 129, 0.2);
+  border-color: rgba(16, 185, 129, 0.4);
 }
 
 .footer-chip--accessibility:hover {
@@ -143,7 +138,7 @@ body.dark .footer-chip:hover {
 }
 
 .footer-chip:active {
-  transform: scale(0.96);
+  transform: scale(0.95);
 }
 
 /* Grid de 3 Columnas en Footer */
@@ -152,7 +147,7 @@ body.dark .footer-chip:hover {
   grid-template-columns: 1fr;
   gap: 2.2rem;
   padding-bottom: 2rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 @media (min-width: 768px) {
@@ -171,20 +166,20 @@ body.dark .footer-chip:hover {
 
 .footer__brand-subtitle {
   font-size: 0.85rem;
-  color: var(--first-color);
+  color: #38bdf8;
   margin: 0.2rem 0 0.8rem 0;
   font-weight: 600;
 }
 
-body.dark .footer__brand-subtitle {
-  color: #38bdf8;
-}
-
 .footer__slogan {
   font-size: 0.83rem;
-  color: #94a3b8;
+  color: #cbd5e1;
   line-height: 1.5;
   margin-bottom: 1rem;
+}
+
+body.dark .footer__slogan {
+  color: #94a3b8;
 }
 
 .footer__col-title {
@@ -203,12 +198,8 @@ body.dark .footer__brand-subtitle {
   left: 0;
   width: 28px;
   height: 2px;
-  background: var(--first-color);
-  border-radius: 2px;
-}
-
-body.dark .footer__col-title::after {
   background: #38bdf8;
+  border-radius: 2px;
 }
 
 .footer__links {
@@ -221,13 +212,17 @@ body.dark .footer__col-title::after {
 }
 
 .footer__link {
-  color: #94a3b8;
+  color: #cbd5e1;
   text-decoration: none;
   font-size: 0.85rem;
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   transition: all 0.25s ease;
+}
+
+body.dark .footer__link {
+  color: #94a3b8;
 }
 
 .footer__link:hover {
@@ -247,11 +242,11 @@ body.dark .footer__col-title::after {
   align-items: center;
   gap: 0.55rem;
   font-size: 0.8rem;
-  color: #cbd5e1;
-  background: rgba(255, 255, 255, 0.04);
+  color: #f1f5f9;
+  background: rgba(255, 255, 255, 0.05);
   padding: 0.45rem 0.85rem;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer__badge i {
@@ -267,7 +262,7 @@ body.dark .footer__col-title::after {
   justify-content: space-between;
   gap: 1rem;
   font-size: 0.82rem;
-  color: #64748b;
+  color: #94a3b8;
   text-align: center;
 }
 
@@ -282,7 +277,7 @@ body.dark .footer__col-title::after {
   display: flex;
   align-items: center;
   gap: 0.55rem;
-  color: #94a3b8;
+  color: #cbd5e1;
   font-size: 0.8rem;
 }
 
@@ -310,4 +305,17 @@ body.dark .footer__col-title::after {
 
 .footer .link-github:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 2.5rem 1rem 1.5rem 1rem;
+  }
+  .footer__guide-card {
+    padding: 1.15rem;
+  }
+  .footer-chip {
+    width: 100%;
+    justify-content: center;
+  }
 }
