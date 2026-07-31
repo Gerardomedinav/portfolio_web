@@ -82,9 +82,9 @@ export function renderChatbotWidget() {
         <!-- Botones de sugerencias rápidas -->
         <div class="bot-quick-pills">
           <button class="bot-pill" data-query="¿Quién es Gerardo y cuál es su perfil?">👤 Perfil & UTN</button>
-          <button class="bot-pill" data-query="Agrandar letra de la web">🔍 Agrandar Letra</button>
-          <button class="bot-pill" data-query="Leer la web por voz">🔊 Leer por Voz</button>
-          <button class="bot-pill" data-query="Activar filtro monocromático (Daltonismo)">👁️ Daltonismo</button>
+          <button class="bot-pill" data-query="Ver proyectos de Gerardo">📂 Proyectos</button>
+          <button class="bot-pill" data-query="¿Qué funciones de accesibilidad tenés y cómo te las pido?">♿ Accesibilidad</button>
+          <button class="bot-pill" data-query="Quiero coordinar una reunión o entrevista con Gerardo">📅 Cita / Contacto</button>
         </div>
       </div>
 
