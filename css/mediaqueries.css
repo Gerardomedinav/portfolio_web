@@ -29,17 +29,84 @@
   .nav__list {
     display: flex;
     padding-top: 0;
+    align-items: center;
   }
   .nav__item {
-    margin-left: 3rem;
+    margin-left: 2.5rem;
     margin-bottom: 0;
   }
   .nav__toggle {
     display: none;
   }
   .nav__link {
-    color: var(--second-color);
+    position: relative;
+    color: var(--second-color, #022c43);
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.35rem 0;
+    transition: color 0.25s ease, transform 0.2s ease;
+    display: inline-block;
   }
+  body.dark .nav__link {
+    color: #f8fafc;
+  }
+
+  /* Línea animada inferior (underline) */
+  .nav__link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background-color: var(--first-color, #0078ff);
+    border-radius: 4px;
+    transition: width 0.3s ease, left 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+  }
+
+  body.dark .nav__link::after {
+    background-color: #38bdf8;
+    box-shadow: 0 0 8px rgba(56, 189, 248, 0.7);
+  }
+
+  /* HOVER State Desktop: Leve elevamiento y vista previa de subrayado */
+  .nav__link:hover {
+    color: var(--first-color) !important;
+    transform: translateY(-2px);
+  }
+
+  body.dark .nav__link:hover {
+    color: #38bdf8 !important;
+  }
+
+  .nav__link:hover::after {
+    width: 70%;
+    left: 15%;
+    opacity: 0.6;
+  }
+
+  /* ACTIVE State Desktop: Barra persistente en la sección activa */
+  .nav__link.active {
+    color: var(--first-color) !important;
+    font-weight: 700;
+  }
+
+  body.dark .nav__link.active {
+    color: #38bdf8 !important;
+  }
+
+  .nav__link.active::after {
+    width: 100%;
+    left: 0;
+    opacity: 1;
+  }
+
+  /* PRESSED State Desktop: Respuesta táctil/clic */
+  .nav__link:active {
+    transform: translateY(0) scale(0.96);
+  }
+
   .nav__link-es,
   .nav__link-en {
     font-size: 0.8rem;
