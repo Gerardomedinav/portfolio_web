@@ -615,18 +615,33 @@ function handleSmartNavigationAndFill(userText, botReply) {
     return;
   }
 
-  // 2. Detección de Intención de Proyectos -> Cerrar accesibilidad y modales anteriores, scroll suave y abrir el proyecto indicado
-  const projectKeywords = [
-    'siga', 'analytics', 'python', 'nexo', 'proyecoins',
-    'ahorcado', 'entrevigas', 'bytezar', 'planificador', 'codigo urbano', 'catalogo',
-    'proyecto', 'proyectos'
+  // 2. Detección de Intención de Proyectos
+  // Solo se abre un modal de proyecto específico cuando el usuario menciona EXPLÍCITAMENTE el nombre de ese proyecto en particular.
+  // Si el usuario pregunta por "proyectos" en general, solo se desplaza suavemente a la sección #projects sin abrir ningún modal.
+  const specificProjectNames = [
+    'siga', 'nexo', 'proyecoins', 'ahorcado', 'entrevigas',
+    'bytezar', 'planificad', 'codigo urbano', 'código urbano', 'catalogo', 'catálogo', 'analytics'
   ];
 
-  if (projectKeywords.some(kw => fullText.includes(kw))) {
+  const mentionsSpecificProject = specificProjectNames.some(name => userLower.includes(name));
+
+  if (mentionsSpecificProject) {
     closeAccessibilityPanel();
     closeAllProjectModals();
 
-    const opened = openProjectModalByName(fullText);
+    openProjectModalByName(userLower);
+
+    const projectsSection = document.getElementById('projects');
+    if (projectsSection) {
+      projectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    return;
+  }
+
+  // Si se menciona la palabra general "proyecto" o "proyectos" (o al hacer clic en el botón de sugerencia rápida)
+  if (fullText.includes('proyecto') || fullText.includes('proyectos')) {
+    closeAccessibilityPanel();
+    closeAllProjectModals();
 
     const projectsSection = document.getElementById('projects');
     if (projectsSection) {
