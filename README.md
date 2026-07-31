@@ -8,65 +8,80 @@
 
 Bienvenido al repositorio oficial del **Portafolio Web Profesional de Gerardo Medina** (Full Stack Developer Jr. & Data Analyst / Data Scientist profile).
 
-Este proyecto destaca mis proyectos y habilidades a la vez que sirve como caso de estudio completo en **Desarrollo Web Moderno, Prompt Engineering & Orquestación de IA, Accesibilidad Universal (WCAG 2.1 AA), Internacionalización (i18n), Comunicación Asíncrona (AJAX Formspree), Endurecimiento de Seguridad (Hardening)** y un **Sistema de Administración CRUD Multisección Criptográfico Reactivo**.
+Este proyecto destaca la trayectoria, proyectos y habilidades de Gerardo Medina, sirviendo como caso de estudio completo en **Desarrollo Web Moderno, Prompt Engineering & Orquestación de IA con Control Interactivo de la Interfaz, Accesibilidad Universal (WCAG 2.1 AA), Internacionalización (i18n), Comunicación Asíncrona (AJAX Formspree), Endurecimiento de Seguridad (Hardening)** y un **Sistema de Administración CRUD Multisección Criptográfico Reactivo**.
 
 ---
 
 ## ✨ Funcionalidades Principales y Arquitectura
 
-### 🤖 1. Asistente Virtual Inteligente con Prompt Engineering (`GerAssist`)
-El portafolio incluye a **`GerAssist`**, un chatbot con Inteligencia Artificial integrado mediante una arquitectura híbrida de alto rendimiento:
-* **Prompt Engineering & Diseño de Persona Empática:** Diseñado mediante ingeniería de prompts avanzada para actuar como un embajador servicial, empático y comercial. Resalta el perfil analítico de Gerardo (**Data Analyst / Data Scientist**), su enfoque en **Accesibilidad Universal (WCAG 2.1 AA)**, sus títulos universitarios en Programación, Análisis y Diseño de Software, y sus estudios de **Licenciatura en Educación Tecnológica en la UTN**.
-* **Orquestación Multi-Proveedor de IA:** Capa de servicio abstracta capaz de intercalar en tiempo real entre modelos como **Anthropic Claude API**, **Groq (Llama 3)**, **OpenRouter** y **Google Gemini API**.
-* **Arquitectura Híbrida RAG-Lite & Optimización de Tokens:**
-  - *Nivel 1 (0 Costo de Tokens):* Búsqueda en tiempo real sobre una base de conocimiento en JSON (`assets/json/bot_knowledge.json`) para responder FAQs de forma instantánea sin consumir créditos de API.
-  - *Nivel 2 (Rate Limiting y Anti-Abuso):* Control de sesión en `sessionStorage` que limita las consultas abiertas a un máximo de 20 por usuario (con temporizador de reactivación de 30 min), acotando el contexto inyectado al modelo.
-  - *Nivel 3 (Fallback Directo a Contacto):* Redirección amigable con botones de acción directa hacia el **Formulario de Contacto**, **LinkedIn** y **Gmail**.
-* **Protección de Credenciales (Serverless Edge in `/api/chat.js`):** La API Key se ejecuta únicamente del lado del servidor en Vercel, garantizando cero exposición de llaves en el navegador o repositorio.
+### 🤖 1. Asistente Virtual Inteligente (`GerAssist`) con Control Interactivo del DOM
+**`GerAssist`** no es solo un modelo de chat pasivo; es un **asistente virtual empático e interactivo** que reacciona en tiempo real a las consultas del usuario para controlar la interfaz web y guiar la navegación:
 
-### 🔑 2. Sistema de Administración CRUD Multisección (Fases 0 a 5)
-* **Autenticación Criptográfica Nativa (SHA-256):** Verificación de claves con la Web Crypto API (`crypto.subtle.digest`) con token de sesión en `sessionStorage`. El HTML del panel no existe en la página hasta ingresar la clave correcta (previniendo inspección en DevTools).
-* **Edición Limpia en Texto Plano:** Formulario intuitivo sin etiquetas HTML expuestas. Los campos dividen Saludos, Nombres y Profesiones en texto limpio y el código aplica los colores y formato automáticamente.
-* **Carga Directa de Archivos Locales (`<input type="file">`):** Selector de archivos de la computadora con previsualización en tiempo real para foto de perfil, foto de Sobre Mí, portadas de proyectos, logos y PDFs de CVs.
-* **Gestión de Texto Alternativo (Alt Text WCAG 2.1 AA):** Todos los cargadores de imagen permiten ingresar o modificar el **Texto Alt bilingüe (ES / EN)** para garantizar accesibilidad completa.
+* **Navegación Inteligente y Scroll Suave Automático (`handleSmartNavigationAndFill`):**
+  - Al mencionar secciones del sitio (*Inicio, Sobre mí, Proyectos, Habilidades, Contacto o Accesibilidad*), GerAssist realiza de forma automática un **scroll suave (`scrollIntoView({ behavior: 'smooth' })`)** posicionando la vista exactamente sobre la sección correspondiente.
+* **Apertura Automatizada de Modales de Proyectos:**
+  - Si el usuario menciona la palabra general *"proyectos"*, el asistente desplaza la pantalla suavemente a la sección `#projects` para mostrar el catálogo completo.
+  - Si el usuario menciona el **nombre específico de un proyecto** (*SIGA Formosa*, *Nexo Emprendedor*, *ProyeCoins*, *Data Analytics con Python*, *Ahorcado*, *EntreVigas*, *ByteZar*, *Planificador*, *Código Urbano*, *Catálogo*), GerAssist **abre automáticamente la ventana modal flotante** con los detalles y enlaces de ese proyecto específico.
+* **Ejecución Directa de Comandos de Accesibilidad:**
+  - GerAssist atiende instrucciones por texto o dictado por voz para activar herramientas de accesibilidad en tiempo real:
+    - 🔊 **Audio y Lectura:** *"activar lector"*, *"leer la web por voz"*, *"detener voz"*.
+    - 👁️ **Filtros Visuales:** *"alto contraste"*, *"invertir colores"*, *"modo monocromático"*, *"filtro de daltonismo"*.
+    - 🔍 **Texto y Enfoque:** *"agrandar letra"*, *"reducir letra"*, *"modo dislexia"*, *"resaltar enlaces"*, *"pausar animaciones"*, *"restablecer accesibilidad"*.
+* **Pre-rellenado del Formulario de Contacto:**
+  - Al solicitar agendar una entrevista o reunión con Gerardo, GerAssist prepara automáticamente el borrador en la sección de contacto.
+* **Prompt Engineering & Tono de Guía Empático:**
+  - Diseñado sin términos comerciales agresivos. Actúa como un guía servicial y empático que promociona el perfil de Gerardo (**Técnico en Programación - UTN**, **Técnico en Análisis de Software - UNAF**, **Licenciatura en Ed. Tecnológica - UTN (en curso)** y **Data Analyst / Data Scientist**), proponiendo coordinar reuniones antes de finalizar su mensaje y manteniendo la conversación abierta sin frases de cierre.
+* **Orquestación Multi-Proveedor de IA & RAG-Lite:**
+  - *Nivel 1 (0 Costo de Tokens):* Búsqueda instantánea en base de conocimiento estructurada (`assets/json/bot_knowledge.json`).
+  - *Nivel 2 (Cascade Pipeline Edge Serverless):* Función Node.js en Vercel (`/api/chat.js`) que alterna entre **Google Gemini API**, **Groq (Llama 3)**, **OpenRouter**, **Ollama** y **Anthropic Claude**.
+  - *Nivel 3 (Rate Limiting por Sesión):* Máximo 20 consultas por usuario en `sessionStorage` para optimizar costos de token.
+
+### 💬 2. Nubes Flotantes Explicativas (Tooltips Interactivos)
+* **Indicación Visual en Hover:** Al posicionar el cursor sobre el botón flotante de Accesibilidad (`#widget-toggle`) o sobre GerAssist (`#gerassist-toggle-btn`), aparece suavemente una **nube explicativa (tooltip con puntero)** que detalla la función de cada herramienta en español e inglés (`data-i18n`).
+* **Supresión Inteligente:** La nube se oculta automáticamente al abrir el modal de chat o el panel de accesibilidad para evitar obstruir los elementos interactivos del formulario o del asistente.
+
+###📱 3. Menú Lateral Responsive (`Drawer`) & Alta Legibilidad en Modo Oscuro
+* **Diseño Drawer Flotante:** Menú lateral compacto (`width: 85%; max-width: 340px; top: 3.5rem; height: calc(100vh - 3.5rem)`), centrado vertical y horizontalmente.
+* **Botón Único de Salida (`X`):** Eliminación de duplicidad de botones, con conmutación limpia de íconos en el encabezado.
+* **Control de Apilamiento Z-Index:** Ajuste de jerarquía CSS que posiciona el menú sobre el telón traslúcido (`.nav__overlay`), permitiendo toques y clics instantáneos sin bloqueos.
+* **Respuesta Táctil & Animaciones:** Micro-animaciones diferenciadas para estado flotante (`:hover`), sección activa (`.active`) y pulsación (`:active`).
+
+### 🔑 4. Sistema de Administración CRUD Multisección Criptográfico (Fases 0 a 5)
+* **Autenticación SHA-256 Nativa:** Verificación de clave de administrador cifrada en el cliente con la Web Crypto API (`crypto.subtle.digest`) y sesión persistente en `sessionStorage`.
+* **Carga de Archivos Locales & Alt Text WCAG 2.1 AA:** Selector de archivos con previsualización en tiempo real para imágenes de perfil, proyectos, logos y PDFs de currículums, con gestión obligatoria de Texto Alt bilingüe.
 * **Pestañas CRUD Organizadas:**
-  1. **Banner / Inicio:** Saludos, Nombre, Profesión, Foto de Perfil, CVs en PDF y Redes Sociales.
+  1. **Banner / Inicio:** Nombres, Profesiones, Fotos de Perfil, CVs en PDF y Redes.
   2. **Sobre Mí:** Subtítulos, Biografía Completa y Fotografía Secundaria.
-  3. **Proyectos:** Lista interactiva para **Crear, Editar, Eliminar y Reordenar proyectos** con portadas y enlaces.
-  4. **Habilidades / Skills:** Clasificación por Lenguajes, Frameworks y Herramientas para agregar/editar tecnologías.
-  5. **Contacto & Footer:** Endpoint AJAX de Formspree, Teléfono/WhatsApp, Ubicación y Copyright del pie de página.
-  6. **Seguridad / Clave:** Cambio seguro de contraseña de administrador.
+  3. **Proyectos:** Creación, edición, eliminación y reordenamiento de proyectos.
+  4. **Habilidades / Skills:** Gestión por Lenguajes, Frameworks y Herramientas.
+  5. **Contacto & Footer:** Endpoint de Formspree, WhatsApp, Ubicación y Copyright.
+  6. **Seguridad:** Cambio seguro de contraseña de administrador.
 
-### ✉️ 3. Formulario de Contacto Directo (AJAX + Formspree)
-* **Envío Asíncrono en Tiempo Real:** Integración directa por Fetch/AJAX con Formspree hacia `gerardomedinavv@gmail.com` sin recargar la página ni abrir clientes de correo externos.
-* **Seguridad y Filtro Anti-Spam:** Trampa Honeypot `_gotcha` para neutralizar bots automáticos y validación de contenido.
+### ✉️ 5. Formulario de Contacto Directo (AJAX + Formspree)
+* **Envío Asíncrono en Tiempo Real:** Formulario con Fetch/AJAX directo a `gerardomedinavv@gmail.com` con trampa Honeypot `_gotcha` anti-spam.
 
-### 🌐 4. Internacionalización (i18n - Español / Inglés)
-* **Motor Reactivo sin Recarga:** Cambio de idioma instantáneo (`es` / `en`) mediante eventos personalizados `languageChange`.
-* **Previsualización de CV en PDF:** Apertura nativa del currículum en PDF en una nueva pestaña adaptado al idioma activo (`CV_Gerardo_Medina_Villalba_español.pdf` y `CV_Gerardo_Medina_Villalba_EN.pdf`).
+### 🌐 6. Internacionalización (i18n - Español / Inglés)
+* **Cambio de Idioma Instantáneo:** Motor reactivo sin recarga mediante eventos `languageChange`.
+* **Rutas PDF ASCII:** Currículums bilingües en PDF (`CV_Gerardo_Medina_Villalba_espanol.pdf` y `CV_Gerardo_Medina_Villalba_EN.pdf`).
 
-### ♿ 5. Suite Avanzada de Accesibilidad (WCAG 2.1 AA)
-Panel flotante interactivo (`.widget-panel`) integrado estéticamente con el tema visual:
-* **👁️ Auditoría de Imágenes 100% Accesibles:** Cada imagen del sitio posee un texto alternativo (`alt`) descriptivo y reactivo en tiempo real al cambio de idioma (`data-i18n-alt`).
-* **🔊 Lector de Voz (TTS):** Síntesis de voz nativa mediante Web Speech API para escuchar el contenido del sitio.
-* **🎨 Filtro de Daltonismo:** Modo monocromático / escala de grises para usuarios con visibilidad reducida.
-* **🔤 Escalado Tipográfico Dinámico:** Controles para ajustar el tamaño de fuente (`A-`, `A`, `A+`).
-* **📖 Espaciado de Lectura (Dislexia):** Optimización del interlineado y espaciado de texto para facilitar la lectura.
-* **🔗 Resaltado de Hipervínculos:** Indicadores visuales destacados en todos los enlaces interactivos.
-### ⏳ 6. Pantalla de Carga Inteligente y Preloader Interactivo (`preloader.js`)
-* **Anillo de Progreso SVG Dinámico:** Indicador circular animado en SVG con contador en tiempo real (`0%` a `100%`).
-* **Secuencia de Carga por Módulos:** Muestra de forma altamente visual e intuitiva la inicialización paso a paso de los componentes (*Arquitectura CSS, Almacén DataStore, Proyectos, Habilidades y Conexión con el Asistente GerAssist*).
-* **Transición Fluida de Desvanecimiento:** Desaparición elegante con efecto de desenfoque y desenfoque óptico una vez alcanzado el 100%, garantizando una interacción fluida en redes móviles y servicios Jamstack como Vercel.
+### ♿ 7. Suite Avanzada de Accesibilidad Universal (WCAG 2.1 AA)
+* **Lector de Voz (TTS)** nativo vía Web Speech API.
+* **Filtros de Color / Daltonismo** (Monocromático, Alto Contraste, Inversión de colores).
+* **Ajustes de Texto** (Escalado A-/A+, espaciado para dislexia, resaltado de hipervínculos).
+* **Pausador de Animaciones (TDAH)** y botón de restablecimiento total.
+
+### ⏳ 8. Pantalla de Carga Inteligente y Preloader Interactivo (`preloader.js`)
+* **Anillo de Progreso SVG Dinámico:** Indicador circular animado con contador del `0%` al `100%` e inicialización secuencial de módulos.
 
 ---
 
 ## 🛠️ Tecnologías Utilizadas
 
 - **Inteligencia Artificial & Prompt Engineering:** Prompt Design Empático, Anthropic Claude API, Groq / Llama 3, OpenRouter, Google Gemini API, RAG-Lite Local JSON Engine.
-- **Frontend Core:** HTML5 Semántico, Vanilla CSS3 (Variables CSS, Flexbox, CSS Grid, Modulares), Vanilla JavaScript (ES Modules).
-- **Seguridad & Hashing:** Web Crypto API (`crypto.subtle.digest` SHA-256), Vercel Serverless Functions (`/api/chat.js`), Content Security Policy (CSP), HTTP Headers en `vercel.json`.
-- **Formularios & Estado:** AJAX / Fetch API (`URLSearchParams`), Formspree, Web Storage API (`localStorage` & `sessionStorage`).
-- **Accesibilidad & Librerías:** WCAG 2.1 AA, Web Speech API (TTS), Boxicons, AOS (Animate On Scroll).
+- **Frontend Core:** HTML5 Semántico (WCAG 2.1 AA), Vanilla CSS3 Modular (Variables CSS, Flexbox, Grid), Vanilla JavaScript (ES Modules).
+- **Seguridad & Hashing:** Web Crypto API (SHA-256), Vercel Serverless Functions (`/api/chat.js`), Content Security Policy (CSP).
+- **Formularios & Estado:** Fetch API, Formspree, Web Storage API (`localStorage` & `sessionStorage`).
+- **Accesibilidad & Librerías:** Web Speech API (TTS), Boxicons, AOS (Animate On Scroll).
 
 ---
 
@@ -74,6 +89,8 @@ Panel flotante interactivo (`.widget-panel`) integrado estéticamente con el tem
 
 ```
 portfolio_web/
+├── .agents/
+│   └── AGENTS.md             # Reglas y memoria de proyecto para agentes de IA
 ├── api/
 │   └── chat.js               # Endpoint Serverless Node.js en Vercel (Proxy seguro de IA)
 ├── assets/
@@ -84,31 +101,42 @@ portfolio_web/
 │   │   ├── proyectos.json    # Datos dinámicos de proyectos
 │   │   └── skill.json        # Datos dinámicos de habilidades
 │   ├── CV_Gerardo_Medina_Villalba_EN.pdf
-│   └── CV_Gerardo_Medina_Villalba_español.pdf
+│   └── CV_Gerardo_Medina_Villalba_espanol.pdf
 ├── css/
-│   ├── main.css              # Hoja de estilos principal
+│   ├── main.css              # Hoja de estilos principal (Importa la arquitectura modular)
 │   ├── style.css             # Estilos globales, modales CRUD y widget GerAssist
+│   ├── header.css            # Estilos del encabezado
+│   ├── nav.css               # Menú responsive, drawer y animaciones de enlace
+│   ├── home.css              # Sección de inicio y fondo de video
+│   ├── about.css             # Sección sobre mí
+│   ├── projects.css          # Modales adaptativos y tarjetas de proyectos
+│   ├── skills.css            # Grid interactivo de habilidades
+│   ├── contact.css           # Formulario de contacto
+│   ├── footer.css            # Pie de página
+│   └── mediaqueries.css      # Adaptación responsive universal
 ├── js/
 │   ├── main.js               # Punto de entrada ES Modules
 │   └── modules/
-│       ├── navigation.js     # Menú móvil y navlinks
+│       ├── navigation.js     # Menú móvil, drawer, overlay y control de video
 │       ├── theme.js          # Control de Modo Oscuro/Claro
 │       ├── i18n.js           # Diccionario y motor de traducción
-│       ├── projects.js       # Renderizado dinámico de proyectos
+│       ├── projects.js       # Renderizado dinámico y modales de proyectos
 │       ├── skills.js         # Renderizado dinámico de habilidades
 │       ├── accessibility.js  # Suite de accesibilidad WCAG
 │       ├── contact.js        # Formulario AJAX Formspree
 │       ├── botService.js     # Motor RAG local y consumidor de /api/chat
-│       ├── chatbotModal.js   # Interfaz interactiva de GerAssist (Chatbot UI)
+│       ├── chatbotModal.js   # Interfaz interactiva de GerAssist (Navegación & Comandos)
 │       ├── auth.js           # Autenticación SHA-256 de Administrador
 │       ├── dataStore.js      # Almacén central de datos reactivos
 │       ├── home.js           # Renderizado dinámico del Banner
 │       ├── about.js          # Renderizado dinámico de Sobre Mí
 │       ├── footerContact.js  # Renderizado dinámico de Contacto y Footer
-│       └── adminModal.js     # Panel de Administración CRUD Multisección
+│       ├── adminModal.js     # Panel de Administración CRUD Multisección
+│       └── preloader.js      # Pantalla de carga e inicialización modular
+├── server.js                 # Servidor estático Node.js para pruebas locales
 ├── index.html                # Documento HTML5 principal
 ├── vercel.json               # Configuración de despliegue y seguridad Vercel (CSP)
-├── .gitignore                # Reglas para ignorar .env y credenciales de IA
+├── .gitignore                # Protección de credenciales y archivos temporales
 └── README.md                 # Documentación técnica del proyecto
 ```
 
@@ -118,13 +146,13 @@ portfolio_web/
 
 Para ejecutar el proyecto en tu entorno local:
 
-1. Clona el repositorio:
+1. Cloná el repositorio:
    ```bash
    git clone https://github.com/Gerardomedinav/portfolio_web.git
    cd portfolio_web
    ```
-2. Inicia un servidor web local:
+2. Iniciá el servidor Node.js local:
    ```bash
-   npx http-server -p 8080
+   node server.js
    ```
-3. Abre en tu navegador `http://localhost:8080` e interactúa con **`GerAssist`** en la esquina inferior derecha.
+3. Abrí en tu navegador `http://localhost:3000` e interactuá con **`GerAssist`** y la suite de accesibilidad.
