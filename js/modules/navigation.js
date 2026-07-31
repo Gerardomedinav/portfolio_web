@@ -52,7 +52,7 @@ export function initNavigation() {
     if (navToggle) {
       navToggle.setAttribute('aria-expanded', 'true');
       const icon = navToggle.querySelector('i');
-      if (icon) icon.className = 'bx bx-x';
+      if (icon) icon.className = 'bx bx-menu';
     }
   };
 
