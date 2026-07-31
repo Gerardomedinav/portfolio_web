@@ -6,14 +6,12 @@
   font-weight: 600;
 }
 
-/* Overlay de Fondo Transparente / Difuminado */
+/* Overlay de Fondo Transparente */
 .nav__overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  z-index: 998;
+  background: rgba(15, 23, 42, 0.7);
+  z-index: 9998;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -38,7 +36,7 @@
   font-size: 1.65rem;
   cursor: pointer;
   transition: all 0.25s ease;
-  z-index: 1000;
+  z-index: 10000;
 }
 
 body.dark .nav__toggle {
@@ -80,7 +78,7 @@ body.dark .nav__toggle:focus-visible {
   align-items: center;
   justify-content: center;
   transition: all 0.25s ease;
-  z-index: 1001;
+  z-index: 10001;
 }
 
 body.dark .nav__close {
@@ -105,21 +103,21 @@ body.dark .nav__close {
     max-width: 320px;
     height: 100vh;
     padding: 4.5rem 1.75rem 2.5rem 1.75rem;
-    background-color: #ffffff;
-    box-shadow: -10px 0 35px rgba(0, 0, 0, 0.25);
+    background-color: #ffffff !important;
+    box-shadow: -10px 0 35px rgba(0, 0, 0, 0.4);
     transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     overflow-y: auto;
     box-sizing: border-box;
-    z-index: 999;
+    z-index: 9999;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
 
   body.dark .nav__menu {
-    background-color: #0f172a;
-    box-shadow: -10px 0 35px rgba(0, 0, 0, 0.75);
-    border-left: 1px solid rgba(255, 255, 255, 0.12);
+    background-color: #0f172a !important;
+    box-shadow: -10px 0 35px rgba(0, 0, 0, 0.85);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
   }
 
   .nav__menu.show {
