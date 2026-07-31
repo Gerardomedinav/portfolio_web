@@ -5,9 +5,11 @@
 export function openAccessibilityPanel() {
   const widgetPanel = document.getElementById("widget-panel");
   const widgetToggle = document.getElementById("widget-toggle");
+  const widgetWidget = document.querySelector(".accessibility-widget");
   if (widgetPanel) {
     widgetPanel.removeAttribute("hidden");
     if (widgetToggle) widgetToggle.setAttribute("aria-expanded", "true");
+    if (widgetWidget) widgetWidget.classList.add("panel-open");
     widgetPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 }
@@ -15,9 +17,11 @@ export function openAccessibilityPanel() {
 export function closeAccessibilityPanel() {
   const widgetPanel = document.getElementById("widget-panel");
   const widgetToggle = document.getElementById("widget-toggle");
+  const widgetWidget = document.querySelector(".accessibility-widget");
   if (widgetPanel) {
     widgetPanel.setAttribute("hidden", "");
     if (widgetToggle) widgetToggle.setAttribute("aria-expanded", "false");
+    if (widgetWidget) widgetWidget.classList.remove("panel-open");
   }
 }
 

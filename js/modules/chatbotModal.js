@@ -29,11 +29,6 @@ export function renderChatbotWidget() {
   widgetContainer.className = 'bot-widget-root';
 
   widgetContainer.innerHTML = `
-    <!-- Nube flotante explicativa (Tooltip GerAssist) -->
-    <div class="bot-tooltip-bubble" id="bot-tooltip-bubble" role="tooltip" data-i18n="botTooltip">
-      ${lang === 'es' ? '🤖 GerAssist – Asistente Virtual e IA Guía del Portafolio' : '🤖 GerAssist – AI Virtual Assistant & Portfolio Guide'}
-    </div>
-
     <!-- Botón flotante GerAssist -->
     <button id="gerassist-toggle-btn" class="bot-toggle-btn" aria-label="Abrir asistente virtual GerAssist" title="Hablá con GerAssist (IA)">
       <div class="bot-avatar-badge">
@@ -42,6 +37,11 @@ export function renderChatbotWidget() {
       <span class="bot-btn-text">GerAssist</span>
       <span class="bot-online-indicator"></span>
     </button>
+
+    <!-- Nube flotante explicativa (Tooltip GerAssist) -->
+    <div class="bot-tooltip-bubble" id="bot-tooltip-bubble" role="tooltip" data-i18n="botTooltip">
+      ${lang === 'es' ? '🤖 GerAssist – Asistente Virtual e IA Guía del Portafolio' : '🤖 GerAssist – AI Virtual Assistant & Portfolio Guide'}
+    </div>
 
     <!-- Ventana de Chat Desplegable -->
     <div id="gerassist-window" class="bot-window" hidden role="dialog" aria-labelledby="gerassist-header-title">
