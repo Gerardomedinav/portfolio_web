@@ -1,12 +1,21 @@
-/**
- * Módulo de Servicio e Inteligencia para GerAssist (Búsqueda Local FAQ + Serverless AI API)
- */
+import { getProjectsData } from './dataStore.js';
+import { getLang } from './i18n.js';
+
 const STORAGE_BOT_SESSION_KEY = 'gerassist_session_count';
 const STORAGE_BOT_LIMIT_TIME_KEY = 'gerassist_session_limit_time';
 const MAX_SESSION_MESSAGES = 20;
 const COOLDOWN_MINUTES = 30;
 
 let botKnowledgeData = null;
+
+function extractText(field, lang = 'es') {
+  if (!field) return '';
+  if (typeof field === 'string') return field;
+  if (typeof field === 'object') {
+    return field[lang] || field.es || field.en || Object.values(field)[0] || '';
+  }
+  return String(field);
+}
 
 /**
  * Carga la base de conocimiento local en JSON
@@ -143,20 +152,29 @@ export async function sendMessageToGerAssist(message, conversationHistory = []) 
   // 3. Incrementar contador de sesión
   incrementSessionMessageCount();
 
-  // 4. Preparar contexto acotado
+  // 4. Preparar contexto dinámico en tiempo real (Perfil + TODOS los Proyectos Actuales de DataStore)
   const knowledge = await getBotKnowledge();
+  const currentProjects = await getProjectsData();
+  const lang = getLang();
+
   let relevantContext = '';
-  if (knowledge) {
-    if (knowledge.profile) {
-      relevantContext = `Perfil: ${knowledge.profile.name} - ${knowledge.profile.title}.
+  if (knowledge && knowledge.profile) {
+    relevantContext = `Perfil: ${knowledge.profile.name} - ${knowledge.profile.title}.
 Títulos: ${knowledge.profile.degrees.join(', ')}.
 Trayectoria: ${knowledge.profile.experience}
 Visión: ${knowledge.profile.vision}`;
-    }
-    if (knowledge.projects && Array.isArray(knowledge.projects)) {
-      const projInfo = knowledge.projects.map(p => `- ${p.name}: ${p.concept} Tech: ${p.tech}`).join('\n');
-      relevantContext += `\nProyectos Destacados:\n${projInfo}`;
-    }
+  }
+
+  if (Array.isArray(currentProjects) && currentProjects.length > 0) {
+    const projListStr = currentProjects.map((p, idx) => {
+      const title = extractText(p.title, lang);
+      const desc = extractText(p.description, lang);
+      const github = p.github ? ` | GitHub: ${p.github}` : '';
+      const demo = p.demo ? ` | Demo: ${p.demo}` : '';
+      return `${idx + 1}. PROYECTO OFICIAL: "${title}"\n   Descripción: ${desc}${github}${demo}`;
+    }).join('\n\n');
+
+    relevantContext += `\n\nLISTADO COMPLETO Y ACTUALIZADO EN TIEMPO REAL DE PROYECTOS REGISTRADOS EN EL PORTAFOLIO DE GERARDO MEDINA (UTILIZA ESTA INFORMACIÓN OFICIAL PARA RESPONDER):\n${projListStr}`;
   }
 
   try {
