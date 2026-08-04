@@ -625,9 +625,7 @@ function handleSmartNavigationAndFill(userText, botReply) {
     return;
   }
 
-  // 2. Detección de Intención de Proyectos
-  // Solo se abre un modal de proyecto específico cuando el usuario menciona EXPLÍCITAMENTE el nombre de ese proyecto en particular.
-  // Si el usuario pregunta por "proyectos" en general, solo se desplaza suavemente a la sección #projects sin abrir ningún modal.
+  // 2. Detección de Intención de Proyectos por Nombre Especificado
   const specificProjectNames = [
     'siga', 'nexo', 'proyecoins', 'ahorcado', 'entrevigas',
     'bytezar', 'planificad', 'codigo urbano', 'código urbano', 'catalogo', 'catálogo', 'analytics'
@@ -648,8 +646,8 @@ function handleSmartNavigationAndFill(userText, botReply) {
     return;
   }
 
-  // Si se menciona la palabra general "proyecto" o "proyectos" (o al hacer clic en el botón de sugerencia rápida)
-  if (fullText.includes('proyecto') || fullText.includes('proyectos')) {
+  // Si se menciona explícitamente la palabra general "proyecto" o "proyectos" en la consulta del usuario
+  if (userLower.includes('proyecto') || userLower.includes('proyectos')) {
     closeAccessibilityPanel();
     closeAllProjectModals();
 
@@ -662,17 +660,17 @@ function handleSmartNavigationAndFill(userText, botReply) {
 
   // 3. Detección de Intención de Contactar / Cita / Entrevista -> Desplazar a #contact y autofill
   if (
-    fullText.includes('contact') || 
-    fullText.includes('contrat') || 
-    fullText.includes('cita') ||
-    fullText.includes('reunion') ||
-    fullText.includes('reunión') ||
-    fullText.includes('entrevista') ||
-    fullText.includes('email') || 
-    fullText.includes('correo') ||
-    fullText.includes('escribir') ||
-    fullText.includes('mensaje') ||
-    fullText.includes('vías oficiales')
+    userLower.includes('contact') || 
+    userLower.includes('contrat') || 
+    userLower.includes('cita') ||
+    userLower.includes('reunion') ||
+    userLower.includes('reunión') ||
+    userLower.includes('entrevista') ||
+    userLower.includes('email') || 
+    userLower.includes('correo') ||
+    userLower.includes('escribir') ||
+    userLower.includes('mensaje') ||
+    userLower.includes('vías oficiales')
   ) {
     closeAccessibilityPanel();
     closeAllProjectModals();
@@ -682,14 +680,14 @@ function handleSmartNavigationAndFill(userText, botReply) {
 
   // 4. Detección de Intención de Habilidades / Skills -> Scroll suave a #skills
   if (
-    fullText.includes('habilidad') || 
-    fullText.includes('skills') || 
-    fullText.includes('tecnolog') || 
-    fullText.includes('framework') || 
-    fullText.includes('herramienta') ||
-    fullText.includes('javascript') ||
-    fullText.includes('docker') ||
-    fullText.includes('sql')
+    userLower.includes('habilidad') || 
+    userLower.includes('skills') || 
+    userLower.includes('tecnolog') || 
+    userLower.includes('framework') || 
+    userLower.includes('herramienta') ||
+    userLower.includes('javascript') ||
+    userLower.includes('docker') ||
+    userLower.includes('sql')
   ) {
     closeAccessibilityPanel();
     closeAllProjectModals();
@@ -702,7 +700,7 @@ function handleSmartNavigationAndFill(userText, botReply) {
 
   // 5. Detección de Intención de CV / Currículum -> Scroll suave a #home donde se ubica el botón de descarga
   const cvKeywords = ['cv', 'curriculum', 'currículum', 'resume', 'hoja de vida', 'descargar cv', 'ver cv'];
-  if (cvKeywords.some(kw => fullText.includes(kw))) {
+  if (cvKeywords.some(kw => userLower.includes(kw))) {
     closeAccessibilityPanel();
     closeAllProjectModals();
     const homeSection = document.getElementById('home');
@@ -718,10 +716,10 @@ function handleSmartNavigationAndFill(userText, botReply) {
     'quien es', 'quién es', 'quien sos', 'quién sos', 'quien eres', 'quién eres',
     'perfil', 'utn', 'unaf', 'estudios', 'trayectoria', 'educacion', 'educación',
     'formacion', 'formación', 'biografia', 'biografía', 'presentate', 'presentáte',
-    'saber mas', 'saber más', 'conocer a gerardo'
+    'saber mas', 'saber más', 'conocer', 'hablame', 'habláme', 'habla'
   ];
 
-  if (aboutKeywords.some(kw => fullText.includes(kw))) {
+  if (aboutKeywords.some(kw => userLower.includes(kw) || fullText.includes(kw))) {
     closeAccessibilityPanel();
     closeAllProjectModals();
     const aboutSection = document.getElementById('about');
