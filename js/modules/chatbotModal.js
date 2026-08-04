@@ -680,28 +680,7 @@ function handleSmartNavigationAndFill(userText, botReply) {
     return;
   }
 
-  // 4. Detección de Intención de Sobre Mí / UTN / Estudios -> Scroll suave a #about
-  if (
-    fullText.includes('sobre mi') || 
-    fullText.includes('sobre mí') || 
-    fullText.includes('utn') || 
-    fullText.includes('unaf') || 
-    fullText.includes('perfil') || 
-    fullText.includes('estudios') || 
-    fullText.includes('trayectoria') ||
-    fullText.includes('educacion') ||
-    fullText.includes('educación')
-  ) {
-    closeAccessibilityPanel();
-    closeAllProjectModals();
-    const aboutSection = document.getElementById('about');
-    if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-    return;
-  }
-
-  // 5. Detección de Intención de Habilidades / Skills -> Scroll suave a #skills
+  // 4. Detección de Intención de Habilidades / Skills -> Scroll suave a #skills
   if (
     fullText.includes('habilidad') || 
     fullText.includes('skills') || 
@@ -721,7 +700,7 @@ function handleSmartNavigationAndFill(userText, botReply) {
     return;
   }
 
-  // 6. Detección de Intención de CV / Currículum -> Scroll suave a #home donde se ubica el botón de descarga
+  // 5. Detección de Intención de CV / Currículum -> Scroll suave a #home donde se ubica el botón de descarga
   const cvKeywords = ['cv', 'curriculum', 'currículum', 'resume', 'hoja de vida', 'descargar cv', 'ver cv'];
   if (cvKeywords.some(kw => fullText.includes(kw))) {
     closeAccessibilityPanel();
@@ -729,6 +708,25 @@ function handleSmartNavigationAndFill(userText, botReply) {
     const homeSection = document.getElementById('home');
     if (homeSection) {
       homeSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    return;
+  }
+
+  // 6. Detección de Intención de Sobre Mí / Gerardo Medina / Perfil / UTN / Estudios -> Scroll suave a #about
+  const aboutKeywords = [
+    'gerardo', 'gerardo medina', 'acerca de', 'sobre mi', 'sobre mí', 'sobre gerardo',
+    'quien es', 'quién es', 'quien sos', 'quién sos', 'quien eres', 'quién eres',
+    'perfil', 'utn', 'unaf', 'estudios', 'trayectoria', 'educacion', 'educación',
+    'formacion', 'formación', 'biografia', 'biografía', 'presentate', 'presentáte',
+    'saber mas', 'saber más', 'conocer a gerardo'
+  ];
+
+  if (aboutKeywords.some(kw => fullText.includes(kw))) {
+    closeAccessibilityPanel();
+    closeAllProjectModals();
+    const aboutSection = document.getElementById('about');
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     return;
   }
