@@ -86,6 +86,10 @@
       "answer": "🌙 **¡Modo Oscuro activado!** He configurado la interfaz en el tema oscuro para reducir el cansancio ocular y brindarte la máxima comodidad visual."
     },
     {
+      "keywords": ["siga", "siga formosa", "siga-formosa", "sistema siga", "gestion academica", "gestión académica"],
+      "answer": "🎓 **SIGA-Formosa (Sistema Integral de Gestión Académica)** es un sistema profesional de gestión universitaria desarrollado por Gerardo Medina específicamente para la **UTN Sede Formosa (Universidad Tecnológica Nacional)**.\n\nEstá diseñado para centralizar la información educativa, eliminar la dispersión de datos y optimizar trámites universitarios. Fue construido con un stack robusto de **PHP, Laravel, PostgreSQL y Docker**, destacándose por su arquitectura escalable, seguridad y alta eficiencia.\n\n¿Te gustaría que coordinemos una reunión o entrevista con Gerardo para conversar sobre este desarrollo o preferís explorar otro proyecto?"
+    },
+    {
       "keywords": ["modo claro", "tema claro", "activar modo claro", "poner modo claro"],
       "answer": "☀️ **¡Modo Claro activado!** He cambiado la interfaz al tema claro con alta visibilidad y brillo natural."
     }

@@ -146,11 +146,17 @@ export async function sendMessageToGerAssist(message, conversationHistory = []) 
   // 4. Preparar contexto acotado
   const knowledge = await getBotKnowledge();
   let relevantContext = '';
-  if (knowledge && knowledge.profile) {
-    relevantContext = `Perfil: ${knowledge.profile.name} - ${knowledge.profile.title}.
+  if (knowledge) {
+    if (knowledge.profile) {
+      relevantContext = `Perfil: ${knowledge.profile.name} - ${knowledge.profile.title}.
 Títulos: ${knowledge.profile.degrees.join(', ')}.
 Trayectoria: ${knowledge.profile.experience}
 Visión: ${knowledge.profile.vision}`;
+    }
+    if (knowledge.projects && Array.isArray(knowledge.projects)) {
+      const projInfo = knowledge.projects.map(p => `- ${p.name}: ${p.concept} Tech: ${p.tech}`).join('\n');
+      relevantContext += `\nProyectos Destacados:\n${projInfo}`;
+    }
   }
 
   try {
