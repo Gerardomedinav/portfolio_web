@@ -208,24 +208,39 @@ export function openProjectModalByName(queryText) {
   const popovers = document.querySelectorAll('.project__popover');
   let matchedPopover = null;
 
-  popovers.forEach(pop => {
-    const titleEl = pop.querySelector('.project__popover-title');
-    const titleText = (titleEl ? titleEl.textContent : '').toLowerCase();
+  // Palabras genéricas a ignorar para evitar falsos positivos
+  const genericWords = new Set([
+    'proyecto', 'proyectos', 'project', 'projects', 'desarrollo', 'sistema',
+    'app', 'web', 'de', 'del', 'el', 'la', 'los', 'las', 'un', 'una', 'con',
+    'para', 'por', 'en', 'y', 'e', 'o', 'u', 'sin', 'gerardo', 'medina', 'ver',
+    'mostrar', 'abrir', 'como', 'cómo', 'que', 'qué', 'sobre', 'mas', 'más'
+  ]);
 
-    if (
-      (cleanQuery.includes('siga') && titleText.includes('siga')) ||
-      (cleanQuery.includes('nexo') && titleText.includes('nexo')) ||
-      (cleanQuery.includes('proyecoins') && titleText.includes('proyecoins')) ||
-      (cleanQuery.includes('ahorcado') && titleText.includes('ahorcado')) ||
-      (cleanQuery.includes('entrevigas') && titleText.includes('entrevigas')) ||
-      (cleanQuery.includes('bytezar') && titleText.includes('bytezar')) ||
-      (cleanQuery.includes('planificad') && titleText.includes('planificad')) ||
-      (cleanQuery.includes('codigo urbano') && titleText.includes('código urbano')) ||
-      (cleanQuery.includes('catalogo') && titleText.includes('catálogo')) ||
-      (cleanQuery.includes('animal') && titleText.includes('comunitario')) ||
-      (cleanQuery.includes('analytics') && titleText.includes('analytics'))
-    ) {
+  popovers.forEach(pop => {
+    if (matchedPopover) return;
+
+    const titleEl = pop.querySelector('.project__popover-title');
+    const titleText = (titleEl ? titleEl.textContent : '').toLowerCase().trim();
+    if (!titleText) return;
+
+    // 1. Coincidencia directa si el texto de búsqueda contiene el título completo o viceversa
+    if (cleanQuery.includes(titleText) || titleText.includes(cleanQuery)) {
       matchedPopover = pop;
+      return;
+    }
+
+    // 2. Extraer palabras clave del título del proyecto (excluyendo genéricas y muy cortas)
+    const titleWords = titleText
+      .replace(/[^\w\sáéíóúñ-]/gi, ' ')
+      .split(/\s+/)
+      .filter(w => w.length >= 3 && !genericWords.has(w));
+
+    // Si alguna palabra clave significativa del título del proyecto está presente en la consulta del usuario
+    for (const word of titleWords) {
+      if (cleanQuery.includes(word)) {
+        matchedPopover = pop;
+        break;
+      }
     }
   });
 

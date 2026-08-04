@@ -625,25 +625,25 @@ function handleSmartNavigationAndFill(userText, botReply) {
     return;
   }
 
-  // 2. Detección de Intención de Proyectos por Nombre Especificado
-  const specificProjectNames = [
-    'siga', 'nexo', 'proyecoins', 'ahorcado', 'entrevigas',
-    'bytezar', 'planificad', 'codigo urbano', 'código urbano', 'catalogo', 'catálogo', 'analytics'
-  ];
+  // 2. Detección Dinámica de Proyecto Específico por Nombre (proyectos existentes y creados desde el CRUD Admin)
+  const isGeneralProjectsQuery = (
+    userLower === 'proyectos' || 
+    userLower === 'ver proyectos' || 
+    userLower === 'proyectos de gerardo' || 
+    userLower === 'mostrar proyectos' ||
+    userLower === 'mis proyectos'
+  );
 
-  const mentionsSpecificProject = specificProjectNames.some(name => userLower.includes(name));
-
-  if (mentionsSpecificProject) {
-    closeAccessibilityPanel();
-    closeAllProjectModals();
-
-    openProjectModalByName(userLower);
-
-    const projectsSection = document.getElementById('projects');
-    if (projectsSection) {
-      projectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (!isGeneralProjectsQuery) {
+    const openedModal = openProjectModalByName(userLower);
+    if (openedModal) {
+      closeAccessibilityPanel();
+      const projectsSection = document.getElementById('projects');
+      if (projectsSection) {
+        projectsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      return;
     }
-    return;
   }
 
   // Si se menciona explícitamente la palabra general "proyecto" o "proyectos" en la consulta del usuario
